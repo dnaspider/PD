@@ -1,0 +1,50 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="SettingDB" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;'PD 1.0.0&lt;/string&gt;
+  &lt;string&gt;'Keyboard assist&lt;/string&gt;
+  &lt;string&gt;'A-Z, 0-9&lt;/string&gt;
+  &lt;string&gt;'Sendkeys (search engine how to use)&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'Master Settings:&lt;/string&gt;
+  &lt;string&gt;'C:\Users\..\AppData\Local\pd  (delete pd folder to reset)&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'H + Escape: Toggle visibility: &lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'List box commands:&lt;/string&gt;
+  &lt;string&gt;'Delete: Remove item&lt;/string&gt;
+  &lt;string&gt;'Ctrl + E: Edit&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'Text box commands:&lt;/string&gt;
+  &lt;string&gt;'Ctrl + S: Save&lt;/string&gt;
+  &lt;string&gt;'Ctrl + E: Edit&lt;/string&gt;
+  &lt;string&gt;'Ctrl + U: Update&lt;/string&gt;
+  &lt;string&gt;'Ctrl + Z: Undo&lt;/string&gt;
+  &lt;string&gt;'Ctrl + Y: Redo&lt;/string&gt;
+  &lt;string&gt;'Double click: Print&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'Basic examples:  (three different modes)&lt;/string&gt;
+  &lt;string&gt;'Press RCtrl then type `test` for output `Hi!`&lt;/string&gt;
+  &lt;string&gt;«test-»Hi!&lt;/string&gt;
+  &lt;string&gt;'Type `wel` somewhere to output `Hello`&lt;/string&gt;
+  &lt;string&gt;welcome{left 2}+{left 2}&lt;/string&gt;
+  &lt;string&gt;'Press RCtrl then type `t1` for output `Goodbye`&lt;/string&gt;
+  &lt;string&gt;«t1» Goodbye^a&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Setting_g_length" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="SettingSpecialKey" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">163</Value>
+    </Setting>
+    <Setting Name="SettingTitleTip" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
