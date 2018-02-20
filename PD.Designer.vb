@@ -55,7 +55,7 @@ Partial Class PD
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.SplitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.SplitContainer1.Location = New System.Drawing.Point(38, 35)
+        Me.SplitContainer1.Location = New System.Drawing.Point(38, 38)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
@@ -63,12 +63,14 @@ Partial Class PD
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.ListBox1)
+        Me.SplitContainer1.Panel1MinSize = 2
         '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.TextBox1)
+        Me.SplitContainer1.Panel2MinSize = 1
         Me.SplitContainer1.Size = New System.Drawing.Size(824, 580)
-        Me.SplitContainer1.SplitterDistance = 329
+        Me.SplitContainer1.SplitterDistance = 269
         Me.SplitContainer1.SplitterWidth = 39
         Me.SplitContainer1.TabIndex = 4
         '
@@ -81,7 +83,7 @@ Partial Class PD
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(822, 327)
+        Me.ListBox1.Size = New System.Drawing.Size(822, 267)
         Me.ListBox1.TabIndex = 1
         '
         'TextBox1
@@ -94,7 +96,7 @@ Partial Class PD
         Me.TextBox1.Location = New System.Drawing.Point(0, 0)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(822, 210)
+        Me.TextBox1.Size = New System.Drawing.Size(822, 270)
         Me.TextBox1.TabIndex = 5
         Me.TextBox1.Text = ""
         '

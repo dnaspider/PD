@@ -5,12 +5,12 @@
     <Setting Name="SettingDB" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;'PD 1.0.0&lt;/string&gt;
+  &lt;string&gt;'PD 1.0.1&lt;/string&gt;
   &lt;string&gt;'Keyboard assist&lt;/string&gt;
   &lt;string&gt;'A-Z, 0-9&lt;/string&gt;
   &lt;string&gt;'Sendkeys (search engine how to use)&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
-  &lt;string&gt;'Master Settings:&lt;/string&gt;
+  &lt;string&gt;'Master Settings: (pd.exe.config -&amp;gt; user.config)&lt;/string&gt;
   &lt;string&gt;'C:\Users\..\AppData\Local\pd  (delete pd folder to reset)&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
   &lt;string&gt;'H + Escape: Toggle visibility: &lt;/string&gt;
@@ -25,19 +25,24 @@
   &lt;string&gt;'Ctrl + U: Update&lt;/string&gt;
   &lt;string&gt;'Ctrl + Z: Undo&lt;/string&gt;
   &lt;string&gt;'Ctrl + Y: Redo&lt;/string&gt;
-  &lt;string&gt;'Double click: Print&lt;/string&gt;
+  &lt;string&gt;'Double click: Print «»&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
   &lt;string&gt;'Basic examples:  (three different modes)&lt;/string&gt;
   &lt;string&gt;'Press RCtrl then type `test` for output `Hi!`&lt;/string&gt;
   &lt;string&gt;«test-»Hi!&lt;/string&gt;
-  &lt;string&gt;'Type `wel` somewhere to output `Hello`&lt;/string&gt;
+  &lt;string&gt;'Type `wel` somewhere to output `Hello` (SettingCodeLength: 3)&lt;/string&gt;
   &lt;string&gt;welcome{left 2}+{left 2}&lt;/string&gt;
   &lt;string&gt;'Press RCtrl then type `t1` for output `Goodbye`&lt;/string&gt;
   &lt;string&gt;«t1» Goodbye^a&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
+  &lt;string&gt;'More Info:&lt;/string&gt;
+  &lt;string&gt;'SettingSendkeysOnlyMode: False&lt;/string&gt;
+  &lt;string&gt;'Press Tab inside of text box to print «»&lt;/string&gt;
+  &lt;string&gt;'«e» + Tab: «enter» (auto complete)&lt;/string&gt;
+  &lt;string&gt;'&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="Setting_g_length" Type="System.Int32" Scope="User">
+    <Setting Name="SettingCodeLength" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="SettingSpecialKey" Type="System.Int32" Scope="User">
@@ -45,6 +50,75 @@
     </Setting>
     <Setting Name="SettingTitleTip" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SettingBracketModeOnlyScan" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SettingInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="SettingDarkMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SettingDarkModeText" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Lime</Value>
+    </Setting>
+    <Setting Name="SettingOpacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.9</Value>
+    </Setting>
+    <Setting Name="SettingTopMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SettingHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">268</Value>
+    </Setting>
+    <Setting Name="SettingWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="SettingLocationTop" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">118</Value>
+    </Setting>
+    <Setting Name="SettingLocationLeft" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">78</Value>
+    </Setting>
+    <Setting Name="SettingTextBox" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SettingFixedSize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SettingFixedSizeHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="SettingFixedSizeWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">253</Value>
+    </Setting>
+    <Setting Name="SettingListboxSelectedIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="SettingTabIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SettingSelectionStart" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SettingSelectionLength" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SettingTextBoxZoomFactor" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SettingListBoxFontSize" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">8.25</Value>
+    </Setting>
+    <Setting Name="SettingSendkeysOnlyMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SettingBracketOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">«</Value>
+    </Setting>
+    <Setting Name="SettingBracketClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">»</Value>
     </Setting>
   </Settings>
 </SettingsFile>

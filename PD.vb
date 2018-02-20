@@ -8,7 +8,7 @@
     Dim g_drag As Boolean
     Dim g_drag_x As Integer
     Dim g_drag_y As Integer
-    Sub DragformInit()
+    Sub DragFormInit()
         g_drag = True
         g_drag_x = Cursor.Position.X - Me.Left
         g_drag_y = Cursor.Position.Y - Me.Top
@@ -21,24 +21,22 @@
     End Sub
 
 
-    Sub Key(key As Integer)
-        '48-57 0-9
-        '65-90 a-z
-        Keybd_event(key, 0, 0, 0)  'press char 
-        Keybd_event(key, 0, 2, 0) 'release
-        GetAsyncKeyState(key) 'clear
-    End Sub
-    Sub KeyKey(key As Integer, presses As Integer)
-        For index = 1 To presses
+    Sub Key(key As Integer, shft As Boolean, presses As Integer)
+        If shft Then Keybd_event(Keys.RShiftKey, 0, 1, 0)
+        If CInt(g_presses) > 1 Then presses = CInt(g_presses) 'Convert.ToUInt16(
+        For i = 1 To presses
             Keybd_event(key, 0, 0, 0)
             Keybd_event(key, 0, 2, 0)
         Next
+        If shft Then Keybd_event(Keys.RShiftKey, 0, 2, 0)
         GetAsyncKeyState(key)
     End Sub
-    Sub KeyRelease(key As Integer)
-        Keybd_event(key, 0, &H2, 0)
+    Sub KeyHold(key As Integer)
+        Keybd_event(key, 0, 1, 0)
     End Sub
-
+    Sub KeyRelease(key As Integer)
+        Keybd_event(key, 0, 2, 0)
+    End Sub
     Sub TextClear()
         TextBox1.SelectAll()
         TextBox1.SelectedText = ""
@@ -46,6 +44,7 @@
 
     Sub Sleep(ms As Integer)
         System.Threading.Thread.Sleep(ms)
+        Application.DoEvents()
     End Sub
 
     Sub Timeout(ms As Double)
@@ -58,9 +57,10 @@
 
     Sub LoadDb()
         For Each item As String In My.Settings.SettingDB
-            ListBox1.Items.Add(item)
+            ListBox1.Items.Add(CStr(item))
         Next
     End Sub
+
     Sub AddDbItm()
         My.Settings.SettingDB.Add(TextBox1.Text)
         ListBox1.Items.Add(TextBox1.Text)
@@ -68,7 +68,7 @@
         ListBox1.SelectedIndex() = ListBox1.Items.Count - 1
         KeyRelease(Keys.S)
         KeyRelease(g_specialKey)
-        TextBox2.Clear()
+        CleanMock()
     End Sub
     Sub RemoveDbItm()
         If ListBox1.SelectedIndex = -1 Then Exit Sub
@@ -77,7 +77,7 @@
         TextBox1.AppendText(ListBox1.SelectedItem.ToString)
         My.Settings.SettingDB.RemoveAt(ListBox1.SelectedIndex)
         ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
-        Key(Keys.Down)
+        Key(Keys.Down, False, 1)
         TextClear()
         TextBox1.AppendText(x)
     End Sub
@@ -94,20 +94,72 @@
 
         ListBox1.SelectedItem() = ListBox1.Items.Item(i)
         TextBox1.SelectionStart = x
+        CleanMock()
+    End Sub
+    Sub CleanMock()
+        Sleep(333)
+        TextBox2.Clear()
+    End Sub
+    Sub CleanSelect()
+        Sleep(333)
+        ListBox1.SelectedIndex() = ListBox1.SelectedIndex
+        CleanMock()
     End Sub
     Sub EditDbItm()
         If ListBox1.GetItemText(ListBox1.SelectedItem) > "" And TextBox1.Text = "" Then
             TextBox1.AppendText(ListBox1.SelectedItem.ToString)
+            CleanMock()
         End If
     End Sub
 
     Sub ClearAllKeys()
-        For i = 48 To 57
+        For i = 48 To 57 '0-9
             GetAsyncKeyState(i)
         Next
-        For i = 65 To 90
+        For i = 65 To 90 'a-z
             GetAsyncKeyState(i)
         Next
+        GetAsyncKeyState(g_specialKey)
+        GetAsyncKeyState(Keys.Escape)
+        GetAsyncKeyState(Keys.RShiftKey)
+        GetAsyncKeyState(Keys.LMenu)
+        GetAsyncKeyState(Keys.Enter)
+        GetAsyncKeyState(Keys.Tab)
+        GetAsyncKeyState(Keys.Space)
+        GetAsyncKeyState(Keys.OemQuestion)
+        GetAsyncKeyState(Keys.OemMinus)
+        GetAsyncKeyState(Keys.Oemplus)
+        GetAsyncKeyState(Keys.OemOpenBrackets)
+        GetAsyncKeyState(Keys.OemCloseBrackets)
+        GetAsyncKeyState(Keys.OemBackslash)
+        GetAsyncKeyState(Keys.OemSemicolon)
+        GetAsyncKeyState(Keys.OemQuotes)
+        GetAsyncKeyState(Keys.Oemcomma)
+        GetAsyncKeyState(Keys.OemPeriod)
+        GetAsyncKeyState(Keys.Oem3) '`
+        GetAsyncKeyState(Keys.F1)
+        GetAsyncKeyState(Keys.F2)
+        GetAsyncKeyState(Keys.F3)
+        GetAsyncKeyState(Keys.F4)
+        GetAsyncKeyState(Keys.F5)
+        GetAsyncKeyState(Keys.F6)
+        GetAsyncKeyState(Keys.F7)
+        GetAsyncKeyState(Keys.F8)
+        GetAsyncKeyState(Keys.F9)
+        GetAsyncKeyState(Keys.F10)
+        GetAsyncKeyState(Keys.F11)
+        GetAsyncKeyState(Keys.F12)
+        GetAsyncKeyState(Keys.Up)
+        GetAsyncKeyState(Keys.Down)
+        GetAsyncKeyState(Keys.Left)
+        GetAsyncKeyState(Keys.Right)
+        GetAsyncKeyState(Keys.PageUp)
+        GetAsyncKeyState(Keys.PageDown)
+        GetAsyncKeyState(Keys.Home)
+        GetAsyncKeyState(Keys.End)
+        GetAsyncKeyState(Keys.Delete)
+        GetAsyncKeyState(Keys.Back)
+        GetAsyncKeyState(Keys.Menu)
     End Sub
 
     Sub TextMock()
@@ -115,21 +167,98 @@
             TextBox2.Clear()
             Exit Sub
         End If
-        If TextBox2.Text.StartsWith("«") Then
+        If TextBox2.Text.StartsWith(p_) Then
             Exit Sub
         End If
         TextBox2.Text = Microsoft.VisualBasic.Right(TextBox2.Text, g_length)
     End Sub
 
+    Sub DarkMode()
+        If My.Settings.SettingDarkMode = True Then
+            ListBox1.BackColor = Color.Black
+            ListBox1.ForeColor = My.Settings.SettingDarkModeText
+            TextBox1.BackColor = Color.Black
+            TextBox1.ForeColor = My.Settings.SettingDarkModeText
+            Me.BackColor = Color.Black
+        Else
+            Me.BackColor = Nothing
+            ListBox1.BackColor = Color.White
+            ListBox1.ForeColor = Color.Black
+            TextBox1.BackColor = Color.White
+            TextBox1.ForeColor = Color.Black
+        End If
+    End Sub
+
+    Sub SaveSettings()
+        If Me.Top <> -32000 Then My.Settings.SettingLocationTop = Me.Top
+        If Me.Left <> -32000 Then My.Settings.SettingLocationLeft = Me.Left
+        If WindowState = 0 Then
+            My.Settings.SettingHeight = Me.Height
+            My.Settings.SettingWidth = Me.Width
+        End If
+
+        If ListBox1.Focused Then My.Settings.SettingTabIndex = 1
+        If TextBox1.Focused Then My.Settings.SettingTabIndex = 5
+        My.Settings.SettingSelectionStart = TextBox1.SelectionStart
+        My.Settings.SettingSelectionLength = TextBox1.SelectionLength
+        My.Settings.SettingTextBoxZoomFactor = TextBox1.ZoomFactor
+
+
+        My.Settings.SettingTextBox = TextBox1.Text
+        My.Settings.SettingListboxSelectedIndex = ListBox1.SelectedIndex
+
+        My.Settings.SettingListBoxFontSize = Me.ListBox1.Font.Size
+
+        My.Settings.Save()
+    End Sub
 
 
 
     Private Sub PD_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Timer1.Dispose()
+        SaveSettings()
     End Sub
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
         LoadDb()
+        DarkMode()
+        Timer1.Interval = My.Settings.SettingInterval
+        Me.Opacity = My.Settings.SettingOpacity
+        Me.TopMost = My.Settings.SettingTopMost
+        Me.Top = My.Settings.SettingLocationTop
+        Me.Left = My.Settings.SettingLocationLeft
+        Me.Height = My.Settings.SettingHeight
+        Me.Width = My.Settings.SettingWidth
+        If My.Settings.SettingFixedSize = True Then
+            Me.FormBorderStyle = 0
+            Me.ControlBox = False
+            Me.Text = ""
+            My.Settings.SettingTitleTip = False
+            Me.Height = My.Settings.SettingFixedSizeHeight
+            Me.Width = My.Settings.SettingFixedSizeWidth
+        Else
+            My.Settings.SettingTitleTip = True
+            Me.ControlBox = True
+        End If
+
+        ListBox1.SelectedIndex = My.Settings.SettingListboxSelectedIndex
+        Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, My.Settings.SettingListBoxFontSize)
+
+        Select Case My.Settings.SettingTabIndex
+            Case 1
+                ListBox1.Focus()
+            Case 5
+                TextBox1.Focus()
+            Case Else
+                ListBox1.Focus()
+        End Select
+
+        TextBox1.Text = My.Settings.SettingTextBox
+        If TextBox1.Focused Then
+            TextBox1.SelectionStart = My.Settings.SettingSelectionStart
+            TextBox1.SelectionLength = My.Settings.SettingSelectionLength
+        End If
+        TextBox1.ZoomFactor = My.Settings.SettingTextBoxZoomFactor
     End Sub
 
     Private Sub PD_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -144,16 +273,16 @@
         If MouseButtons = Windows.Forms.MouseButtons.Left Then DragForm()
     End Sub
 
-    Dim g_specialKey As Integer = Keys.RControlKey
+    Dim g_specialKey As Integer = My.Settings.SettingSpecialKey
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
-        If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith("«") Then TextBox2.Clear() Else TextBox2.Text = "«"
+        If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else TextBox2.Text = p_
 
-        'If My.Settings.SettingBracketModeOnly And TextBox2.Text.StartsWith("«") = False Then
-        '    ClearAllKeys()
-        '    Exit Sub
-        'End If
+        If My.Settings.SettingBracketModeOnlyScan And TextBox2.Text.StartsWith(p_) = False Then
+            ClearAllKeys()
+            Exit Sub
+        End If
 
         If CBool(GetAsyncKeyState(Keys.Z)) Then TextBox2.AppendText("z")
         If CBool(GetAsyncKeyState(Keys.X)) Then TextBox2.AppendText("x")
@@ -213,7 +342,7 @@
 
     Private Sub TextBox1_DoubleClick(sender As Object, e As EventArgs) Handles TextBox1.DoubleClick
         If TextBox1.SelectedText = "" Then
-            SendKeys.Send("«»{left}") '«»
+            SendKeys.Send(p_ & _p & "{left}") '«»
             Exit Sub
         End If
 
@@ -223,41 +352,223 @@
         If e.KeyChar = ChrW(19) Then 'ctrl + s
             AddDbItm()
         End If
-        If e.KeyChar = ChrW(21) Then 'ctrl + u 
+        If e.KeyChar = ChrW(21) Then 'ctrl + u
             UpdateDbItm()
         End If
-        If e.KeyChar = ChrW(5) Then 'ctrl + e  
+        If e.KeyChar = ChrW(5) Then 'ctrl + e
             TextBox1.Undo()
             EditDbItm()
         End If
+        If e.KeyChar = ChrW(22) Then  'ctrl + v
+            If Clipboard.GetText > "" Then Clipboard.SetText(Clipboard.GetText.ToString) 'double paste, raw txt
+            TextBox1.Undo()
+            TextBox1.Paste()
+            CleanMock()
+        End If
+
+        If CBool(GetAsyncKeyState(Keys.Tab)) Then
+            If My.Settings.SettingSendkeysOnlyMode Then Exit Sub
+            KeyRelease(Keys.Tab)
+
+            If TextBox1.SelectionStart = 0 Or TextBox1.SelectionStart = TextBox1.TextLength Then
+                Key(Keys.Back, False, 1)
+                SendKeys.Send(p_ & _p & "{left}")
+                Exit Sub
+            End If
+
+            Dim x As String = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart))
+            If TextBox1.SelectionStart > 0 Then
+                Select Case Microsoft.VisualBasic.Left(x, 2)
+                    Case "a" & _p
+                        AutoComplete("lt", "-alt", 1)
+                        Exit Sub
+                    Case "b"
+                        AutoComplete("s*", "", 0)
+                        Exit Sub
+                    Case "c" & _p
+                        AutoComplete("trl", "-ctrl", 1)
+                        Exit Sub
+                    Case "d"
+                        AutoComplete("own*", "", 0)
+                        Exit Sub
+                    Case "e" & _p
+                        AutoComplete("nter*", "", 0)
+                        Exit Sub
+                    Case "h"
+                        AutoComplete("ome", "", 1)
+                        Exit Sub
+                    Case "u"
+                        AutoComplete("p*", "", 0)
+                        Exit Sub
+                    Case "i"
+                        AutoComplete("nsert", "", 1)
+                        Exit Sub
+                    Case "l"
+                        AutoComplete("eft*", "", 0)
+                        Exit Sub
+                    Case "m"
+                        AutoComplete("enu", "", 1)
+                        Exit Sub
+                    'Case "p"
+                    '    AutoComplete("ause", "", 1)
+                    '    Exit Sub
+                    Case "r"
+                        AutoComplete("ight*", "", 0)
+                        Exit Sub
+                    Case "s" & _p
+                        AutoComplete("hift", "-shift", 1)
+                        Exit Sub
+                    Case "t"
+                        AutoComplete("ab*", "", 0)
+                        Exit Sub
+                    Case "u"
+                        AutoComplete("p*", "", 0)
+                        Exit Sub
+                    Case "w" & _p
+                        AutoComplete("in", "-win", 1)
+                        Exit Sub
+
+                    Case p_ & _p
+                        Key(Keys.Back, False, 2)
+                        Key(Keys.Delete, False, 1)
+                        Key(Keys.Tab, False, 1)
+                        Exit Sub
+                    Case _p & p_
+                        Key(Keys.Back, False, 1)
+                        SendKeys.Send(p_ & _p & "{left}")
+                        Exit Sub
+                    Case Chr(9)
+                        Key(Keys.Back, False, 1)
+                        SendKeys.Send(p_ & _p & "{left}")
+                        Exit Sub
+                    Case _p
+                        Key(Keys.Back, False, 1)
+                        SendKeys.Send(p_ & _p & "{left}")
+                        Exit Sub
+                    Case "*" & _p
+                        Key(Keys.Back, False, 2)
+                        Key(Keys.OemSemicolon, True, 1)
+                        Exit Sub
+                    Case ":" & _p
+                        Key(Keys.Back, False, 2)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "0" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "1" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "2" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "3" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "4" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "5" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "6" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "7" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "8" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                    Case "9" & _p
+                        Key(Keys.Back, False, 1)
+                        Key(Keys.Right, False, 1)
+                        Exit Sub
+                End Select
+            End If
+
+            'If TextBox1.SelectionStart > 1 Then Console.WriteLine(Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
+            If TextBox1.SelectionStart > 1 Then
+                x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
+                Select Case Microsoft.VisualBasic.Left(x, 3)
+                    'Case "br"
+                    '    AutoComplete("eak", "", 1)
+                    '    Exit Sub
+                    'Case "ca"
+                    '    AutoComplete("ps", "", 1)
+                    '    Exit Sub
+                    Case "en" & _p
+                        AutoComplete("d", "", 1)
+                        Exit Sub
+                    Case "es" & _p
+                        AutoComplete("c", "", 1)
+                        Exit Sub
+                    Case "de"
+                        AutoComplete("lete*", "", 0)
+                        Exit Sub
+                    'Case "pd" & _p
+                    '    AutoComplete("", "", 1)
+                    '    Exit Sub
+                    'Case "ps"
+                    '    AutoComplete("", "", 1)
+                    '    Exit Sub
+                    'Case "pu" & _p
+                    '    AutoComplete("", "", 1)
+                    '    Exit Sub
+                    Case "sp" & _p
+                        AutoComplete("ace*", "", 0)
+                        Exit Sub
+                    Case "sl" & _p
+                        AutoComplete("eep:", "", 0)
+                        Exit Sub
+                End Select
+
+            End If
+            Key(Keys.Back, False, 1)
+            SendKeys.Send(p_ & _p & "{left}")
+        End If
+
     End Sub
 
-    Dim g_length As Integer = My.Settings.Setting_g_length
-    Dim g_i As Integer = 0
+    Dim g_length As Integer = My.Settings.SettingCodeLength
+    'dim b_length As Integer = My.Settings.SettingBracketCodeLength
+    Dim g_i As Integer = 0 'listbox1 item
+    Dim g_kb_i As Integer = 0 'kb item c
+
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         If TextBox2.Text = "'" Then Exit Sub
         If My.Settings.SettingTitleTip = True Then Me.Text = "PD > " & TextBox2.Text
 
 
-        If ((TextBox2.TextLength = g_length) Or (TextBox2.Text.StartsWith("«") And TextBox2.TextLength >= 1)) = False Then
+        If ((TextBox2.TextLength = g_length) Or (TextBox2.Text.StartsWith(p_) And TextBox2.TextLength >= 1)) = False Then
             TextMock()
             Exit Sub
         End If
 
         For i = 0 To ListBox1.Items.Count - 1
-            If TextBox2.Text = "«" Then Exit Sub
+            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit For
+            If TextBox2.Text = p_ Then Exit Sub
             If ListBox1.Items(i).ToString = "" Or
                 ListBox1.Items(i).ToString.StartsWith("'") Then Continue For 'rem
 
             g_i = i
-            If TextBox2.Text.StartsWith("«") Then '«x»|«x-»
+            If TextBox2.Text.StartsWith(p_) Then '«x»|«x-»
 
-                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + "»") Then '«x»
+                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + _p) Then '«x»
                     Sk(1)
                     Exit For
                 End If
 
-                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + "-»") Then '«x-»
+                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + "-" & _p) Then '«x-»
                     Sk(2)
                     Exit For
                 End If
@@ -274,20 +585,479 @@
         TextMock()
     End Sub
 
+    Sub AutoComplete(fill As String, fill2 As String, right As Integer)
+        Key(Keys.Back, False, 1)
+        g_s = fill
+        PD()
+        For i = 1 To right
+            Key(Keys.Right, False, 1)
+        Next
+
+        If fill2.Length > 0 Then
+            SendKeys.Send(p_)
+            g_s = fill2
+            PD()
+            SendKeys.Send(_p)
+            Key(Keys.Left, False, fill2.Length + 2)
+        End If
+    End Sub
+
+    Sub Kb(c As String)
+        'On Error GoTo err
+        Select Case c
+            Case "0"
+                Key(Keys.D0, False, 1)
+            Case "9"
+                Key(Keys.D9, False, 1)
+            Case "8"
+                Key(Keys.D8, False, 1)
+            Case "7"
+                Key(Keys.D7, False, 1)
+            Case "6"
+                Key(Keys.D6, False, 1)
+            Case "5"
+                Key(Keys.D5, False, 1)
+            Case "4"
+                Key(Keys.D4, False, 1)
+            Case "3"
+                Key(Keys.D3, False, 1)
+            Case "2"
+                Key(Keys.D2, False, 1)
+            Case "1"
+                Key(Keys.D1, False, 1)
+
+            Case "a"
+                Key(Keys.A, False, 1)
+            Case "b"
+                Key(Keys.B, False, 1)
+            Case "c"
+                Key(Keys.C, False, 1)
+            Case "d"
+                Key(Keys.D, False, 1)
+            Case "e"
+                Key(Keys.E, False, 1)
+            Case "f"
+                Key(Keys.F, False, 1)
+            Case "g"
+                Key(Keys.G, False, 1)
+            Case "h"
+                Key(Keys.H, False, 1)
+            Case "i"
+                Key(Keys.I, False, 1)
+            Case "j"
+                Key(Keys.J, False, 1)
+            Case "k"
+                Key(Keys.K, False, 1)
+            Case "l"
+                Key(Keys.L, False, 1)
+            Case "m"
+                Key(Keys.M, False, 1)
+            Case "n"
+                Key(Keys.N, False, 1)
+            Case "o"
+                Key(Keys.O, False, 1)
+            Case "p"
+                Key(Keys.P, False, 1)
+            Case "q"
+                Key(Keys.Q, False, 1)
+            Case "r"
+                Key(Keys.R, False, 1)
+            Case "s"
+                Key(Keys.S, False, 1)
+            Case "t"
+                Key(Keys.T, False, 1)
+            Case "u"
+                Key(Keys.U, False, 1)
+            Case "v"
+                Key(Keys.V, False, 1)
+            Case "w"
+                Key(Keys.W, False, 1)
+            Case "x"
+                Key(Keys.X, False, 1)
+            Case "y"
+                Key(Keys.Y, False, 1)
+            Case "z"
+                Key(Keys.Z, False, 1)
+
+            Case "A"
+                Key(Keys.A, True, 1)
+            Case "B"
+                Key(Keys.B, True, 1)
+            Case "C"
+                Key(Keys.C, True, 1)
+            Case "D"
+                Key(Keys.D, True, 1)
+            Case "E"
+                Key(Keys.E, True, 1)
+            Case "F"
+                Key(Keys.F, True, 1)
+            Case "G"
+                Key(Keys.G, True, 1)
+            Case "H"
+                Key(Keys.H, True, 1)
+            Case "I"
+                Key(Keys.I, True, 1)
+            Case "J"
+                Key(Keys.J, True, 1)
+            Case "K"
+                Key(Keys.K, True, 1)
+            Case "L"
+                Key(Keys.L, True, 1)
+            Case "M"
+                Key(Keys.M, True, 1)
+            Case "N"
+                Key(Keys.N, True, 1)
+            Case "O"
+                Key(Keys.O, True, 1)
+            Case "P"
+                Key(Keys.P, True, 1)
+            Case "Q"
+                Key(Keys.Q, True, 1)
+            Case "R"
+                Key(Keys.R, True, 1)
+            Case "S"
+                Key(Keys.S, True, 1)
+            Case "T"
+                Key(Keys.T, True, 1)
+            Case "U"
+                Key(Keys.U, True, 1)
+            Case "V"
+                Key(Keys.V, True, 1)
+            Case "W"
+                Key(Keys.W, True, 1)
+            Case "X"
+                Key(Keys.X, True, 1)
+            Case "Y"
+                Key(Keys.Y, True, 1)
+            Case "Z"
+                Key(Keys.Z, True, 1)
+
+            Case vbLf
+                Key(Keys.Enter, False, 1)
+            Case vbTab
+                Key(Keys.Tab, False, 1)
+            Case " "
+                Key(Keys.Space, False, 1)
+
+            Case "?"
+                Key(Keys.OemQuestion, True, 1)
+            Case "/"
+                Key(Keys.OemQuestion, False, 1)
+            Case "~"
+                Key(Keys.Oem3, True, 1)
+            Case "`"
+                Key(Keys.Oem3, False, 1)
+            Case ")"
+                Key(Keys.D0, True, 1)
+            Case "("
+                Key(Keys.D9, True, 1)
+            Case "*"
+                Key(Keys.D8, True, 1)
+            Case "&"
+                Key(Keys.D7, True, 1)
+            Case "^"
+                Key(Keys.D6, True, 1)
+            Case "%"
+                Key(Keys.D5, True, 1)
+            Case "$"
+                Key(Keys.D4, True, 1)
+            Case "#"
+                Key(Keys.D3, True, 1)
+            Case "@"
+                Key(Keys.D2, True, 1)
+            Case "!"
+                Key(Keys.D1, True, 1)
+
+            Case "_"
+                Key(Keys.OemMinus, True, 1)
+            Case "-"
+                Key(Keys.OemMinus, False, 1)
+            Case "+"
+                Key(Keys.Oemplus, True, 1)
+            Case "="
+                Key(Keys.Oemplus, False, 1)
+            Case "{"
+                Key(Keys.OemOpenBrackets, True, 1)
+            Case "["
+                Key(Keys.OemOpenBrackets, False, 1)
+            Case "}"
+                Key(Keys.OemCloseBrackets, True, 1)
+            Case "]"
+                Key(Keys.OemCloseBrackets, False, 1)
+            Case "|"
+                Key(Keys.OemBackslash, True, 1)
+            Case "\"
+                Key(Keys.OemBackslash, False, 1)
+            Case ":"
+                Key(Keys.OemSemicolon, True, 1)
+            Case ";"
+                Key(Keys.OemSemicolon, False, 1)
+            Case """"
+                Key(Keys.OemQuotes, True, 1)
+            Case "'"
+                Key(Keys.OemQuotes, False, 1)
+            Case "<"
+                Key(Keys.Oemcomma, True, 1)
+            Case ","
+                Key(Keys.Oemcomma, False, 1)
+            Case ">"
+                Key(Keys.OemPeriod, True, 1)
+            Case "."
+                Key(Keys.OemPeriod, False, 1)
+
+            Case p_
+                'Console.WriteLine("indexof «:" & g_s.IndexOf(p_) + 1)
+                'Console.WriteLine("indexof »:" & g_s.IndexOf(_p) - 2)
+
+                Dim middle As String = g_s.Substring(g_s.IndexOf(p_) + 1, g_s.IndexOf(_p) + 1 - g_s.IndexOf(p_) - 2) 'grab middle value
+                'Console.WriteLine("middle: " + middle)
+
+                If middle.Contains(":") Then 'grab x:#
+                    g_n = middle.Substring(middle.IndexOf(":") + 1)
+                    middle = middle.Substring(middle.IndexOf(p_) + 1, middle.IndexOf(":"))
+                End If
+                If middle.Contains("*") Then 'grab x*#
+                    g_presses = middle.Substring(middle.IndexOf("*") + 1)
+                    middle = middle.Substring(middle.IndexOf(p_) + 1, middle.IndexOf("*"))
+                    'Console.WriteLine("middle: " + middle)
+                    'Console.WriteLine("g_presses: " + g_presses)
+                End If
+
+
+
+                g_s = Microsoft.VisualBasic.Right(g_s, g_s.Length - g_s.IndexOf(_p) - 1) 'make new string
+                'Console.WriteLine("new string: " & g_s)
+
+                Select Case middle
+
+                    Case ""
+                        SendKeys.Send(g_n)
+
+                    Case "sleep"
+                        Sleep(CInt(g_n))
+                    Case ","
+                        Sleep(77)
+                    Case "app"
+                        Sleep(1)
+                        AppActivate(g_n)
+                        Sleep(1)
+                    Case "win"
+                        KeyHold(Keys.LWin)
+                    Case "-win"
+                        KeyRelease(Keys.LWin)
+                    Case "shift"
+                        KeyHold(Keys.LShiftKey)
+                    Case "-shift"
+                        KeyRelease(Keys.LShiftKey)
+                        Keybd_event(Keys.RShiftKey, 0, 2, 0)
+                    Case "alt"
+                        Keybd_event(Keys.LMenu, 0, 0, 0)
+                    Case "-alt"
+                        Keybd_event(Keys.LMenu, 0, 2, 0)
+                    Case "ctrl"
+                        Keybd_event(Keys.LControlKey, 0, 0, 0)
+                    Case "-ctrl"
+                        KeyRelease(Keys.LControlKey)
+                        Keybd_event(Keys.LControlKey, 0, 2, 0)
+                    Case "up"
+                        Key(Keys.Up, False, CInt(g_presses))
+                    Case "right"
+                        Key(Keys.Right, False, CInt(g_presses))
+                    Case "down"
+                        Key(Keys.Down, False, CInt(g_presses))
+                    Case "left"
+                        Key(Keys.Left, False, CInt(g_presses))
+                    Case "tab"
+                        Key(Keys.Tab, False, CInt(g_presses))
+                    Case "space"
+                        Key(Keys.Space, False, CInt(g_presses))
+                    Case "menu"
+                        Key(93, False, 1)
+                    Case "enter"
+                        Key(Keys.Enter, False, CInt(g_presses))
+                        'Convert.ToUInt16(
+                        'Keybd_event(Keys.Enter, 0, 0, 0)
+                        'Keybd_event(Keys.Enter, 0, 2, 0)
+                    Case "bs"
+                        Key(Keys.Back, False, CInt(g_presses))
+                    Case "backspace"
+                        Key(Keys.Back, False, CInt(g_presses))
+                    Case "esc"
+                        Key(Keys.Escape, False, 1)
+                    Case "escape"
+                        Key(Keys.Escape, False, 1)
+                    Case "home"
+                        Key(Keys.Home, False, CInt(g_presses))
+                    Case "end"
+                        Key(Keys.End, False, CInt(g_presses))
+                    Case "pu"
+                        Key(Keys.PageUp, False, CInt(g_presses))
+                    Case "pd"
+                        Key(Keys.PageDown, False, CInt(g_presses))
+                    Case "insert"
+                        Key(Keys.Insert, False, CInt(g_presses))
+                    Case "delete"
+                        Key(Keys.Delete, False, CInt(g_presses))
+
+                    Case "f1"
+                        Key(Keys.F1, False, CInt(g_presses))
+                    Case "f2"
+                        Key(Keys.F2, False, CInt(g_presses))
+                    Case "f3"
+                        Key(Keys.F3, False, CInt(g_presses))
+                    Case "f4"
+                        Key(Keys.F4, False, CInt(g_presses))
+                    Case "f5"
+                        Key(Keys.F5, False, CInt(g_presses))
+                    Case "f6"
+                        Key(Keys.F6, False, CInt(g_presses))
+                    Case "f7"
+                        Key(Keys.F7, False, CInt(g_presses))
+                    Case "f8"
+                        Key(Keys.F8, False, CInt(g_presses))
+                    Case "f9"
+                        Key(Keys.F9, False, CInt(g_presses))
+                    Case "f10"
+                        Key(Keys.F10, False, CInt(g_presses))
+                    Case "f11"
+                        Key(Keys.F11, False, CInt(g_presses))
+                    Case "f12"
+                        Key(Keys.F12, False, CInt(g_presses))
+
+                    Case "pause"
+                        Key(Keys.Pause, False, CInt(g_presses))
+                    Case "break"
+                        Key(Keys.Pause, False, CInt(g_presses))
+                    Case "printscreen"
+                        Key(Keys.PrintScreen, False, CInt(g_presses))
+                    Case "ps"
+                        Key(Keys.PrintScreen, False, CInt(g_presses))
+
+                    Case "vu"
+                        Key(Keys.VolumeUp, False, CInt(g_presses))
+                    Case "vd"
+                        Key(Keys.VolumeDown, False, CInt(g_presses))
+                    Case "vm"
+                        Key(Keys.VolumeMute, False, 1)
+
+                    Case "caps"
+                        Key(Keys.CapsLock, False, CInt(g_presses))
+
+                    Case "nl"
+                        Key(Keys.NumLock, False, CInt(g_presses))
+                    Case "sl"
+                        Key(Keys.Scroll, False, CInt(g_presses))
+
+                    Case "MediaStop"
+                        Key(Keys.MediaStop, False, 1)
+                    Case "MediaPlayPause"
+                        Key(Keys.MediaPlayPause, False, 1)
+                    Case "MediaNextTrack"
+                        Key(Keys.MediaNextTrack, False, 1)
+                    Case "MediaPreviousTrack"
+                        Key(Keys.MediaPreviousTrack, False, 1)
+                    Case "SelectMedia"
+                        Key(Keys.SelectMedia, False, 1)
+
+
+
+
+
+
+                    Case "lc"
+                        Key(Keys.LButton, False, CInt(g_presses))
+                    Case "rc"
+                        Key(Keys.RButton, False, CInt(g_presses))
+                    Case "mc"
+                        Key(Keys.MButton, False, CInt(g_presses))
+
+
+                    Case "n0"
+                        Key(Keys.NumPad0, False, 1)
+                    Case "n2"
+                        Key(Keys.NumPad2, False, 1)
+                    Case "n3"
+                        Key(Keys.NumPad3, False, 1)
+                    Case "n4"
+                        Key(Keys.NumPad4, False, 1)
+                    Case "n5"
+                        Key(Keys.NumPad5, False, 1)
+                    Case "n6"
+                        Key(Keys.NumPad6, False, 1)
+                    Case "n7"
+                        Key(Keys.NumPad7, False, 1)
+                    Case "n8"
+                        Key(Keys.NumPad8, False, 1)
+                    Case "n9"
+                        Key(Keys.NumPad9, False, 1)
+
+
+
+                    Case Else
+                        'MsgBox(middle, vbInformation)
+                End Select
+
+                g_kb_i = -1 'update to 0
+                g_presses = "1"
+                g_n = "0"
+                middle = ""
+            Case Else
+                SendKeys.Send(c)
+        End Select
+
+        '        Exit Sub
+        'Err:
+        '        MsgBox(Err.Description & vbNewLine & Err.Number, vbExclamation, "Error")
+    End Sub
+
+
+    Sub PD()
+        'Console.WriteLine("string: " & g_s)
+        'Console.WriteLine("g_s length:" & g_s.Length)
+
+        'Console.WriteLine(vbNewLine & "#####start#####")
+        If My.Settings.SettingSendkeysOnlyMode Then
+            SendKeys.Send(g_s)
+        Else
+            For g_kb_i = 0 To g_s.Length
+                If g_kb_i = g_s.Length Then Exit For
+                If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
+                'Console.WriteLine("print: " & g_s(g_kb_i) & " :" & g_s.IndexOf(g_s(g_kb_i)))
+                Kb(g_s(g_kb_i))
+            Next
+        End If
+        'Console.WriteLine("#####finish#####" & vbNewLine)
+    End Sub
+
+    'global g_
+    Dim g_presses As String = "1" 'default press | «up»
+    Dim g_n As String = "0" 'number | Convert.ToUInt16(g_n)
+    Dim g_s As String 'string | «code-» GlobalString
+    Dim p_ As String = My.Settings.SettingBracketOpen '«
+    Dim _p As String = My.Settings.SettingBracketClose '»
+
     Sub Sk(opt As Integer)
         TextBox2.Text = "'"
         ListBox1.SelectedItem() = ListBox1.Items.Item(g_i)
+
+        g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
+        'Console.WriteLine("code: " & ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)) 'code
+        'Console.WriteLine("string: " & ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1))
         Select Case opt
-            Case 1 '«x»
-                'Console.WriteLine("code: " & ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf("»") - 1)) 'code
-                'Console.WriteLine("string: " & ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf("»") + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf("»") - 1))
-                SendKeys.Send(Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, Len(ListBox1.Items.Item(g_i)) - ListBox1.SelectedItem.ToString.IndexOf("»") - 1))
-            Case 2 '«x-»
-                KeyKey(Keys.Back, ListBox1.SelectedItem.ToString.IndexOf("»") - 2)
-                SendKeys.Send(Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, Len(ListBox1.Items.Item(g_i)) - ListBox1.SelectedItem.ToString.IndexOf("»") - 1))
-            Case 3 'x
-                SendKeys.Send(Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length))
+            Case 1 '«code»
+                PD()
+            Case 2 '«code-» | ?= (-2 = (-»).length)
+                Key(Keys.Back, False, ListBox1.SelectedItem.ToString.IndexOf(_p) - 2) 'auto bs*#
+                PD()
+            Case 3 'code | g_length code
+                g_s = Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length)
+                If My.Settings.SettingSendkeysOnlyMode Then
+                    SendKeys.Send(g_s)
+                Else
+                    PD()
+                End If
         End Select
+
         ClearAllKeys()
         TextBox2.Clear()
     End Sub
@@ -303,13 +1073,41 @@
             TextClear()
             EditDbItm()
             TextBox1.Focus()
-            Timeout(1000)
-            ListBox1.SelectedIndex() = ListBox1.SelectedIndex
+            CleanSelect()
         End If
         If e.KeyChar = ChrW(21) Then   'ctrl + u 
             UpdateDbItm()
-            Timeout(1000)
-            ListBox1.SelectedIndex() = ListBox1.SelectedIndex
+            CleanSelect()
+        End If
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.C)) Then
+            Clipboard.SetText(ListBox1.Text)
+            CleanSelect()
+        End If
+
+    End Sub
+
+    Private Sub SplitContainer1_MouseDown(sender As Object, e As MouseEventArgs) Handles SplitContainer1.MouseDown
+        If MouseButtons = Windows.Forms.MouseButtons.Right Then
+            'select top or bottom item
+            If Not ListBox1.Items.Count >= 0 Then Exit Sub
+            If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then
+                ListBox1.SelectedItem = ListBox1.Items.Item(0)
+            Else
+                ListBox1.SelectedIndex = ListBox1.Items.Count - 1
+            End If
+        End If
+    End Sub
+
+    Private Sub ListBox1_MouseWheel(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseWheel
+        'ctrl + mouse wheel adjust listbox font size
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) Or CBool(GetAsyncKeyState(Keys.RControlKey)) Then
+            If e.Delta > 1 Then
+                Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, ListBox1.Font.Size + +1)
+            End If
+            If e.Delta < 1 Then
+                If ListBox1.Font.Size <= 0.25 Then ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, 8.25)   'reset
+                Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, ListBox1.Font.Size + -1) '- 
+            End If
         End If
     End Sub
 End Class
