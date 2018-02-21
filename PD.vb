@@ -4,6 +4,41 @@
 
     Private Declare Function GetAsyncKeyState Lib "user32.dll" (ByVal vKey As Int32) As UShort
     Private Declare Sub Keybd_event Lib "user32" Alias "keybd_event" (ByVal bVk As Integer, bScan As Integer, ByVal dwFlags As Integer, ByVal dwExtraInfo As Integer)
+    Private Declare Function SetCursorPos Lib "user32.dll" (ByVal X As Int32, ByVal Y As Int32) As UShort
+    Private Declare Sub Mouse_event Lib "user32" Alias "mouse_event" (ByVal dwFlags As Integer, ByVal dx As Integer, ByVal dy As Integer, ByVal cButtons As Integer, ByVal dwExtraInfo As Integer)
+
+    Sub LeftClick()
+        mouse_event(&H2, 0, 0, 0, 0)
+        mouse_event(&H4, 0, 0, 0, 0)
+    End Sub
+    Sub LeftHold()
+        mouse_event(&H2, 0, 0, 0, 0)
+    End Sub
+    Sub LeftRelease()
+        mouse_event(&H4, 0, 0, 0, 0)
+    End Sub
+    Sub MiddleClick()
+        mouse_event(&H20, 0, 0, 0, 0)
+        mouse_event(&H40, 0, 0, 0, 0)
+    End Sub
+    Sub MiddleHold()
+        mouse_event(&H20, 0, 0, 0, 0)
+    End Sub
+    Sub MiddleRelease()
+        mouse_event(&H40, 0, 0, 0, 0)
+    End Sub
+    Sub RightClick()
+        mouse_event(&H8, 0, 0, 0, 0) '&H2
+        mouse_event(&H10, 0, 0, 0, 0) '&H4
+    End Sub
+    Sub RightHold()
+        mouse_event(&H8, 0, 0, 0, 0)
+    End Sub
+    Sub RightRelease()
+        mouse_event(&H10, 0, 0, 0, 0)
+    End Sub
+
+
 
     Dim g_drag As Boolean
     Dim g_drag_x As Integer
@@ -277,6 +312,20 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
+        If CBool(GetAsyncKeyState(Keys.Pause)) Then PD()
+
+        If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
+            Me.Visible = False
+            Sleep(1)
+            If TextBox1.SelectedText.Length > 0 Then
+                g_s = TextBox1.SelectedText
+                PD()
+            Else
+                If TextBox1.Text > "" Then g_s = TextBox1.Text : PD()
+            End If
+            Me.Visible = True
+        End If
+
         If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else TextBox2.Text = p_
 
         If My.Settings.SettingBracketModeOnlyScan And TextBox2.Text.StartsWith(p_) = False Then
@@ -376,145 +425,32 @@
                 Exit Sub
             End If
 
-            Dim x As String = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart))
-            If TextBox1.SelectionStart > 0 Then
-                Select Case Microsoft.VisualBasic.Left(x, 2)
-                    Case "a" & _p
-                        AutoComplete("lt", "-alt", 1)
-                        Exit Sub
-                    Case "b"
-                        AutoComplete("s*", "", 0)
-                        Exit Sub
-                    Case "c" & _p
-                        AutoComplete("trl", "-ctrl", 1)
-                        Exit Sub
-                    Case "d"
-                        AutoComplete("own*", "", 0)
-                        Exit Sub
-                    Case "e" & _p
-                        AutoComplete("nter*", "", 0)
-                        Exit Sub
-                    Case "h"
-                        AutoComplete("ome", "", 1)
-                        Exit Sub
-                    Case "u"
-                        AutoComplete("p*", "", 0)
-                        Exit Sub
-                    Case "i"
-                        AutoComplete("nsert", "", 1)
-                        Exit Sub
-                    Case "l"
-                        AutoComplete("eft*", "", 0)
-                        Exit Sub
-                    Case "m"
-                        AutoComplete("enu", "", 1)
-                        Exit Sub
-                    'Case "p"
-                    '    AutoComplete("ause", "", 1)
-                    '    Exit Sub
-                    Case "r"
-                        AutoComplete("ight*", "", 0)
-                        Exit Sub
-                    Case "s" & _p
-                        AutoComplete("hift", "-shift", 1)
-                        Exit Sub
-                    Case "t"
-                        AutoComplete("ab*", "", 0)
-                        Exit Sub
-                    Case "u"
-                        AutoComplete("p*", "", 0)
-                        Exit Sub
-                    Case "w" & _p
-                        AutoComplete("in", "-win", 1)
-                        Exit Sub
-
-                    Case p_ & _p
-                        Key(Keys.Back, False, 2)
-                        Key(Keys.Delete, False, 1)
-                        Key(Keys.Tab, False, 1)
-                        Exit Sub
-                    Case _p & p_
-                        Key(Keys.Back, False, 1)
-                        SendKeys.Send(p_ & _p & "{left}")
-                        Exit Sub
-                    Case Chr(9)
-                        Key(Keys.Back, False, 1)
-                        SendKeys.Send(p_ & _p & "{left}")
-                        Exit Sub
-                    Case _p
-                        Key(Keys.Back, False, 1)
-                        SendKeys.Send(p_ & _p & "{left}")
-                        Exit Sub
-                    Case "*" & _p
-                        Key(Keys.Back, False, 2)
-                        Key(Keys.OemSemicolon, True, 1)
-                        Exit Sub
-                    Case ":" & _p
-                        Key(Keys.Back, False, 2)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "0" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "1" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "2" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "3" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "4" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "5" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "6" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "7" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "8" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                    Case "9" & _p
-                        Key(Keys.Back, False, 1)
-                        Key(Keys.Right, False, 1)
-                        Exit Sub
-                End Select
-            End If
-
+            Dim x As String
             'If TextBox1.SelectionStart > 1 Then Console.WriteLine(Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
             If TextBox1.SelectionStart > 1 Then
                 x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
                 Select Case Microsoft.VisualBasic.Left(x, 3)
+
                     'Case "br"
                     '    AutoComplete("eak", "", 1)
                     '    Exit Sub
                     'Case "ca"
                     '    AutoComplete("ps", "", 1)
                     '    Exit Sub
+                    Case "cb" & _p
+                        AutoComplete(":", "", 0)
+                        Exit Sub
+
+                    Case "de" & _p
+                        AutoComplete("lete*", "", 0)
+                        Exit Sub
                     Case "en" & _p
                         AutoComplete("d", "", 1)
                         Exit Sub
                     Case "es" & _p
                         AutoComplete("c", "", 1)
                         Exit Sub
-                    Case "de"
-                        AutoComplete("lete*", "", 0)
-                        Exit Sub
+
                     'Case "pd" & _p
                     '    AutoComplete("", "", 1)
                     '    Exit Sub
@@ -524,13 +460,149 @@
                     'Case "pu" & _p
                     '    AutoComplete("", "", 1)
                     '    Exit Sub
+                    Case "iw" & _p
+                        AutoComplete("", "-iw", 1) 'ignore whitespace 
+                        Exit Sub
                     Case "sp" & _p
                         AutoComplete("ace*", "", 0)
                         Exit Sub
                     Case "sl" & _p
                         AutoComplete("eep:", "", 0)
                         Exit Sub
+                    Case "xy" & _p
+                        For i = 3 To 0 Step -1
+                            Me.Text = i.ToString
+                            Sleep(1000)
+                        Next
+                        Key(Keys.Back, False, 1)
+                        g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
+                        PD()
+                        TextBox2.Text = ""
+                        Me.Text = "PD"
+                        Exit Sub
                 End Select
+
+
+                If TextBox1.SelectionStart > 0 Then
+                    x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart))
+                    Select Case Microsoft.VisualBasic.Left(x, 2)
+                        Case "a" & _p
+                            AutoComplete("lt", "-alt", 1)
+                            Exit Sub
+                        Case "b"
+                            AutoComplete("s*", "", 0)
+                            Exit Sub
+                        Case "c" & _p
+                            AutoComplete("trl", "-ctrl", 1)
+                            Exit Sub
+                        Case "d" & _p
+                            AutoComplete("own*", "", 0)
+                            Exit Sub
+                        Case "e" & _p
+                            AutoComplete("nter*", "", 0)
+                            Exit Sub
+                        Case "h" & _p
+                            AutoComplete("ome", "", 1)
+                            Exit Sub
+                        Case "u" & _p
+                            AutoComplete("p*", "", 0)
+                            Exit Sub
+                        Case "i" & _p
+                            AutoComplete("nsert", "", 1)
+                            Exit Sub
+                        Case "l" & _p
+                            AutoComplete("eft*", "", 0)
+                            Exit Sub
+                        Case "m" & _p
+                            AutoComplete("enu", "", 1)
+                            Exit Sub
+                    'Case "p"
+                    '    AutoComplete("ause", "", 1)
+                    '    Exit Sub
+                        Case "r" & _p
+                            AutoComplete("ight*", "", 0)
+                            Exit Sub
+                        Case "s" & _p
+                            AutoComplete("hift", "-shift", 1)
+                            Exit Sub
+                        Case "t" & _p
+                            AutoComplete("ab*", "", 0)
+                            Exit Sub
+                        Case "u" & _p
+                            AutoComplete("p*", "", 0)
+                            Exit Sub
+                        Case "w" & _p
+                            AutoComplete("in", "-win", 1)
+                            Exit Sub
+
+                        Case p_ & _p
+                            Key(Keys.Back, False, 2)
+                            Key(Keys.Delete, False, 1)
+                            Key(Keys.Tab, False, 1)
+                            Exit Sub
+                        Case _p & p_
+                            Key(Keys.Back, False, 1)
+                            SendKeys.Send(p_ & _p & "{left}")
+                            Exit Sub
+                        Case Chr(9)
+                            Key(Keys.Back, False, 1)
+                            SendKeys.Send(p_ & _p & "{left}")
+                            Exit Sub
+                        Case _p
+                            Key(Keys.Back, False, 1)
+                            SendKeys.Send(p_ & _p & "{left}")
+                            Exit Sub
+                        Case "*" & _p
+                            Key(Keys.Back, False, 2)
+                            Key(Keys.OemSemicolon, True, 1)
+                            Exit Sub
+                        Case ":" & _p
+                            Key(Keys.Back, False, 2)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "0" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "1" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "2" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "3" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "4" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "5" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "6" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "7" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "8" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                        Case "9" & _p
+                            Key(Keys.Back, False, 1)
+                            Key(Keys.Right, False, 1)
+                            Exit Sub
+                    End Select
+                End If
+
 
             End If
             Key(Keys.Back, False, 1)
@@ -733,11 +805,11 @@
                 Key(Keys.Z, True, 1)
 
             Case vbLf
-                Key(Keys.Enter, False, 1)
+                If Not g_ignoreWhiteSpace Then Key(Keys.Enter, False, 1)
             Case vbTab
-                Key(Keys.Tab, False, 1)
+                If Not g_ignoreWhiteSpace Then Key(Keys.Tab, False, 1)
             Case " "
-                Key(Keys.Space, False, 1)
+                If Not g_ignoreWhiteSpace Then Key(Keys.Space, False, 1)
 
             Case "?"
                 Key(Keys.OemQuestion, True, 1)
@@ -832,7 +904,16 @@
 
                     Case ""
                         SendKeys.Send(g_n)
-
+                    Case "<<"
+                        SendKeys.Send(p_) 'print open bracket
+                    Case ">>"
+                        SendKeys.Send(_p)
+                    Case "iw"
+                        g_ignoreWhiteSpace = True
+                    Case "-iw"
+                        g_ignoreWhiteSpace = False
+                    Case "cb"
+                        Clipboard.SetText(g_n)
                     Case "sleep"
                         Sleep(CInt(g_n))
                     Case ","
@@ -875,16 +956,9 @@
                         Key(93, False, 1)
                     Case "enter"
                         Key(Keys.Enter, False, CInt(g_presses))
-                        'Convert.ToUInt16(
-                        'Keybd_event(Keys.Enter, 0, 0, 0)
-                        'Keybd_event(Keys.Enter, 0, 2, 0)
-                    Case "bs"
+                    Case "bs", "backspace"
                         Key(Keys.Back, False, CInt(g_presses))
-                    Case "backspace"
-                        Key(Keys.Back, False, CInt(g_presses))
-                    Case "esc"
-                        Key(Keys.Escape, False, 1)
-                    Case "escape"
+                    Case "esc", "escape"
                         Key(Keys.Escape, False, 1)
                     Case "home"
                         Key(Keys.Home, False, CInt(g_presses))
@@ -924,15 +998,10 @@
                     Case "f12"
                         Key(Keys.F12, False, CInt(g_presses))
 
-                    Case "pause"
+                    Case "pause", "break"
                         Key(Keys.Pause, False, CInt(g_presses))
-                    Case "break"
-                        Key(Keys.Pause, False, CInt(g_presses))
-                    Case "printscreen"
+                    Case "ps", "printscreen"
                         Key(Keys.PrintScreen, False, CInt(g_presses))
-                    Case "ps"
-                        Key(Keys.PrintScreen, False, CInt(g_presses))
-
                     Case "vu"
                         Key(Keys.VolumeUp, False, CInt(g_presses))
                     Case "vd"
@@ -959,21 +1028,42 @@
                     Case "SelectMedia"
                         Key(Keys.SelectMedia, False, 1)
 
-
-
-
-
+                    Case "xy"
+                        SetCursorPos(CType(Split(g_n, "-").GetValue(0), Integer), CType(Split(g_n, "-").GetValue(1), Integer))
+                    Case "rp", "rm" 'return pointer
+                        SetCursorPos(g_x, g_y)
 
                     Case "lc"
-                        Key(Keys.LButton, False, CInt(g_presses))
-                    Case "rc"
-                        Key(Keys.RButton, False, CInt(g_presses))
+                        LeftClick()
+                    Case "lh"
+                        LeftHold()
+                    Case "lr"
+                        LeftRelease()
                     Case "mc"
+                        MiddleClick()
+                    Case "mh"
+                        MiddleHold()
+                    Case "mr"
+                        MiddleRelease()
+                    Case "rc"
+                        RightClick()
+                    Case "rh"
+                        RightHold()
+                    Case "rr"
+                        RightRelease()
+
+                    Case "lb"
+                        Key(Keys.LButton, False, CInt(g_presses))
+                    Case "rb"
+                        Key(Keys.RButton, False, CInt(g_presses))
+                    Case "mb"
                         Key(Keys.MButton, False, CInt(g_presses))
 
 
                     Case "n0"
                         Key(Keys.NumPad0, False, 1)
+                    Case "n1"
+                        Key(Keys.NumPad2, False, 1)
                     Case "n2"
                         Key(Keys.NumPad2, False, 1)
                     Case "n3"
@@ -1016,6 +1106,7 @@
         'Console.WriteLine("g_s length:" & g_s.Length)
 
         'Console.WriteLine(vbNewLine & "#####start#####")
+        If g_s.Contains(p_ & "rp" & _p) Or g_s.Contains(p_ & "rm" & _p) Then g_x = MousePosition.X : g_y = MousePosition.Y
         If My.Settings.SettingSendkeysOnlyMode Then
             SendKeys.Send(g_s)
         Else
@@ -1035,6 +1126,9 @@
     Dim g_s As String 'string | «code-» GlobalString
     Dim p_ As String = My.Settings.SettingBracketOpen '«
     Dim _p As String = My.Settings.SettingBracketClose '»
+    Dim g_ignoreWhiteSpace As Boolean = False
+    Dim g_x As Integer, g_y As Integer
+
 
     Sub Sk(opt As Integer)
         TextBox2.Text = "'"
@@ -1046,7 +1140,7 @@
         Select Case opt
             Case 1 '«code»
                 PD()
-            Case 2 '«code-» | ?= (-2 = (-»).length)
+            Case 2 '«code-»
                 Key(Keys.Back, False, ListBox1.SelectedItem.ToString.IndexOf(_p) - 2) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
@@ -1110,4 +1204,25 @@
             End If
         End If
     End Sub
+
+    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        If e.KeyValue = 177 Then 'f4
+            TextClear()
+        End If
+        'move cursor home or end
+        If e.KeyValue = 40 Then 'down {end}
+            If TextBox1.Text > "" Then
+                Dim getLastLineNumb = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart + TextBox1.TextLength) + 1
+                Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
+                If getLineNumb = getLastLineNumb Then TextBox1.SelectionStart = TextBox1.TextLength : Exit Sub 'Bottom
+            End If
+        End If
+        If e.KeyValue = 38 Then 'up {home}
+            If TextBox1.Text > "" Then
+                Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
+                If getLineNumb = 1 Then TextBox1.SelectionStart = 0 : Exit Sub 'Bottom
+            End If
+        End If
+    End Sub
+
 End Class
