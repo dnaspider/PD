@@ -41,11 +41,10 @@ Partial Class PD
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(102, 797)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
+        Me.TextBox2.Location = New System.Drawing.Point(32, 280)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TextBox2.Size = New System.Drawing.Size(280, 44)
+        Me.TextBox2.Size = New System.Drawing.Size(91, 20)
         Me.TextBox2.TabIndex = 2
         Me.TextBox2.Visible = False
         '
@@ -55,8 +54,7 @@ Partial Class PD
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.SplitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.SplitContainer1.Location = New System.Drawing.Point(38, 38)
-        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
+        Me.SplitContainer1.Location = New System.Drawing.Point(12, 13)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
@@ -69,9 +67,9 @@ Partial Class PD
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.TextBox1)
         Me.SplitContainer1.Panel2MinSize = 1
-        Me.SplitContainer1.Size = New System.Drawing.Size(824, 580)
-        Me.SplitContainer1.SplitterDistance = 269
-        Me.SplitContainer1.SplitterWidth = 39
+        Me.SplitContainer1.Size = New System.Drawing.Size(260, 204)
+        Me.SplitContainer1.SplitterDistance = 94
+        Me.SplitContainer1.SplitterWidth = 14
         Me.SplitContainer1.TabIndex = 4
         '
         'ListBox1
@@ -79,11 +77,9 @@ Partial Class PD
         Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.ListBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 37
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
-        Me.ListBox1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(822, 267)
+        Me.ListBox1.Size = New System.Drawing.Size(258, 92)
         Me.ListBox1.TabIndex = 1
         '
         'TextBox1
@@ -94,20 +90,18 @@ Partial Class PD
         Me.TextBox1.EnableAutoDragDrop = True
         Me.TextBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.TextBox1.Location = New System.Drawing.Point(0, 0)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(822, 270)
+        Me.TextBox1.Size = New System.Drawing.Size(258, 94)
         Me.TextBox1.TabIndex = 5
         Me.TextBox1.Text = ""
         '
         'PD
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(19.0!, 37.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(900, 653)
+        Me.ClientSize = New System.Drawing.Size(284, 229)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TextBox2)
-        Me.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.Name = "PD"
         Me.Text = "PD"
         Me.SplitContainer1.Panel1.ResumeLayout(False)

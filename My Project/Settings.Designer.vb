@@ -57,57 +57,7 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
-            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <s"& _ 
-            "tring>'PD 1.0.1</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Keyboard assist</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'A-Z, 0"& _ 
-            "-9</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Sendkeys (search engine how to use)</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>"& _ 
-            "'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Master Settings: (pd.exe.config -&gt; user.config)</strin"& _ 
-            "g>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'C:\Users\..\AppData\Local\pd  (delete pd folder to reset)</string"& _ 
-            ">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'H + Escape: Toggle visibility: </string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  "& _ 
-            "<string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'List box commands:</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Delete: R"& _ 
-            "emove item</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Ctrl + E: Edit</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&" "& _ 
-            " <string>'Text box commands:</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Ctrl + S: Save</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <st"& _ 
-            "ring>'Ctrl + E: Edit</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Ctrl + U: Update</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'"& _ 
-            "Ctrl + Z: Undo</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Ctrl + Y: Redo</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Double c"& _ 
-            "lick or tab: Print «»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'f4: Clear</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'f5: Te"& _ 
-            "st selected text or full text</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Basic e"& _ 
-            "xamples:  (three different modes)</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Press RCtrl then type `te"& _ 
-            "st` for output `Hi!`</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>«test-»Hi!</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Type `w"& _ 
-            "el` somewhere to output `Hello` (SettingCodeLength: 3)</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>welco"& _ 
-            "me{left 2}+{left 2}</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Press RCtrl then type `t1` for output `"& _ 
-            "Goodbye`</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>«t1» Goodbye^a</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <s"& _ 
-            "tring>'«» Code list</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«:»"&Global.Microsoft.VisualBasic.ChrW(9)&"Sendkeys. Example: «:test+{left 4}»"& _ 
-            "</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«&lt;&lt;»"&Global.Microsoft.VisualBasic.ChrW(9)&"Print open code bracket (SettingBracketOpen)</s"& _ 
-            "tring>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«&gt;&gt;»"&Global.Microsoft.VisualBasic.ChrW(9)&"Print close bracket</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«iw»"&Global.Microsoft.VisualBasic.ChrW(9)&"Igno"& _ 
-            "re white space («iw + Tab»)</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«cb:»"&Global.Microsoft.VisualBasic.ChrW(9)&"Copy clipboard value. ex."& _ 
-            " «cb:test»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«sleep:»"&Global.Microsoft.VisualBasic.ChrW(9)&"Pause program x milliseconds ex. «sleep"& _ 
-            ":1000» (sleep 1 second)</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«,»"&Global.Microsoft.VisualBasic.ChrW(9)&"Sleep 77ms</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>"& _ 
-            "'«app:»"&Global.Microsoft.VisualBasic.ChrW(9)&"App activate. ex. «app:PD»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'Ke"& _ 
-            "yboard code list</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«win»«-win»"&Global.Microsoft.VisualBasic.ChrW(9)&"( «w + Tab» )</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <str"& _ 
-            "ing>'«shift»«-shift»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«alt»«-alt»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«ctrl"& _ 
-            "»«-ctrl»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«up»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«right»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <str"& _ 
-            "ing>'«down»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«left»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«tab»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <"& _ 
-            "string>'«space»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«enter»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«menu»</string"& _ 
-            ">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«bs» or «backspace»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«esc» or «escape»</string"& _ 
-            ">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«home»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«end»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«pu»"&Global.Microsoft.VisualBasic.ChrW(9)&"page u"& _ 
-            "p</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«pd»"&Global.Microsoft.VisualBasic.ChrW(9)&"page down</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«insert»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  "& _ 
-            "<string>'«delete»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«f1»"&Global.Microsoft.VisualBasic.ChrW(9)&"F1-F12 ex. «f4»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>"& _ 
-            "'«n0»"&Global.Microsoft.VisualBasic.ChrW(9)&"Number Pad 0-9 ex. «n3»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«pause» or «break»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)& _ 
-            "  <string>'«ps» or «printscreen»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«nl»"&Global.Microsoft.VisualBasic.ChrW(9)&"Number lock</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«sl»"&Global.Microsoft.VisualBasic.ChrW(9)&"Scroll lock</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«MediaStop»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <strin"& _ 
-            "g>'«MediaPlayPause»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«MediaNextTrack»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«"& _ 
-            "MediaPreviousTrack»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«SelectMedia»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«vu»"& _ 
-            ""&Global.Microsoft.VisualBasic.ChrW(9)&"volume up</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«vd»"&Global.Microsoft.VisualBasic.ChrW(9)&"volume down</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«vm»"&Global.Microsoft.VisualBasic.ChrW(9)&"volum"& _ 
-            "e mute</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«lb»"&Global.Microsoft.VisualBasic.ChrW(9)&"Left button</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«rb»"&Global.Microsoft.VisualBasic.ChrW(9)&"Right but"& _ 
-            "ton</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«mb»"&Global.Microsoft.VisualBasic.ChrW(9)&"Middle button</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«lc»"&Global.Microsoft.VisualBasic.ChrW(9)&"Left click"& _ 
-            "</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«lh»"&Global.Microsoft.VisualBasic.ChrW(9)&"Left hold</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«lr»"&Global.Microsoft.VisualBasic.ChrW(9)&"Left release</str"& _ 
-            "ing>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«mc»"&Global.Microsoft.VisualBasic.ChrW(9)&"Middle click</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«mh»"&Global.Microsoft.VisualBasic.ChrW(9)&"Middle hold</string"& _ 
-            ">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«mr»"&Global.Microsoft.VisualBasic.ChrW(9)&"Middle release</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«rc»"&Global.Microsoft.VisualBasic.ChrW(9)&"Right click</string>"& _ 
-            ""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«rh»"&Global.Microsoft.VisualBasic.ChrW(9)&"Right hold</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«rr»"&Global.Microsoft.VisualBasic.ChrW(9)&"Right release</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&" "& _ 
-            " <string>'«rp»"&Global.Microsoft.VisualBasic.ChrW(9)&"Return pointer</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«xy»"&Global.Microsoft.VisualBasic.ChrW(9)&"Get pointer x y"&Global.Microsoft.VisualBasic.ChrW(9)&"( «xy + "& _ 
-            "Tab» ) </string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«audio:»"&Global.Microsoft.VisualBasic.ChrW(9)&"Play .wav file</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«Audio"& _ 
-            ":»"&Global.Microsoft.VisualBasic.ChrW(9)&"Play .wav and wait to complete</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«stop-audio»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  "& _ 
-            "<string>'«yesno:»"&Global.Microsoft.VisualBasic.ChrW(9)&"Verify ex. «yesno:Continue?»</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'«replace:tha"& _ 
-            "t|this»"&Global.Microsoft.VisualBasic.ChrW(9)&"</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>'More Info:</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <stri"& _ 
-            "ng>'Scroll lock: test or repeat</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</ArrayOfString>")>  _
+            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")>  _
         Public Property SettingDB() As Global.System.Collections.Specialized.StringCollection
             Get
                 Return CType(Me("SettingDB"),Global.System.Collections.Specialized.StringCollection)
@@ -426,6 +376,42 @@ Namespace My
             End Get
             Set
                 Me("SettingBracketClose") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("95")>  _
+        Public Property SettingSplitterDistance() As Integer
+            Get
+                Return CType(Me("SettingSplitterDistance"),Integer)
+            End Get
+            Set
+                Me("SettingSplitterDistance") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
+        Public Property SettingSplitterWidth() As Integer
+            Get
+                Return CType(Me("SettingSplitterWidth"),Integer)
+            End Get
+            Set
+                Me("SettingSplitterWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property SettingStopButton() As Integer
+            Get
+                Return CType(Me("SettingStopButton"),Integer)
+            End Get
+            Set
+                Me("SettingStopButton") = value
             End Set
         End Property
     End Class

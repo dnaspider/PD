@@ -85,7 +85,7 @@
     Sub Timeout(ms As Double)
         Dim x = Now.AddMilliseconds(ms)
         Do While x > Now
-            If CBool(GetAsyncKeyState(Keys.Pause)) Then Exit Sub
+            If CBool(GetAsyncKeyState(Keys.Pause)) Or CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
             Application.DoEvents()
         Loop
     End Sub
@@ -155,46 +155,48 @@
             GetAsyncKeyState(i)
         Next
         GetAsyncKeyState(g_specialKey)
-        GetAsyncKeyState(Keys.Escape)
-        GetAsyncKeyState(Keys.RShiftKey)
-        GetAsyncKeyState(Keys.LMenu)
-        GetAsyncKeyState(Keys.Enter)
-        GetAsyncKeyState(Keys.Tab)
-        GetAsyncKeyState(Keys.Space)
-        GetAsyncKeyState(Keys.OemQuestion)
-        GetAsyncKeyState(Keys.OemMinus)
-        GetAsyncKeyState(Keys.Oemplus)
-        GetAsyncKeyState(Keys.OemOpenBrackets)
-        GetAsyncKeyState(Keys.OemCloseBrackets)
-        GetAsyncKeyState(Keys.OemBackslash)
-        GetAsyncKeyState(Keys.OemSemicolon)
-        GetAsyncKeyState(Keys.OemQuotes)
-        GetAsyncKeyState(Keys.Oemcomma)
-        GetAsyncKeyState(Keys.OemPeriod)
-        GetAsyncKeyState(Keys.Oem3) '`
-        GetAsyncKeyState(Keys.F1)
-        GetAsyncKeyState(Keys.F2)
-        GetAsyncKeyState(Keys.F3)
-        GetAsyncKeyState(Keys.F4)
-        GetAsyncKeyState(Keys.F5)
-        GetAsyncKeyState(Keys.F6)
-        GetAsyncKeyState(Keys.F7)
-        GetAsyncKeyState(Keys.F8)
-        GetAsyncKeyState(Keys.F9)
-        GetAsyncKeyState(Keys.F10)
-        GetAsyncKeyState(Keys.F11)
-        GetAsyncKeyState(Keys.F12)
-        GetAsyncKeyState(Keys.Up)
-        GetAsyncKeyState(Keys.Down)
-        GetAsyncKeyState(Keys.Left)
-        GetAsyncKeyState(Keys.Right)
-        GetAsyncKeyState(Keys.PageUp)
-        GetAsyncKeyState(Keys.PageDown)
-        GetAsyncKeyState(Keys.Home)
-        GetAsyncKeyState(Keys.End)
-        GetAsyncKeyState(Keys.Delete)
-        GetAsyncKeyState(Keys.Back)
-        GetAsyncKeyState(Keys.Menu)
+        GetAsyncKeyState(Keys.Insert)
+        'GetAsyncKeyState(Keys.Escape)
+        'GetAsyncKeyState(Keys.LShiftKey)
+        'GetAsyncKeyState(Keys.RShiftKey)
+        'GetAsyncKeyState(Keys.LMenu)
+        'GetAsyncKeyState(Keys.Enter)
+        'GetAsyncKeyState(Keys.Tab)
+        'GetAsyncKeyState(Keys.Space)
+        'GetAsyncKeyState(Keys.OemQuestion)
+        'GetAsyncKeyState(Keys.OemMinus)
+        'GetAsyncKeyState(Keys.Oemplus)
+        'GetAsyncKeyState(Keys.OemOpenBrackets)
+        'GetAsyncKeyState(Keys.OemCloseBrackets)
+        'GetAsyncKeyState(Keys.OemBackslash)
+        'GetAsyncKeyState(Keys.OemSemicolon)
+        'GetAsyncKeyState(Keys.OemQuotes)
+        'GetAsyncKeyState(Keys.Oemcomma)
+        'GetAsyncKeyState(Keys.OemPeriod)
+        'GetAsyncKeyState(Keys.Oem3) '`
+        'GetAsyncKeyState(Keys.F1)
+        'GetAsyncKeyState(Keys.F2)
+        'GetAsyncKeyState(Keys.F3)
+        'GetAsyncKeyState(Keys.F4)
+        'GetAsyncKeyState(Keys.F5)
+        'GetAsyncKeyState(Keys.F6)
+        'GetAsyncKeyState(Keys.F7)
+        'GetAsyncKeyState(Keys.F8)
+        'GetAsyncKeyState(Keys.F9)
+        'GetAsyncKeyState(Keys.F10)
+        'GetAsyncKeyState(Keys.F11)
+        'GetAsyncKeyState(Keys.F12)
+        'GetAsyncKeyState(Keys.Up)
+        'GetAsyncKeyState(Keys.Down)
+        'GetAsyncKeyState(Keys.Left)
+        'GetAsyncKeyState(Keys.Right)
+        'GetAsyncKeyState(Keys.PageUp)
+        'GetAsyncKeyState(Keys.PageDown)
+        'GetAsyncKeyState(Keys.Home)
+        'GetAsyncKeyState(Keys.End)
+        'GetAsyncKeyState(Keys.Delete)
+        'GetAsyncKeyState(Keys.Back)
+        'GetAsyncKeyState(Keys.Menu)
     End Sub
 
     Sub TextMock()
@@ -231,19 +233,15 @@
             My.Settings.SettingHeight = Me.Height
             My.Settings.SettingWidth = Me.Width
         End If
-
         If ListBox1.Focused Then My.Settings.SettingTabIndex = 1
         If TextBox1.Focused Then My.Settings.SettingTabIndex = 5
         My.Settings.SettingSelectionStart = TextBox1.SelectionStart
         My.Settings.SettingSelectionLength = TextBox1.SelectionLength
         My.Settings.SettingTextBoxZoomFactor = TextBox1.ZoomFactor
-
-
         My.Settings.SettingTextBox = TextBox1.Text
         My.Settings.SettingListboxSelectedIndex = ListBox1.SelectedIndex
-
         My.Settings.SettingListBoxFontSize = Me.ListBox1.Font.Size
-
+        My.Settings.SettingSplitterDistance = SplitContainer1.SplitterDistance
         My.Settings.Save()
     End Sub
 
@@ -268,11 +266,9 @@
             Me.FormBorderStyle = 0
             Me.ControlBox = False
             Me.Text = ""
-            My.Settings.SettingTitleTip = False
             Me.Height = My.Settings.SettingFixedSizeHeight
             Me.Width = My.Settings.SettingFixedSizeWidth
         Else
-            My.Settings.SettingTitleTip = True
             Me.ControlBox = True
         End If
 
@@ -294,6 +290,9 @@
             TextBox1.SelectionLength = My.Settings.SettingSelectionLength
         End If
         TextBox1.ZoomFactor = My.Settings.SettingTextBoxZoomFactor
+        SplitContainer1.SplitterDistance = My.Settings.SettingSplitterDistance
+        SplitContainer1.SplitterWidth = My.Settings.SettingSplitterWidth
+
     End Sub
 
     Private Sub PD_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -332,6 +331,8 @@
             End If
             Me.Visible = x
         End If
+
+        If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText("į")
 
         If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else TextBox2.Text = p_
 
@@ -397,6 +398,10 @@
     End Sub
 
     Private Sub TextBox1_DoubleClick(sender As Object, e As EventArgs) Handles TextBox1.DoubleClick
+        If TextBox1.Text = "" And TextBox2.TextLength = g_length Then
+            TextBox1.AppendText(TextBox2.Text) 'get code
+            Exit Sub
+        End If
         If TextBox1.SelectedText = "" Then
             SendKeys.Send(p_ & _p & "{left}") '«»
             Exit Sub
@@ -490,15 +495,18 @@
                     Case "sl" & _p
                         AutoComplete("eep:", "", 0)
                         Exit Sub
+                    Case "to" & _p 'timeout
+                        AutoComplete(":", "", 0)
+                        Exit Sub
                     Case "xy" & _p
                         For i = 3 To 0 Step -1
-                            Me.Text = i.ToString
+                            Me.Text = "PD > " & p_ & "xy:" & i.ToString & _p
                             Sleep(1000)
                         Next
                         Key(Keys.Back, False, 1)
                         g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
                         PD()
-                        TextBox2.Text = ""
+                        TextBox2.Clear()
                         Me.Text = "PD"
                         Exit Sub
                     Case "ye" & _p
@@ -540,9 +548,9 @@
                         Case "m" & _p
                             AutoComplete("enu", "", 1)
                             Exit Sub
-                    'Case "p"
-                    '    AutoComplete("ause", "", 1)
-                    '    Exit Sub
+                        'Case "p"
+                        '    AutoComplete("ause", "", 1)
+                        '    Exit Sub
                         Case "r" & _p
                             AutoComplete("ight*", "", 0)
                             Exit Sub
@@ -636,13 +644,13 @@
     End Sub
 
     Dim g_length As Integer = My.Settings.SettingCodeLength
-    'dim b_length As Integer = My.Settings.SettingBracketCodeLength
+    'dim g_b_length As Integer = My.Settings.SettingBracketCodeLength
     Dim g_i As Integer = 0 'listbox1 item
     Dim g_kb_i As Integer = 0 'kb item c
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         If TextBox2.Text = "'" Then Exit Sub
-        If My.Settings.SettingTitleTip = True Then Me.Text = "PD > " & TextBox2.Text
+        If My.Settings.SettingTitleTip = True And My.Settings.SettingFixedSize = False Then Me.Text = "PD > " & TextBox2.Text
 
 
         If ((TextBox2.TextLength = g_length) Or (TextBox2.Text.StartsWith(p_) And TextBox2.TextLength >= 1)) = False Then
@@ -926,6 +934,8 @@
 
                 Select Case middle
 
+                    Case "to"
+                        Timeout(CInt(g_n))
                     Case "replace"
                         Clipboard.SetText(Clipboard.GetText.Replace(CType(Split(g_n, "|").GetValue(0), String), CType(Split(g_n, "|").GetValue(1), String)))
                     Case "yesno"
@@ -1157,7 +1167,7 @@
 
     'global g_
     Dim g_presses As String = "1" 'default press | «up»
-    Dim g_n As String = "0" 'number | Convert.ToUInt16(g_n)
+    Dim g_n As String = "0" 'number | *# or :#
     Dim g_s As String 'string | «code-» GlobalString
     Dim p_ As String = My.Settings.SettingBracketOpen '«
     Dim _p As String = My.Settings.SettingBracketClose '»
@@ -1212,11 +1222,15 @@
             Clipboard.SetText(ListBox1.Text)
             CleanSelect()
         End If
-
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.V)) And Clipboard.GetText > "" And ListBox1.Items.Count > 0 Then
+            ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
+            My.Settings.SettingDB.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
+            CleanSelect()
+        End If
     End Sub
 
     Private Sub SplitContainer1_MouseDown(sender As Object, e As MouseEventArgs) Handles SplitContainer1.MouseDown
-        If MouseButtons = Windows.Forms.MouseButtons.Right Then
+        If MouseButtons = Windows.Forms.MouseButtons.Right And ListBox1.Items.Count > 0 Then
             'select top or bottom item
             If Not ListBox1.Items.Count >= 0 Then Exit Sub
             If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then
