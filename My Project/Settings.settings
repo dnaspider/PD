@@ -27,7 +27,7 @@
   &lt;string&gt;'Ctrl + Y: Redo&lt;/string&gt;
   &lt;string&gt;'Double click or tab: Print «»&lt;/string&gt;
   &lt;string&gt;'f4: Clear&lt;/string&gt;
-  &lt;string&gt;'f5: Test selected text&lt;/string&gt;
+  &lt;string&gt;'f5: Test selected text or full text&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
   &lt;string&gt;'Basic examples:  (three different modes)&lt;/string&gt;
   &lt;string&gt;'Press RCtrl then type `test` for output `Hi!`&lt;/string&gt;
@@ -41,14 +41,14 @@
   &lt;string&gt;'«:»	Sendkeys. Example: «:test+{left 4}»&lt;/string&gt;
   &lt;string&gt;'«&amp;lt;&amp;lt;»	Print open code bracket (SettingBracketOpen)&lt;/string&gt;
   &lt;string&gt;'«&amp;gt;&amp;gt;»	Print close bracket&lt;/string&gt;
-  &lt;string&gt;'«iw»	Ignore white space&lt;/string&gt;
+  &lt;string&gt;'«iw»	Ignore white space («iw + Tab»)&lt;/string&gt;
   &lt;string&gt;'«cb:»	Copy clipboard value. ex. «cb:test»&lt;/string&gt;
-  &lt;string&gt;'«sleep:»	Pause program x milliseconds. ex. «sleep:1000» (sleep 1 second)&lt;/string&gt;
+  &lt;string&gt;'«sleep:»	Pause program x milliseconds ex. «sleep:1000» (sleep 1 second)&lt;/string&gt;
   &lt;string&gt;'«,»	Sleep 77ms&lt;/string&gt;
   &lt;string&gt;'«app:»	App activate. ex. «app:PD»&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
   &lt;string&gt;'Keyboard code list&lt;/string&gt;
-  &lt;string&gt;'«win»«-win» («w + Tab»)&lt;/string&gt;
+  &lt;string&gt;'«win»«-win»	( «w + Tab» )&lt;/string&gt;
   &lt;string&gt;'«shift»«-shift»&lt;/string&gt;
   &lt;string&gt;'«alt»«-alt»&lt;/string&gt;
   &lt;string&gt;'«ctrl»«-ctrl»&lt;/string&gt;
@@ -79,6 +79,9 @@
   &lt;string&gt;'«MediaNextTrack»&lt;/string&gt;
   &lt;string&gt;'«MediaPreviousTrack»&lt;/string&gt;
   &lt;string&gt;'«SelectMedia»&lt;/string&gt;
+  &lt;string&gt;'«vu»	volume up&lt;/string&gt;
+  &lt;string&gt;'«vd»	volume down&lt;/string&gt;
+  &lt;string&gt;'«vm»	volume mute&lt;/string&gt;
   &lt;string&gt;'«lb»	Left button&lt;/string&gt;
   &lt;string&gt;'«rb»	Right button&lt;/string&gt;
   &lt;string&gt;'«mb»	Middle button&lt;/string&gt;
@@ -92,10 +95,15 @@
   &lt;string&gt;'«rh»	Right hold&lt;/string&gt;
   &lt;string&gt;'«rr»	Right release&lt;/string&gt;
   &lt;string&gt;'«rp»	Return pointer&lt;/string&gt;
-  &lt;string&gt;'«xy»	Get pointer x y («xy» + Tab) &lt;/string&gt;
+  &lt;string&gt;'«xy»	Get pointer x y	( «xy + Tab» ) &lt;/string&gt;
+  &lt;string&gt;'«audio:»	Play .wav file&lt;/string&gt;
+  &lt;string&gt;'«Audio:»	Play .wav and wait to complete&lt;/string&gt;
+  &lt;string&gt;'«stop-audio»&lt;/string&gt;
+  &lt;string&gt;'«yesno:»	Verify ex. «yesno:Continue?»&lt;/string&gt;
+  &lt;string&gt;'«replace:that|this»	&lt;/string&gt;
   &lt;string&gt;'&lt;/string&gt;
   &lt;string&gt;'More Info:&lt;/string&gt;
-  &lt;string&gt;'Scroll lock: repeat &lt;/string&gt;
+  &lt;string&gt;'Scroll lock: test or repeat&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="SettingCodeLength" Type="System.Int32" Scope="User">

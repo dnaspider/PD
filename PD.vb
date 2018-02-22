@@ -312,9 +312,16 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
-        If CBool(GetAsyncKeyState(Keys.Pause)) Then PD()
+        If CBool(GetAsyncKeyState(Keys.Scroll)) Then
+            If TextBox1.Text > "" Then
+                If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText : PD()
+                If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text : PD()
+            End If
+            If TextBox1.Text = "" Then PD()
+        End If
 
         If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
+            Dim x As Boolean = Me.Visible
             Me.Visible = False
             Sleep(1)
             If TextBox1.SelectedText.Length > 0 Then
@@ -323,7 +330,7 @@
             Else
                 If TextBox1.Text > "" Then g_s = TextBox1.Text : PD()
             End If
-            Me.Visible = True
+            Me.Visible = x
         End If
 
         If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else TextBox2.Text = p_
@@ -431,6 +438,13 @@
                 x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
                 Select Case Microsoft.VisualBasic.Left(x, 3)
 
+                    Case "au" & _p
+                        AutoComplete("dio:", "", 0)
+                        Exit Sub
+                    Case "Au" & _p
+                        AutoComplete("dio:", "", 0)
+                        Exit Sub
+
                     'Case "br"
                     '    AutoComplete("eak", "", 1)
                     '    Exit Sub
@@ -463,6 +477,13 @@
                     Case "iw" & _p
                         AutoComplete("", "-iw", 1) 'ignore whitespace 
                         Exit Sub
+                    Case "re" & _p
+                        AutoComplete("place:|", "", 0)
+                        Key(Keys.Left, False, 1)
+                        Exit Sub
+                    Case "st" & _p
+                        AutoComplete("op-audio", "", 1)
+                        Exit Sub
                     Case "sp" & _p
                         AutoComplete("ace*", "", 0)
                         Exit Sub
@@ -479,6 +500,9 @@
                         PD()
                         TextBox2.Text = ""
                         Me.Text = "PD"
+                        Exit Sub
+                    Case "ye" & _p
+                        AutoComplete("sno:", "", 0)
                         Exit Sub
                 End Select
 
@@ -902,6 +926,17 @@
 
                 Select Case middle
 
+                    Case "replace"
+                        Clipboard.SetText(Clipboard.GetText.Replace(CType(Split(g_n, "|").GetValue(0), String), CType(Split(g_n, "|").GetValue(1), String)))
+                    Case "yesno"
+                        Dim yn = MsgBox(g_n, vbYesNo, "Verify")
+                        If yn = vbYes Then Else Exit Sub
+                    Case "audio"
+                        My.Computer.Audio.Play(g_n)
+                    Case "Audio"
+                        My.Computer.Audio.Play(g_n, AudioPlayMode.WaitToComplete)
+                    Case "stop-audio"
+                        My.Computer.Audio.Stop()
                     Case ""
                         SendKeys.Send(g_n)
                     Case "<<"
