@@ -90,12 +90,22 @@
         Loop
     End Sub
 
+    Sub LoadArray()
+        ar.Clear()
+        For x = 0 To ListBox1.Items.Count - 1
+            If ListBox1.Items(x).ToString.StartsWith(p_) Then ar.Add(ar.Count & ":" & x & ":" & ListBox1.Items(x).ToString.Substring(1, ListBox1.Items(x).ToString.IndexOf(_p) - 1))
+        Next
+        'For x = 0 To ar.Count - 1
+        '    Console.WriteLine("ar: " & x & " " & ar(x).ToString)
+        'Next
+    End Sub
+
     Sub LoadDb()
         For Each item As String In My.Settings.SettingDB
             ListBox1.Items.Add(CStr(item))
         Next
+        LoadArray()
     End Sub
-
     Sub AddDbItm()
         My.Settings.SettingDB.Add(TextBox1.Text)
         ListBox1.Items.Add(TextBox1.Text)
@@ -103,6 +113,7 @@
         ListBox1.SelectedIndex() = ListBox1.Items.Count - 1
         KeyRelease(Keys.S)
         KeyRelease(g_specialKey)
+        LoadArray()
         CleanMock()
     End Sub
     Sub RemoveDbItm()
@@ -115,6 +126,7 @@
         Key(Keys.Down, False, 1)
         TextClear()
         TextBox1.AppendText(x)
+        LoadArray()
     End Sub
     Sub UpdateDbItm()
         If ListBox1.SelectedIndex < 0 Or TextBox1.Text = "" Then Exit Sub
@@ -129,6 +141,8 @@
 
         ListBox1.SelectedItem() = ListBox1.Items.Item(i)
         TextBox1.SelectionStart = x
+        LoadArray()
+
         CleanMock()
     End Sub
     Sub CleanMock()
@@ -272,7 +286,7 @@
             Me.ControlBox = True
         End If
 
-        ListBox1.SelectedIndex = My.Settings.SettingListboxSelectedIndex
+        If ListBox1.Items.Count > 0 Then ListBox1.SelectedIndex = My.Settings.SettingListboxSelectedIndex
         Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, My.Settings.SettingListBoxFontSize)
 
         Select Case My.Settings.SettingTabIndex
@@ -666,7 +680,6 @@
 
             g_i = i
             If TextBox2.Text.StartsWith(p_) Then '«x»|«x-»
-
                 If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + _p) Then '«x»
                     Sk(1)
                     Exit For
@@ -916,6 +929,7 @@
                 Dim middle As String = g_s.Substring(g_s.IndexOf(p_) + 1, g_s.IndexOf(_p) + 1 - g_s.IndexOf(p_) - 2) 'grab middle value
                 'Console.WriteLine("middle: " + middle)
 
+
                 If middle.Contains(":") Then 'grab x:#
                     g_n = middle.Substring(middle.IndexOf(":") + 1)
                     middle = middle.Substring(middle.IndexOf(p_) + 1, middle.IndexOf(":"))
@@ -1129,10 +1143,19 @@
 
 
                     Case Else
-                        'MsgBox(middle, vbInformation)
+                        'connect
+                        If middle.StartsWith("'") Then Exit Select
+                        For i = 0 To ar.Count - 1
+                            If Split(ar(i).ToString, ":").GetValue(2).ToString.Contains(middle) Then
+                                g_i = CInt(Split(ar(i).ToString, ":").GetValue(1))
+                                Sk(1)
+                                Exit For
+                                'Console.WriteLine("get value: " & Split(ar(i).ToString, ":").GetValue(2))
+                                'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(0))
+                            End If
+                        Next
                 End Select
-
-                g_kb_i = -1 'update to 0
+                If g_kb_i = g_s.Length Then g_kb_i -= 1 Else g_kb_i = -1 '-=1 finish connect, update to 0
                 g_presses = "1"
                 g_n = "0"
                 middle = ""
@@ -1156,7 +1179,7 @@
             SendKeys.Send(g_s)
         Else
             For g_kb_i = 0 To g_s.Length
-                If g_kb_i = g_s.Length Then Exit For
+                If g_kb_i >= g_s.Length Then Exit For
                 If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
                 'Console.WriteLine("print: " & g_s(g_kb_i) & " :" & g_s.IndexOf(g_s(g_kb_i)))
                 Kb(g_s(g_kb_i))
@@ -1173,6 +1196,7 @@
     Dim _p As String = My.Settings.SettingBracketClose '»
     Dim g_ignoreWhiteSpace As Boolean = False
     Dim g_x As Integer, g_y As Integer
+    Dim ar As New ArrayList
 
 
     Sub Sk(opt As Integer)
@@ -1226,6 +1250,7 @@
             ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
             My.Settings.SettingDB.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
             CleanSelect()
+            LoadArray()
         End If
     End Sub
 
