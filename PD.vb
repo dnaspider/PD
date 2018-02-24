@@ -1151,7 +1151,7 @@
                                 Sk(1)
                                 Exit For
                                 'Console.WriteLine("get value: " & Split(ar(i).ToString, ":").GetValue(2))
-                                'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(0))
+                                'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(1))
                             End If
                         Next
                 End Select
@@ -1170,10 +1170,8 @@
 
 
     Sub PD()
-        'Console.WriteLine("string: " & g_s)
-        'Console.WriteLine("g_s length:" & g_s.Length)
-
         'Console.WriteLine(vbNewLine & "#####start#####")
+        'Console.WriteLine("string: " & g_s)
         If g_s.Contains(p_ & "rp" & _p) Or g_s.Contains(p_ & "rm" & _p) Then g_x = MousePosition.X : g_y = MousePosition.Y
         If My.Settings.SettingSendkeysOnlyMode Then
             SendKeys.Send(g_s)
@@ -1249,8 +1247,8 @@
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.V)) And Clipboard.GetText > "" And ListBox1.Items.Count > 0 Then
             ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
             My.Settings.SettingDB.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
-            CleanSelect()
             LoadArray()
+            CleanSelect()
         End If
     End Sub
 
