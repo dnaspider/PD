@@ -1148,9 +1148,9 @@
                             If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
                             If Split(ar(i).ToString, ":").GetValue(1).ToString.Contains(middle) Then
                                 g_i = CInt(Split(ar(i).ToString, ":").GetValue(0))
-                                g_code = ListBox1.Items(g_i).ToString.Substring(1, ListBox1.Items(g_i).ToString.IndexOf(_p) - 1)
                                 g_s = ListBox1.Items(g_i).ToString.Substring(ListBox1.Items(g_i).ToString.IndexOf(_p) + 1, ListBox1.Items(g_i).ToString.Length - ListBox1.Items(g_i).ToString.IndexOf(_p) - 1) & g_s
-                                If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) Then
+                                'Console.WriteLine("connect: " & Split(ar(i).ToString, ":").GetValue(1).ToString)
+                                If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) And Split(ar(i).ToString, ":").GetValue(1).ToString <> middle Or g_code = middle And g_s.Length = 0 Then
                                     MsgBox("Infinite loop" & vbNewLine & p_ & g_code & _p & " >" & g_s, vbExclamation)
                                     g_s = ""
                                     Exit Sub
@@ -1158,8 +1158,8 @@
                                 PD()
                                 g_s = ""
                                 Exit For
-                                'Console.WriteLine("get value: " & Split(ar(i).ToString, ":").GetValue(2))
-                                'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(1))
+                                'Console.WriteLine("get value: " & Split(ar(i).ToString, ":").GetValue(1))
+                                'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(0))
                             End If
                         Next
                 End Select
@@ -1185,9 +1185,9 @@
             SendKeys.Send(g_s)
         Else
             For g_kb_i = 0 To g_s.Length
-                If g_kb_i >= g_s.Length Then Exit For
+                If g_kb_i >= g_s.Length Then g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
                 If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
-                'Console.WriteLine("print: " & g_s(g_kb_i) & " :" & g_s.IndexOf(g_s(g_kb_i)))
+                'Console.WriteLine("print: " & g_s(g_kb_i))
                 Kb(g_s(g_kb_i))
             Next
         End If
@@ -1215,8 +1215,10 @@
 
         Select Case opt
             Case 1 '«code»
+                g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
                 PD()
             Case 2 '«code-»
+                g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
                 Key(Keys.Back, False, ListBox1.SelectedItem.ToString.IndexOf(_p) - 2) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
