@@ -457,6 +457,9 @@
                 x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
                 Select Case Microsoft.VisualBasic.Left(x, 3)
 
+                    Case "ap" & _p
+                        AutoComplete("p:", "", 0)
+                        Exit Sub
                     Case "au" & _p
                         AutoComplete("dio:", "", 0)
                         Exit Sub
@@ -946,7 +949,30 @@
                 'Console.WriteLine("new string: " & g_s)
 
                 Select Case middle
-
+                    Case "date"
+                        Dim d As String = (Date.Now.Month.ToString & "/" & Date.Now.Day.ToString & "/" & Date.Now.Year.ToString)
+                        If g_n <> "0" Then
+                            d = (Date.Now.Month.ToString & "/" & Date.Now.Day.ToString & "/" & Date.Now.Year.ToString)
+                            d = Replace(d, "/", g_n)
+                        End If
+                        If middle = "Date" Then
+                            SendKeys.Send(d)
+                        Else
+                            Clipboard.SetText(d)
+                        End If
+                    Case "time"
+                        Dim h As String = Date.Now.Hour.ToString
+                        Dim hh As Integer = CInt(h)
+                        Dim m As String = "AM"
+                        If CInt(h) > 12 Then m = "PM" : hh -= 12
+                        Dim t As String = hh & ":" & Date.Now.Minute.ToString & ":" & Date.Now.Second.ToString & ":" & m
+                        If g_n <> "0" Then t = Replace(t, ":", g_n)
+                        Clipboard.SetText(t)
+                        If middle = "Time" Then
+                            SendKeys.Send(t)
+                        Else
+                            Clipboard.SetText(t)
+                        End If
                     Case "to"
                         Timeout(CInt(g_n))
                     Case "replace"
@@ -960,7 +986,7 @@
                         My.Computer.Audio.Play(g_n, AudioPlayMode.WaitToComplete)
                     Case "stop-audio"
                         My.Computer.Audio.Stop()
-                    Case ""
+                    Case "" '«:»
                         SendKeys.Send(g_n)
                     Case "<<"
                         SendKeys.Send(p_) 'print open bracket
@@ -975,11 +1001,24 @@
                     Case "sleep"
                         Sleep(CInt(g_n))
                     Case ","
-                        Sleep(77)
+                        If g_n <> "0" Then
+                            If g_n <> "" Then Sleep(CInt(g_n))
+                        Else
+                            Sleep(77)
+                        End If
                     Case "app"
                         Sleep(1)
-                        AppActivate(g_n)
-                        Sleep(1)
+                        Dim x As Integer = 0
+App:
+                        Try
+                            x += 1
+                            AppActivate(g_n)
+                        Catch ex As Exception
+                            If x = 200 Then MsgBox(p_ & middle & ":" & g_n & _p & " " & " not found", vbExclamation) : Exit Sub
+                            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
+                            Sleep(77)
+                            GoTo App
+                        End Try
                     Case "win"
                         KeyHold(Keys.LWin)
                     Case "-win"
