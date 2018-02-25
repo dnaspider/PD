@@ -93,10 +93,10 @@
     Sub LoadArray()
         ar.Clear()
         For x = 0 To ListBox1.Items.Count - 1
-            If ListBox1.Items(x).ToString.StartsWith(p_) Then ar.Add(ar.Count & ":" & x & ":" & ListBox1.Items(x).ToString.Substring(1, ListBox1.Items(x).ToString.IndexOf(_p) - 1))
+            If ListBox1.Items(x).ToString.StartsWith(p_) Then ar.Add(x & ":" & ListBox1.Items(x).ToString.Substring(1, ListBox1.Items(x).ToString.IndexOf(_p) - 1))
         Next
         'For x = 0 To ar.Count - 1
-        '    Console.WriteLine("ar: " & x & " " & ar(x).ToString)
+        '    Console.WriteLine(ar.Count & ": ar: " & ar(x).ToString)
         'Next
     End Sub
 
@@ -113,8 +113,8 @@
         ListBox1.SelectedIndex() = ListBox1.Items.Count - 1
         KeyRelease(Keys.S)
         KeyRelease(g_specialKey)
-        LoadArray()
         CleanMock()
+        LoadArray()
     End Sub
     Sub RemoveDbItm()
         If ListBox1.SelectedIndex = -1 Then Exit Sub
@@ -141,9 +141,9 @@
 
         ListBox1.SelectedItem() = ListBox1.Items.Item(i)
         TextBox1.SelectionStart = x
-        LoadArray()
 
         CleanMock()
+        LoadArray()
     End Sub
     Sub CleanMock()
         Sleep(333)
@@ -942,7 +942,6 @@
                 End If
 
 
-
                 g_s = Microsoft.VisualBasic.Right(g_s, g_s.Length - g_s.IndexOf(_p) - 1) 'make new string
                 'Console.WriteLine("new string: " & g_s)
 
@@ -1146,16 +1145,25 @@
                         'connect
                         If middle.StartsWith("'") Then Exit Select
                         For i = 0 To ar.Count - 1
-                            If Split(ar(i).ToString, ":").GetValue(2).ToString.Contains(middle) Then
-                                g_i = CInt(Split(ar(i).ToString, ":").GetValue(1))
-                                Sk(1)
+                            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
+                            If Split(ar(i).ToString, ":").GetValue(1).ToString.Contains(middle) Then
+                                g_i = CInt(Split(ar(i).ToString, ":").GetValue(0))
+                                g_code = ListBox1.Items(g_i).ToString.Substring(1, ListBox1.Items(g_i).ToString.IndexOf(_p) - 1)
+                                g_s = ListBox1.Items(g_i).ToString.Substring(ListBox1.Items(g_i).ToString.IndexOf(_p) + 1, ListBox1.Items(g_i).ToString.Length - ListBox1.Items(g_i).ToString.IndexOf(_p) - 1) & g_s
+                                If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) Then
+                                    MsgBox("Infinite loop" & vbNewLine & p_ & g_code & _p & " >" & g_s, vbExclamation)
+                                    g_s = ""
+                                    Exit Sub
+                                End If
+                                PD()
+                                g_s = ""
                                 Exit For
                                 'Console.WriteLine("get value: " & Split(ar(i).ToString, ":").GetValue(2))
                                 'Console.WriteLine(Split("get index: " & ar(i).ToString, ":").GetValue(1))
                             End If
                         Next
                 End Select
-                If g_kb_i = g_s.Length Then g_kb_i -= 1 Else g_kb_i = -1 '-=1 finish connect, update to 0
+                g_kb_i = -1 'update to 0
                 g_presses = "1"
                 g_n = "0"
                 middle = ""
@@ -1195,15 +1203,16 @@
     Dim g_ignoreWhiteSpace As Boolean = False
     Dim g_x As Integer, g_y As Integer
     Dim ar As New ArrayList
-
+    Dim g_code As String
 
     Sub Sk(opt As Integer)
         TextBox2.Text = "'"
         ListBox1.SelectedItem() = ListBox1.Items.Item(g_i)
 
-        g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
         'Console.WriteLine("code: " & ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)) 'code
         'Console.WriteLine("string: " & ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1))
+        g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
+
         Select Case opt
             Case 1 '«code»
                 PD()
@@ -1247,8 +1256,8 @@
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.V)) And Clipboard.GetText > "" And ListBox1.Items.Count > 0 Then
             ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
             My.Settings.SettingDB.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
-            LoadArray()
             CleanSelect()
+            LoadArray()
         End If
     End Sub
 
@@ -1278,9 +1287,7 @@
     End Sub
 
     Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
-        If e.KeyValue = 177 Then 'f4
-            TextClear()
-        End If
+        If CBool(GetAsyncKeyState(Keys.F4)) Then TextClear()
         'move cursor home or end
         If e.KeyValue = 40 Then 'down {end}
             If TextBox1.Text > "" Then
