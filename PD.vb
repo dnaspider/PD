@@ -466,17 +466,9 @@
                     Case "Au" & _p
                         AutoComplete("dio:", "", 0)
                         Exit Sub
-
-                    'Case "br"
-                    '    AutoComplete("eak", "", 1)
-                    '    Exit Sub
-                    'Case "ca"
-                    '    AutoComplete("ps", "", 1)
-                    '    Exit Sub
-                    Case "cb" & _p
-                        AutoComplete(":", "", 0)
+                    Case "da" & _p
+                        AutoComplete("te", "", 1)
                         Exit Sub
-
                     Case "de" & _p
                         AutoComplete("lete*", "", 0)
                         Exit Sub
@@ -486,16 +478,6 @@
                     Case "es" & _p
                         AutoComplete("c", "", 1)
                         Exit Sub
-
-                    'Case "pd" & _p
-                    '    AutoComplete("", "", 1)
-                    '    Exit Sub
-                    'Case "ps"
-                    '    AutoComplete("", "", 1)
-                    '    Exit Sub
-                    'Case "pu" & _p
-                    '    AutoComplete("", "", 1)
-                    '    Exit Sub
                     Case "iw" & _p
                         AutoComplete("", "-iw", 1) 'ignore whitespace 
                         Exit Sub
@@ -511,6 +493,9 @@
                         Exit Sub
                     Case "sl" & _p
                         AutoComplete("eep:", "", 0)
+                        Exit Sub
+                    Case "ti" & _p
+                        AutoComplete("me", "", 1)
                         Exit Sub
                     Case "to" & _p 'timeout
                         AutoComplete(":", "", 0)
@@ -565,9 +550,6 @@
                         Case "m" & _p
                             AutoComplete("enu", "", 1)
                             Exit Sub
-                        'Case "p"
-                        '    AutoComplete("ause", "", 1)
-                        '    Exit Sub
                         Case "r" & _p
                             AutoComplete("ight*", "", 0)
                             Exit Sub
@@ -1007,18 +989,7 @@
                             Sleep(77)
                         End If
                     Case "app"
-                        Sleep(1)
-                        Dim x As Integer = 0
-App:
-                        Try
-                            x += 1
-                            AppActivate(g_n)
-                        Catch ex As Exception
-                            If x = 200 Then MsgBox(p_ & middle & ":" & g_n & _p & " " & " not found", vbExclamation) : Exit Sub
-                            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
-                            Sleep(77)
-                            GoTo App
-                        End Try
+                        GetApp()
                     Case "win"
                         KeyHold(Keys.LWin)
                     Case "-win"
@@ -1215,6 +1186,20 @@ App:
         '        MsgBox(Err.Description & vbNewLine & Err.Number, vbExclamation, "Error")
     End Sub
 
+    Sub GetApp()
+        Sleep(1)
+        Dim x As Integer = 0
+App:
+        Try
+            x += 1
+            AppActivate(g_n)
+        Catch ex As Exception
+            If x = 200 Then MsgBox(p_ & "app:" & g_n & _p & " " & " not found", vbExclamation) : Exit Sub
+            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
+            Sleep(77)
+            GoTo App
+        End Try
+    End Sub
 
     Sub PD()
         'Console.WriteLine(vbNewLine & "#####start#####")
