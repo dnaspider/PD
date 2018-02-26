@@ -327,10 +327,11 @@
 
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
             If TextBox1.Text > "" Then
+                If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText : PD()
                 If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text : PD()
             End If
-            If TextBox1.Text = "" Then PD()
+            If TextBox1.Text = "" And ListBox1.Items.Count > 0 Then PD()
         End If
 
         If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
@@ -1209,7 +1210,7 @@ App:
             SendKeys.Send(g_s)
         Else
             For g_kb_i = 0 To g_s.Length
-                If g_kb_i >= g_s.Length Then g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
+                If g_kb_i >= g_s.Length Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
                 If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
                 'Console.WriteLine("print: " & g_s(g_kb_i))
                 Kb(g_s(g_kb_i))
