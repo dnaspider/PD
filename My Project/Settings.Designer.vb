@@ -237,42 +237,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property SettingFixedSize() As Boolean
-            Get
-                Return CType(Me("SettingFixedSize"),Boolean)
-            End Get
-            Set
-                Me("SettingFixedSize") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("200")>  _
-        Public Property SettingFixedSizeHeight() As Integer
-            Get
-                Return CType(Me("SettingFixedSizeHeight"),Integer)
-            End Get
-            Set
-                Me("SettingFixedSizeHeight") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("253")>  _
-        Public Property SettingFixedSizeWidth() As Integer
-            Get
-                Return CType(Me("SettingFixedSizeWidth"),Integer)
-            End Get
-            Set
-                Me("SettingFixedSizeWidth") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("-1")>  _
         Public Property SettingListboxSelectedIndex() As Integer
             Get
@@ -400,6 +364,30 @@ Namespace My
             End Get
             Set
                 Me("SettingSplitterWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property SettingBackgroundImage() As String
+            Get
+                Return CType(Me("SettingBackgroundImage"),String)
+            End Get
+            Set
+                Me("SettingBackgroundImage") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property SettingFirstLoad() As Integer
+            Get
+                Return CType(Me("SettingFirstLoad"),Integer)
+            End Get
+            Set
+                Me("SettingFirstLoad") = value
             End Set
         End Property
     End Class

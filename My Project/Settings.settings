@@ -48,15 +48,6 @@
     <Setting Name="SettingTextBox" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SettingFixedSize" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="SettingFixedSizeHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200</Value>
-    </Setting>
-    <Setting Name="SettingFixedSizeWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">253</Value>
-    </Setting>
     <Setting Name="SettingListboxSelectedIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
@@ -89,6 +80,12 @@
     </Setting>
     <Setting Name="SettingSplitterWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="SettingBackgroundImage" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SettingFirstLoad" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

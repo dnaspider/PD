@@ -8,34 +8,34 @@
     Private Declare Sub Mouse_event Lib "user32" Alias "mouse_event" (ByVal dwFlags As Integer, ByVal dx As Integer, ByVal dy As Integer, ByVal cButtons As Integer, ByVal dwExtraInfo As Integer)
 
     Sub LeftClick()
-        mouse_event(&H2, 0, 0, 0, 0)
-        mouse_event(&H4, 0, 0, 0, 0)
+        Mouse_event(&H2, 0, 0, 0, 0)
+        Mouse_event(&H4, 0, 0, 0, 0)
     End Sub
     Sub LeftHold()
-        mouse_event(&H2, 0, 0, 0, 0)
+        Mouse_event(&H2, 0, 0, 0, 0)
     End Sub
     Sub LeftRelease()
-        mouse_event(&H4, 0, 0, 0, 0)
+        Mouse_event(&H4, 0, 0, 0, 0)
     End Sub
     Sub MiddleClick()
-        mouse_event(&H20, 0, 0, 0, 0)
-        mouse_event(&H40, 0, 0, 0, 0)
+        Mouse_event(&H20, 0, 0, 0, 0)
+        Mouse_event(&H40, 0, 0, 0, 0)
     End Sub
     Sub MiddleHold()
-        mouse_event(&H20, 0, 0, 0, 0)
+        Mouse_event(&H20, 0, 0, 0, 0)
     End Sub
     Sub MiddleRelease()
-        mouse_event(&H40, 0, 0, 0, 0)
+        Mouse_event(&H40, 0, 0, 0, 0)
     End Sub
     Sub RightClick()
-        mouse_event(&H8, 0, 0, 0, 0) '&H2
-        mouse_event(&H10, 0, 0, 0, 0) '&H4
+        Mouse_event(&H8, 0, 0, 0, 0) '&H2
+        Mouse_event(&H10, 0, 0, 0, 0) '&H4
     End Sub
     Sub RightHold()
-        mouse_event(&H8, 0, 0, 0, 0)
+        Mouse_event(&H8, 0, 0, 0, 0)
     End Sub
     Sub RightRelease()
-        mouse_event(&H10, 0, 0, 0, 0)
+        Mouse_event(&H10, 0, 0, 0, 0)
     End Sub
 
 
@@ -256,6 +256,22 @@
         My.Settings.SettingListboxSelectedIndex = ListBox1.SelectedIndex
         My.Settings.SettingListBoxFontSize = Me.ListBox1.Font.Size
         My.Settings.SettingSplitterDistance = SplitContainer1.SplitterDistance
+
+        'config
+        My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
+        My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
+        My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
+        My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
+        My.Settings.SettingInterval = My.Settings.SettingInterval
+        My.Settings.SettingDarkMode = My.Settings.SettingDarkMode
+        My.Settings.SettingOpacity = My.Settings.SettingOpacity
+        My.Settings.SettingTopMost = My.Settings.SettingTopMost
+        My.Settings.SettingSendkeysOnlyMode = My.Settings.SettingSendkeysOnlyMode
+        My.Settings.SettingBracketOpen = My.Settings.SettingBracketOpen
+        My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
+        My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
+        'My.Settings. = My.Settings.
+
         My.Settings.Save()
     End Sub
 
@@ -267,6 +283,11 @@
     End Sub
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If My.Settings.SettingFirstLoad = 0 Then
+            My.Settings.SettingFirstLoad += 1
+            Application.Restart()
+        End If
+
         LoadDb()
         DarkMode()
         Timer1.Interval = My.Settings.SettingInterval
@@ -276,15 +297,6 @@
         Me.Left = My.Settings.SettingLocationLeft
         Me.Height = My.Settings.SettingHeight
         Me.Width = My.Settings.SettingWidth
-        If My.Settings.SettingFixedSize = True Then
-            Me.FormBorderStyle = 0
-            Me.ControlBox = False
-            Me.Text = ""
-            Me.Height = My.Settings.SettingFixedSizeHeight
-            Me.Width = My.Settings.SettingFixedSizeWidth
-        Else
-            Me.ControlBox = True
-        End If
 
         If ListBox1.Items.Count > 0 Then ListBox1.SelectedIndex = My.Settings.SettingListboxSelectedIndex
         Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, My.Settings.SettingListBoxFontSize)
@@ -307,10 +319,14 @@
         SplitContainer1.SplitterDistance = My.Settings.SettingSplitterDistance
         SplitContainer1.SplitterWidth = My.Settings.SettingSplitterWidth
 
+        If My.Settings.SettingBackgroundImage > "" Then
+            Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
+            FixedSize()
+        End If
     End Sub
 
     Private Sub PD_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        If MouseButtons = Windows.Forms.MouseButtons.Left Then DragformInit()
+        If MouseButtons = Windows.Forms.MouseButtons.Left Then DragFormInit()
     End Sub
 
     Private Sub PD_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
@@ -339,6 +355,7 @@
             Me.Visible = False
             Sleep(1)
             If TextBox1.SelectedText.Length > 0 Then
+                If ListBox1.Items.Count = 0 Then AddDbItm()
                 g_s = TextBox1.SelectedText
                 PD()
             Else
@@ -453,6 +470,7 @@
             End If
 
             Dim x As String
+            If ListBox1.Items.Count = 0 Then AddDbItm()
             'If TextBox1.SelectionStart > 1 Then Console.WriteLine(Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
             If TextBox1.SelectionStart > 1 Then
                 x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
@@ -586,11 +604,7 @@
                             Exit Sub
                         Case "*" & _p
                             Key(Keys.Back, False, 2)
-                            Key(Keys.OemSemicolon, True, 1)
-                            Exit Sub
-                        Case ":" & _p
-                            Key(Keys.Back, False, 2)
-                            Key(Keys.Right, False, 1)
+                            Key(Keys.Right, True, 1)
                             Exit Sub
                         Case "0" & _p
                             Key(Keys.Back, False, 1)
@@ -650,7 +664,7 @@
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         If TextBox2.Text = "'" Then Exit Sub
-        If My.Settings.SettingTitleTip = True And My.Settings.SettingFixedSize = False Then Me.Text = "PD > " & TextBox2.Text
+        If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = "PD > " & TextBox2.Text
 
 
         If ((TextBox2.TextLength = g_length) Or (TextBox2.Text.StartsWith(p_) And TextBox2.TextLength >= 1)) = False Then
@@ -1210,8 +1224,8 @@ App:
             SendKeys.Send(g_s)
         Else
             For g_kb_i = 0 To g_s.Length
-                If g_kb_i >= g_s.Length Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
                 If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
+                If g_kb_i >= g_s.Length Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
                 'Console.WriteLine("print: " & g_s(g_kb_i))
                 Kb(g_s(g_kb_i))
             Next
@@ -1331,4 +1345,35 @@ App:
         End If
     End Sub
 
+    Sub FixedSize()
+        If Me.ControlBox = True Then
+            Me.FormBorderStyle = FormBorderStyle.None
+            Me.ControlBox = False
+            Me.Text = ""
+        Else
+            Me.ControlBox = True
+            Me.FormBorderStyle = FormBorderStyle.Sizable
+            Me.Text = "PD"
+            Me.ShowIcon = True
+            Me.Icon = Me.Icon
+        End If
+        If My.Settings.SettingBackgroundImage > "" Then Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
+        If Me.SplitContainer1.Visible = True Then
+            If My.Settings.SettingBackgroundImage > "" Then
+                Me.BackColor = Color.GhostWhite
+                Me.SplitContainer1.Visible = False
+            End If
+        Else
+            If My.Settings.SettingDarkMode = True Then Me.BackColor = Color.Black Else Me.BackColor = Nothing
+            Me.SplitContainer1.Visible = True
+        End If
+
+    End Sub
+
+    Private Sub PD_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
+        If My.Settings.SettingBackgroundImage > "" Then
+            FixedSize()
+        End If
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
+    End Sub
 End Class

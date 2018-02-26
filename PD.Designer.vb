@@ -99,11 +99,13 @@ Partial Class PD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(284, 229)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TextBox2)
         Me.Name = "PD"
         Me.Text = "PD"
+        Me.TransparencyKey = System.Drawing.Color.GhostWhite
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
