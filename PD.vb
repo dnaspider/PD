@@ -1221,7 +1221,7 @@ App:
     'global g_
     Dim g_presses As String = "1" 'default press | «up»
     Dim g_n As String = "0" 'number | *# or :#
-    Dim g_s As String 'string | «code-» GlobalString
+    Dim g_s As String = "" 'string | «code-» GlobalString
     Dim p_ As String = My.Settings.SettingBracketOpen '«
     Dim _p As String = My.Settings.SettingBracketClose '»
     Dim g_ignoreWhiteSpace As Boolean = False
