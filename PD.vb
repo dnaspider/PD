@@ -351,6 +351,7 @@
         End If
 
         If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
+            If TextBox1.Text = "" Then Exit Sub
             Dim x As Boolean = Me.Visible
             Me.Visible = False
             Sleep(1)
@@ -359,6 +360,7 @@
                 g_s = TextBox1.SelectedText
                 PD()
             Else
+                If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.Text > "" Then g_s = TextBox1.Text : PD()
             End If
             Me.Visible = x
@@ -946,6 +948,10 @@
                 'Console.WriteLine("new string: " & g_s)
 
                 Select Case middle
+                    Case "x"
+                        SetCursorPos(CInt(g_n) + Cursor.Position.X, Cursor.Position.Y)
+                    Case "y"
+                        SetCursorPos(Cursor.Position.X, CInt(g_n) + Cursor.Position.Y)
                     Case "date"
                         Dim d As String = (Date.Now.Month.ToString & "/" & Date.Now.Day.ToString & "/" & Date.Now.Year.ToString)
                         If g_n <> "0" Then
