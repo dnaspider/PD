@@ -243,7 +243,7 @@
     Sub SaveSettings()
         If Me.Top <> -32000 Then My.Settings.SettingLocationTop = Me.Top
         If Me.Left <> -32000 Then My.Settings.SettingLocationLeft = Me.Left
-        If WindowState = 0 Then
+        If WindowState = 0 And ControlBox = True Then
             My.Settings.SettingHeight = Me.Height
             My.Settings.SettingWidth = Me.Width
         End If
