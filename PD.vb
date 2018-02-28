@@ -258,19 +258,21 @@
         My.Settings.SettingSplitterDistance = SplitContainer1.SplitterDistance
 
         'config
-        My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
-        My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
-        My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
-        My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
-        My.Settings.SettingInterval = My.Settings.SettingInterval
-        My.Settings.SettingDarkMode = My.Settings.SettingDarkMode
-        My.Settings.SettingOpacity = My.Settings.SettingOpacity
-        My.Settings.SettingTopMost = My.Settings.SettingTopMost
-        My.Settings.SettingSendkeysOnlyMode = My.Settings.SettingSendkeysOnlyMode
-        My.Settings.SettingBracketOpen = My.Settings.SettingBracketOpen
-        My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
-        My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
-        'My.Settings. = My.Settings.
+        If My.Settings.SettingFirstLoad = 0 Then
+            My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
+            My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
+            My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
+            My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
+            My.Settings.SettingInterval = My.Settings.SettingInterval
+            My.Settings.SettingDarkMode = My.Settings.SettingDarkMode
+            My.Settings.SettingOpacity = My.Settings.SettingOpacity
+            My.Settings.SettingTopMost = My.Settings.SettingTopMost
+            My.Settings.SettingSendkeysOnlyMode = My.Settings.SettingSendkeysOnlyMode
+            My.Settings.SettingBracketOpen = My.Settings.SettingBracketOpen
+            My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
+            My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
+            My.Settings.SettingFirstLoad += 1
+        End If
 
         My.Settings.Save()
     End Sub
@@ -283,10 +285,7 @@
     End Sub
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If My.Settings.SettingFirstLoad = 0 Then
-            My.Settings.SettingFirstLoad += 1
-            Application.Restart()
-        End If
+        If My.Settings.SettingFirstLoad = 0 Then Application.Restart()
 
         LoadDb()
         DarkMode()
@@ -1334,7 +1333,19 @@ App:
     End Sub
 
     Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.F)) Then
+            If ListBox1.SelectedIndex = -1 Then If ListBox1.Items.Count > 0 Then ListBox1.SelectedIndex = 0 Else Exit Sub
+            If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = 0 : Exit Sub
+            If ListBox1.SelectedItem.ToString.Contains(LCase(TextBox1.Text)) Then ListBox1.SelectedIndex += 1 ': Exit Sub
+            For i = ListBox1.SelectedIndex To ListBox1.Items.Count - 1
+                If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = 0 : Exit Sub
+                If ListBox1.Items(i).ToString.Contains(LCase(TextBox1.Text)) Then ListBox1.SelectedIndex = i : Exit Sub
+                If i = ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = 0 : Exit Sub
+            Next
+        End If
+
         If CBool(GetAsyncKeyState(Keys.F4)) Then TextClear()
+
         'move cursor home or end
         If e.KeyValue = 40 Then 'down {end}
             If TextBox1.Text > "" Then
