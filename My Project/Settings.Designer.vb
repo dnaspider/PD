@@ -390,6 +390,18 @@ Namespace My
                 Me("SettingFirstLoad") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SettingInfiniteLoop() As Boolean
+            Get
+                Return CType(Me("SettingInfiniteLoop"),Boolean)
+            End Get
+            Set
+                Me("SettingInfiniteLoop") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

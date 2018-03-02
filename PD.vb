@@ -77,12 +77,32 @@
         TextBox1.SelectedText = ""
     End Sub
 
+    Sub SleepMinutes(m As Integer)
+        Dim x = Now.AddMinutes(m)
+        Application.DoEvents()
+        Do While x > Now
+            If CBool(GetAsyncKeyState(Keys.Pause)) Or CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Do
+            System.Threading.Thread.Sleep(m)
+        Loop
+        Application.DoEvents()
+    End Sub
+
+    Sub SleepMS(ms As Integer)
+        Dim x = Now.AddMilliseconds(ms)
+        Application.DoEvents()
+        Do While x > Now
+            If CBool(GetAsyncKeyState(Keys.Pause)) Or CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Do
+            System.Threading.Thread.Sleep(ms)
+        Loop
+        Application.DoEvents()
+    End Sub
+
     Sub Sleep(ms As Integer)
         System.Threading.Thread.Sleep(ms)
         Application.DoEvents()
     End Sub
 
-    Sub Timeout(ms As Double)
+    Sub Timeout(ms As Integer)
         Dim x = Now.AddMilliseconds(ms)
         Do While x > Now
             If CBool(GetAsyncKeyState(Keys.Pause)) Or CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
@@ -271,6 +291,7 @@
             My.Settings.SettingBracketOpen = My.Settings.SettingBracketOpen
             My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
             My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
+            My.Settings.SettingInfiniteLoop = My.Settings.SettingInfiniteLoop
             My.Settings.SettingFirstLoad += 1
         End If
 
@@ -341,16 +362,23 @@
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
+            TextBox2.Text = "'"
+            If Me.Visible = True Then Me.Text = "PD > '" & g_s
             If TextBox1.Text > "" Then
                 If ListBox1.Items.Count = 0 Then AddDbItm()
-                If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText : PD()
-                If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text : PD()
+                If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText
+                If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text
+                If Me.Visible = True Then Me.Text = "PD > '" & g_s
+                PD()
             End If
             If TextBox1.Text = "" And ListBox1.Items.Count > 0 Then PD()
+            ClearAllKeys()
+            TextBox2.Clear()
         End If
 
         If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
             If TextBox1.Text = "" Then Exit Sub
+            TextBox2.Text = "'"
             Dim x As Boolean = Me.Visible
             Me.Visible = False
             Sleep(1)
@@ -363,6 +391,8 @@
                 If TextBox1.Text > "" Then g_s = TextBox1.Text : PD()
             End If
             Me.Visible = x
+            ClearAllKeys()
+            TextBox2.Clear()
         End If
 
         If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText("į")
@@ -501,6 +531,9 @@
                     Case "iw" & _p
                         AutoComplete("", "-iw", 1) 'ignore whitespace 
                         Exit Sub
+                    Case "mi" & _p
+                        AutoComplete("nute:", "", 0)
+                        Exit Sub
                     Case "re" & _p
                         AutoComplete("place:|", "", 0)
                         Key(Keys.Left, False, 1)
@@ -521,7 +554,7 @@
                         AutoComplete(":", "", 0)
                         Exit Sub
                     Case "xy" & _p
-                        For i = 3 To 0 Step -1
+                        For i = 3 To 1 Step -1
                             Me.Text = "PD > " & p_ & "xy:" & i.ToString & _p
                             Sleep(1000)
                         Next
@@ -1000,7 +1033,11 @@
                         g_ignoreWhiteSpace = False
                     Case "cb"
                         Clipboard.SetText(g_n)
+                    Case "minute"
+                        SleepMinutes(CInt(g_n))
                     Case "sleep"
+                        SleepMS(CInt(g_n))
+                    Case "Sleep"
                         Sleep(CInt(g_n))
                     Case ","
                         If g_n <> "0" Then
@@ -1175,15 +1212,17 @@
                         'connect
                         If middle.StartsWith("'") Then Exit Select
                         For i = 0 To ar.Count - 1
-                            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
+                            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit For
                             If Split(ar(i).ToString, ":").GetValue(1).ToString.Contains(middle) Then
                                 g_i = CInt(Split(ar(i).ToString, ":").GetValue(0))
                                 g_s = ListBox1.Items(g_i).ToString.Substring(ListBox1.Items(g_i).ToString.IndexOf(_p) + 1, ListBox1.Items(g_i).ToString.Length - ListBox1.Items(g_i).ToString.IndexOf(_p) - 1) & g_s
                                 'Console.WriteLine("connect: " & Split(ar(i).ToString, ":").GetValue(1).ToString)
-                                If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) And Split(ar(i).ToString, ":").GetValue(1).ToString <> middle Or g_code = middle And g_s.Length = 0 Then
-                                    MsgBox("Infinite loop" & vbNewLine & p_ & g_code & _p & " >" & g_s, vbExclamation)
-                                    g_s = ""
-                                    Exit Sub
+                                If My.Settings.SettingInfiniteLoop = False Then
+                                    If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) And Split(ar(i).ToString, ":").GetValue(1).ToString <> middle Or g_code = middle And g_s.Length = 0 Then
+                                        MsgBox("Infinite loop" & vbNewLine & p_ & g_code & _p & " >" & g_s, vbExclamation)
+                                        g_s = ""
+                                        Exit Sub
+                                    End If
                                 End If
                                 PD()
                                 g_s = ""
@@ -1229,12 +1268,13 @@ App:
             SendKeys.Send(g_s)
         Else
             For g_kb_i = 0 To g_s.Length
-                If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub 'stop
-                If g_kb_i >= g_s.Length Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) : Exit For
+                If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit For 'stop
+                If g_kb_i >= g_s.Length Then Exit For
                 'Console.WriteLine("print: " & g_s(g_kb_i))
                 Kb(g_s(g_kb_i))
             Next
         End If
+        g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
         'Console.WriteLine("#####finish#####" & vbNewLine)
     End Sub
 
