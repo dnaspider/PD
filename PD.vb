@@ -58,7 +58,7 @@
 
     Sub Key(key As Integer, shft As Boolean, presses As Integer)
         If shft Then Keybd_event(Keys.RShiftKey, 0, 1, 0)
-        If CInt(g_presses) > 1 Then presses = CInt(g_presses) 'Convert.ToUInt16(
+        If CInt(g_presses) > 1 Then presses = CInt(g_presses)
         For i = 1 To presses
             Keybd_event(key, 0, 0, 0)
             Keybd_event(key, 0, 2, 0)
@@ -539,14 +539,14 @@
                         AutoComplete("place:|", "", 0)
                         Key(Keys.Left, False, 1)
                         Exit Sub
-                    Case "st" & _p
-                        AutoComplete("op-audio", "", 1)
+                    Case "sl" & _p
+                        AutoComplete("eep:", "", 0)
                         Exit Sub
                     Case "sp" & _p
                         AutoComplete("ace*", "", 0)
                         Exit Sub
-                    Case "sl" & _p
-                        AutoComplete("eep:", "", 0)
+                    Case "st" & _p
+                        AutoComplete("op-audio", "", 1)
                         Exit Sub
                     Case "ti" & _p
                         AutoComplete("me", "", 1)
@@ -618,6 +618,9 @@
                             Exit Sub
                         Case "w" & _p
                             AutoComplete("in", "-win", 1)
+                            Exit Sub
+                        Case "x" & _p, "y" & _p
+                            AutoComplete(":", "", 0)
                             Exit Sub
 
                         Case p_ & _p
@@ -1304,7 +1307,7 @@ App:
                 PD()
             Case 2 '«code-»
                 g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
-                Key(Keys.Back, False, ListBox1.SelectedItem.ToString.IndexOf(_p) - 2) 'auto bs*#
+                Key(Keys.Back, False, (g_code.Replace("į", "").Replace("-", "").Length)) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
                 g_s = Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length)
