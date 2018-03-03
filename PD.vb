@@ -363,15 +363,16 @@
 
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
             TextBox2.Text = "'"
-            If Me.Visible = True Then Me.Text = "PD > '" & g_s
+            If Me.ControlBox = True Then Me.Text = "PD > " & g_s
             If TextBox1.Text > "" Then
                 If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText
                 If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text
-                If Me.Visible = True Then Me.Text = "PD > '" & g_s
+                If Me.ControlBox = True Then Me.Text = "PD > " & g_s
                 PD()
             End If
             If TextBox1.Text = "" And ListBox1.Items.Count > 0 Then PD()
+            If Me.ControlBox = True Then Me.Text = "PD"
             ClearAllKeys()
             TextBox2.Clear()
         End If
