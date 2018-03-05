@@ -511,10 +511,7 @@
                     Case "ap" & _p
                         AutoComplete("p:", "", 0)
                         Exit Sub
-                    Case "au" & _p
-                        AutoComplete("dio:", "", 0)
-                        Exit Sub
-                    Case "Au" & _p
+                    Case "au" & _p, "Au" & _p
                         AutoComplete("dio:", "", 0)
                         Exit Sub
                     Case "da" & _p
@@ -619,7 +616,7 @@
                         Case "w" & _p
                             AutoComplete("in", "-win", 1)
                             Exit Sub
-                        Case "x" & _p, "y" & _p
+                        Case "x" & _p, "y" & _p, "," & _p
                             AutoComplete(":", "", 0)
                             Exit Sub
 
@@ -628,15 +625,7 @@
                             Key(Keys.Delete, False, 1)
                             Key(Keys.Tab, False, 1)
                             Exit Sub
-                        Case _p & p_
-                            Key(Keys.Back, False, 1)
-                            SendKeys.Send(p_ & _p & "{left}")
-                            Exit Sub
-                        Case Chr(9)
-                            Key(Keys.Back, False, 1)
-                            SendKeys.Send(p_ & _p & "{left}")
-                            Exit Sub
-                        Case _p
+                        Case _p & p_, Chr(9), _p
                             Key(Keys.Back, False, 1)
                             SendKeys.Send(p_ & _p & "{left}")
                             Exit Sub
@@ -644,49 +633,12 @@
                             Key(Keys.Back, False, 2)
                             Key(Keys.Right, True, 1)
                             Exit Sub
-                        Case "0" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "1" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "2" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "3" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "4" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "5" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "6" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "7" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "8" & _p
-                            Key(Keys.Back, False, 1)
-                            Key(Keys.Right, False, 1)
-                            Exit Sub
-                        Case "9" & _p
+                        Case "0" & _p, "1" & _p, "2" & _p, "3" & _p, "4" & _p, "5" & _p, "6" & _p, "7" & _p, "8" & _p, "9" & _p
                             Key(Keys.Back, False, 1)
                             Key(Keys.Right, False, 1)
                             Exit Sub
                     End Select
                 End If
-
 
             End If
             Key(Keys.Back, False, 1)
