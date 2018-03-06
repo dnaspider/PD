@@ -377,7 +377,7 @@
             TextBox2.Clear()
         End If
 
-        If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
+        If CBool(GetAsyncKeyState(Keys.F5)) And TextBox1.ContainsFocus Then
             If TextBox1.Text = "" Then Exit Sub
             TextBox2.Text = "'"
             Dim x As Boolean = Me.Visible
@@ -648,7 +648,6 @@
     End Sub
 
     Dim g_length As Integer = My.Settings.SettingCodeLength
-    'dim g_b_length As Integer = My.Settings.SettingBracketCodeLength
     Dim g_i As Integer = 0 'listbox1 item
     Dim g_kb_i As Integer = 0 'kb item c
 
@@ -1001,6 +1000,8 @@
                         Else
                             Sleep(77)
                         End If
+                    Case "App"
+                        AppActivate(g_n)
                     Case "app"
                         GetApp()
                     Case "win"
@@ -1306,7 +1307,6 @@ App:
     Private Sub SplitContainer1_MouseDown(sender As Object, e As MouseEventArgs) Handles SplitContainer1.MouseDown
         If MouseButtons = Windows.Forms.MouseButtons.Right And ListBox1.Items.Count > 0 Then
             'select top or bottom item
-            If Not ListBox1.Items.Count >= 0 Then Exit Sub
             If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then
                 ListBox1.SelectedItem = ListBox1.Items.Item(0)
             Else
@@ -1343,18 +1343,14 @@ App:
         If CBool(GetAsyncKeyState(Keys.F4)) Then TextClear()
 
         'move cursor home or end
-        If e.KeyValue = 40 Then 'down {end}
-            If TextBox1.Text > "" Then
-                Dim getLastLineNumb = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart + TextBox1.TextLength) + 1
-                Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
-                If getLineNumb = getLastLineNumb Then TextBox1.SelectionStart = TextBox1.TextLength : Exit Sub 'Bottom
-            End If
+        If e.KeyValue = 40 And TextBox1.Text > "" Then 'down {end}
+            Dim getLastLineNumb = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart + TextBox1.TextLength) + 1
+            Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
+            If getLineNumb = getLastLineNumb Then TextBox1.SelectionStart = TextBox1.TextLength : Exit Sub 'Bottom
         End If
-        If e.KeyValue = 38 Then 'up {home}
-            If TextBox1.Text > "" Then
-                Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
-                If getLineNumb = 1 Then TextBox1.SelectionStart = 0 : Exit Sub 'Bottom
-            End If
+        If e.KeyValue = 38 And TextBox1.Text > "" Then 'up {home}
+            Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
+            If getLineNumb = 1 Then TextBox1.SelectionStart = 0 : Exit Sub 'Bottom
         End If
     End Sub
 
@@ -1384,9 +1380,7 @@ App:
     End Sub
 
     Private Sub PD_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
-        If My.Settings.SettingBackgroundImage > "" Then
-            FixedSize()
-        End If
+        If My.Settings.SettingBackgroundImage > "" Then FixedSize()
         If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
     End Sub
 End Class
