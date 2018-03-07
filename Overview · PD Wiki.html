@@ -1,4 +1,4 @@
-<style>body{background: black;color:lime;}a{color:red;}</style>
+<style>pre{font-family: sans-serif;}body{font-size:100%;font-family:impact;background: black;color:lime;}a{color:red;}strong{color:silver;}</style>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,13 +25,39 @@
 <br>Input: A-Z, 0-9, Insert
 (PD &gt; input)
 <br>Contact: @dnaspider
+
+<h3>
+<a id="user-content-basic-examples--modes" class="anchor" href="#basic-examples--modes">Basic examples:  (modes)</a></h3>
+
+* Press <strong>RCtrl</strong> then type <strong>test</strong> for output <strong>Hi!</strong>
+
+    <strong>«test-»Hi!</strong>
+
+* Type <strong>welc</strong> somewhere to output <strong>ome</strong> 
+  (SettingCodeLength: 4)
+
+    <strong>welcome«:{left 2}+{left 2}»</strong>
+
+* Press <strong>RCtrl</strong> then type <strong>t1</strong> to 
+  output `Goodbye`
+
+    <strong>«t1»Goodbye</strong>
+
+* Connect - Press <strong>RCtrl</strong> then type <strong>t2</strong> for output
+
+    <strong>«t2»«t1»«ctrl»a«-ctrl»</strong>
+
 <h3>
 <a id="user-content-interface-commands" class="anchor" href="#interface-commands">Interface commands:</a></h3>
     Escape: Stop
     H + Escape: Toggle visibility
-    Scroll lock: Test or repeat
     Double click: Toggle (if SettingBackgroundImage has value)
     Ctrl + Double click: Center
+    
+    <strong>⚠</strong> Scroll lock caution: 
+    If Compatibility, Run this program
+    as an administrator, press Scroll
+    Lock again to unlock loop ex. «v-»🗽
 
 <h3>
 <a id="user-content-list-box-commands" class="anchor" href="#list-box-commands">List box commands:</a></h3>
@@ -55,26 +81,6 @@
 <a id="user-content-splitter-command" class="anchor" href="#splitter-command">Splitter command:</a></h3>
     Right click: Toggle select
 
-<h3>
-<a id="user-content-basic-examples--modes" class="anchor" href="#basic-examples--modes">Basic examples:  (modes)</a></h3>
-
-* Press RCtrl then type `test` for output `Hi!`
-
-    <strong>«test-»Hi!</strong>
-
-* Type `welc` somewhere to output `ome` 
-  (SettingCodeLength: 4)
-
-    <strong>welcome«:{left 2}+{left 2}»</strong>
-
-* Press RCtrl then type `t1` to 
-  output `Goodbye`
-
-    <strong>«t1»Goodbye</strong>
-
-* Connect
-
-    <strong>«t2»«t1»</strong>
 
 <h3>
 <a id="user-content--code-list-output" class="anchor" href="#-code-list-output">«» Code list (output)</a></h3>
@@ -87,15 +93,16 @@
     «date:»	Replace forward slashes with value 
                 ex. «date:-»
     «:»		Sendkeys. Example: «:test+{left 4}»
-    «&lt;&lt;»	Print open code bracket 
+    «<<»	Print open code bracket 
                 (SettingBracketOpen)
-    «&gt;&gt;»	Print close bracket
+    «>>»	Print close bracket
     «iw»«-iw»	Ignore white space («iw + Tab»)
     «cb:»	Copy clipboard value. ex. «cb:test»
-    «minute:»	Pause program x minutes 
-    «sleep:»	Pause program x milliseconds 
-		ex. «sleep:1000» (sleep 1 second)
-    «,»		Sleep 77ms or «,:1777»
+    «sleep:»	Pause program x ms, Esc to stop
+        ex. «sleep:1000» (sleep 1 second)
+    «Sleep:»	Pause program x milliseconds
+    «,»		Sleep 77ms or «,:» ex. «,:1777»
+    «minute:»	Pause program x minutes, Esc to stop
     «to:»	Timeout ex. «to:1000» Timeout 1
                 second, press Escape to stop
     «app:»	App activate. ex. «app:PD» 
@@ -160,6 +167,7 @@
     «stop-audio»
     «yesno:»	Verify ex. «yesno:Continue?»
     «replace:that|this»	(edit clipboard value)
+
 <h3>
 <a id="user-content-master-settings" class="anchor" href="#master-settings">Master Settings:</a></h3>
 C:\Users\..\AppData\Local\pd\..\..\user.config
