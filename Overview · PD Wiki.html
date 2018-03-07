@@ -1,0 +1,266 @@
+<style>body{background: black;color:lime;}a{color:red;}</style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width">
+  
+  <title>Overview · dnaspider/PD Wiki</title>
+  <meta name="description" content="PD - 🗽Keyboard assist">
+  <meta name="go-import" content="github.com/dnaspider/PD git https://github.com/dnaspider/PD.git">
+
+  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.github.com/favicon.ico">
+
+<meta name="theme-color" content="#1e2327">
+
+  </head>
+
+  <body class="logged-in env-production">
+    
+<div class="markdown-body">
+          <p>Welcome to the PD wiki!</p>
+          <img src="./pd.gif" />
+<pre><h2>
+<a id="user-content-pd-v134" class="anchor" href="#pd-v134"></a>PD v1.3.4</h2>Keyboard assist
+<br>Input: A-Z, 0-9, Insert
+(PD &gt; input)
+<br>Contact: @dnaspider
+<h3>
+<a id="user-content-interface-commands" class="anchor" href="#interface-commands">Interface commands:</a></h3>
+    Escape: Stop
+    H + Escape: Toggle visibility
+    Scroll lock: Test or repeat
+    Double click: Toggle (if SettingBackgroundImage has value)
+    Ctrl + Double click: Center
+
+<h3>
+<a id="user-content-list-box-commands" class="anchor" href="#list-box-commands">List box commands:</a></h3>
+    Delete: Remove item
+    Ctrl + E: Edit
+    Ctrl + V: Add clipboard
+
+<h3>
+<a id="user-content-text-box-commands" class="anchor" href="#text-box-commands">Text box commands:</a></h3>
+    Ctrl + S: Save
+    Ctrl + E: Edit
+    Ctrl + U: Update
+    Ctrl + F: Find
+    Ctrl + Z: Undo
+    Ctrl + Y: Redo
+    Double click or Tab: Print «»
+    F4: Clear
+    F5: Test selected text or full text
+
+<h3>
+<a id="user-content-splitter-command" class="anchor" href="#splitter-command">Splitter command:</a></h3>
+    Right click: Toggle select
+
+<h3>
+<a id="user-content-basic-examples--modes" class="anchor" href="#basic-examples--modes">Basic examples:  (modes)</a></h3>
+
+* Press RCtrl then type `test` for output `Hi!`
+
+    <strong>«test-»Hi!</strong>
+
+* Type `welc` somewhere to output `ome` 
+  (SettingCodeLength: 4)
+
+    <strong>welcome«:{left 2}+{left 2}»</strong>
+
+* Press RCtrl then type `t1` to 
+  output `Goodbye`
+
+    <strong>«t1»Goodbye</strong>
+
+* Connect
+
+    <strong>«t2»«t1»</strong>
+
+<h3>
+<a id="user-content--code-list-output" class="anchor" href="#-code-list-output">«» Code list (output)</a></h3>
+    «'comments»	
+    «time»	Copy current time to clipboard
+    «Time»	Print current time
+    «time:»	Replace : with value ex. «time:\»
+    «date»	Copy current date to clipboard
+    «Date»	Print current date
+    «date:»	Replace forward slashes with value 
+                ex. «date:-»
+    «:»		Sendkeys. Example: «:test+{left 4}»
+    «&lt;&lt;»	Print open code bracket 
+                (SettingBracketOpen)
+    «&gt;&gt;»	Print close bracket
+    «iw»«-iw»	Ignore white space («iw + Tab»)
+    «cb:»	Copy clipboard value. ex. «cb:test»
+    «minute:»	Pause program x minutes 
+    «sleep:»	Pause program x milliseconds 
+		ex. «sleep:1000» (sleep 1 second)
+    «,»		Sleep 77ms or «,:1777»
+    «to:»	Timeout ex. «to:1000» Timeout 1
+                second, press Escape to stop
+    «app:»	App activate. ex. «app:PD» 
+                (15 second offset) Escape to stop
+    «App:»	App activate
+    «win»«-win»	Auto complete: «w + Tab»
+    «shift»«-shift» (press shift, release 
+                ex. «shift»«up»«-shift»)
+    «alt»«-alt»
+    «ctrl»«-ctrl»
+    «up»
+    «right»
+    «down»
+    «left»
+    «tab»
+    «space»
+    «enter»
+    «menu»
+    «bs» or «backspace»
+    «esc» or «escape»
+    «home»
+    «end»
+    «pu»	page up
+    «pd»	page down
+    «insert»
+    «delete»
+    «f1»	F1-F12 ex. «f4»
+    «n0»	Number Pad 0-9 ex. «n3»
+    «pause» or «break»
+    «ps» or «printscreen»
+    «nl»	Number lock
+    «sl»	Scroll lock
+    «MediaStop»
+    «MediaPlayPause»
+    «MediaNextTrack»
+    «MediaPreviousTrack»
+    «SelectMedia»
+    «vu»	volume up
+    «vd»	volume down
+    «vm»	volume mute
+    «lb»	Left button
+    «rb»	Right button
+    «mb»	Middle button
+    «lc»	Left click
+    «lh»	Left hold
+    «lr»	Left release
+    «mc»	Middle click
+    «mh»	Middle hold
+    «mr»	Middle release
+    «rc»	Right click
+    «rh»	Right hold
+    «rr»	Right release
+    «rp»	Return pointer or «rm»
+    «xy»	Get pointer x y	( «xy + Tab» )
+                ex. «xy:0-0»
+    «x:»	Move pointer x  ex. «x:100» 
+                (right 100px)
+    «y:»	Move pointer y  ex. «y:-100»
+    «audio:»	Play .wav file ex. 
+                «audio:C:\Users\..\sound.wav»
+    «Audio:»	Play .wav and wait to complete
+    «stop-audio»
+    «yesno:»	Verify ex. «yesno:Continue?»
+    «replace:that|this»	(edit clipboard value)
+<h3>
+<a id="user-content-master-settings" class="anchor" href="#master-settings">Master Settings:</a></h3>
+C:\Users\..\AppData\Local\pd\..\..\user.config
+Edit user.config to customize
+Delete pd folder to reset
+<h3>
+<a id="user-content-userconfig" class="anchor" href="#userconfig">User.config</a></h3>
+Adjust this value below if using mode two from above
+`welc` and would like more input values like `welco` (5)
+    SettingCodeLength
+    3
+
+(Right Ctrl key)
+    SettingSpecialKey
+    163
+
+(PD &gt; )
+    SettingTitleTip
+    True
+
+(Ignore mode # two)
+    SettingBracketModeOnlyScan
+    False
+
+(Frequency)
+    SettingInterval
+    150
+
+    SettingInfiniteLoop
+    False
+
+(Interface)
+    SettingDarkMode
+    True
+
+    SettingDarkModeText
+    Lime
+
+    SettingTopMost
+    False
+
+(1 for no opacity)
+    SettingOpacity
+    0.9
+
+(Auto saved values when closed)
+    SettingHeight
+    268
+
+    SettingWidth
+    300
+
+    SettingLocationTop
+    118
+
+    SettingLocationLeft
+    78
+
+    SettingTextBox
+    Text
+
+    SettingListboxSelectedIndex
+    -1
+
+    SettingTabIndex
+    0
+
+    SettingSelectionStart
+    0
+
+    SettingSelectionLength
+    0
+
+    SettingTextBoxZoomFactor
+    1
+
+    SettingListBoxFontSize
+    8.25
+
+    SettingSplitterDistance
+    95
+
+    SettingSplitterWidth
+    15
+
+(v1.0.0)
+    SettingSendkeysOnlyMode
+    False
+
+Customize 
+    SettingBracketOpen
+    «
+
+    SettingBracketClose
+    »
+
+    SettingBackgroundImage
+    &lt;value&gt;C:\Users\..\Desktop\..jpg&lt;/value&gt;
+</pre>
+  </div>
+
+  </body>
+</html>
+
