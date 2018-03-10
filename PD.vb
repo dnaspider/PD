@@ -279,6 +279,7 @@
 
         'config
         If My.Settings.SettingFirstLoad = 0 Then
+            My.Settings.SettingIcon = My.Settings.SettingIcon
             My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
             My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
             My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
@@ -307,7 +308,7 @@
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.SettingFirstLoad = 0 Then Application.Restart()
-
+        If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon)
         LoadDb()
         DarkMode()
         Timer1.Interval = My.Settings.SettingInterval
@@ -1363,8 +1364,7 @@ App:
             Me.ControlBox = True
             Me.FormBorderStyle = FormBorderStyle.Sizable
             Me.Text = "PD"
-            Me.ShowIcon = True
-            Me.Icon = Me.Icon
+            If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon) Else Me.Icon = Me.Icon
         End If
         If My.Settings.SettingBackgroundImage > "" Then Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
         If Me.SplitContainer1.Visible = True Then
