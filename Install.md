@@ -1,5 +1,5 @@
 ## pd.appx install
-* To know what pd.appx or pd.exe version to install: Press Win + Pause on your keyboard and should say x64-bassed or x86<br>
+* To know what pd.appx or pd.exe version to install: Press Win + Pause on your keyboard and should say x64-based or x86<br>
 * If no Pause Break key on your keyboard: Press Win + X, Y
 ### Install pd.cer certificate:
 * Download [pd.cer](https://github.com/dnaspider/PD/releases/download/v1.3.4/pd.cer "pd.appx certificate")
