@@ -234,13 +234,8 @@
     End Sub
 
     Sub TextMock()
-        If TextBox2.TextLength > 20 Then
-            TextBox2.Clear()
-            Exit Sub
-        End If
-        If TextBox2.Text.StartsWith(p_) Then
-            Exit Sub
-        End If
+        If TextBox2.TextLength > 20 Then TextBox2.Clear() : Exit Sub
+        If TextBox2.Text.StartsWith(p_) Then Exit Sub
         TextBox2.Text = Microsoft.VisualBasic.Right(TextBox2.Text, g_length)
     End Sub
 
@@ -378,7 +373,7 @@
             TextBox2.Clear()
         End If
 
-        If CBool(GetAsyncKeyState(Keys.F5)) And TextBox1.ContainsFocus Then
+        If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
             If TextBox1.Text = "" Then Exit Sub
             TextBox2.Text = "'"
             Dim x As Boolean = Me.Visible
@@ -1004,7 +999,22 @@
                     Case "App"
                         AppActivate(g_n)
                     Case "app"
-                        GetApp()
+                        Sleep(1)
+                        Dim x As Integer = 0
+App:
+                        Try
+                            x += 1
+                            AppActivate(g_n)
+                        Catch ex As Exception
+                            If x = 200 Or CBool(GetAsyncKeyState(Keys.Escape)) Then
+                                MsgBox(p_ & "app:" & g_n & _p & " " & " not found", vbExclamation)
+                                g_kb_i = -1
+                                g_s = ""
+                                Exit Sub
+                            End If
+                            Sleep(77)
+                            GoTo App
+                        End Try
                     Case "win"
                         KeyHold(Keys.LWin)
                     Case "-win"
@@ -1178,6 +1188,7 @@
                                 If My.Settings.SettingInfiniteLoop = False Then
                                     If g_s.Contains(p_ & g_code & _p) Or g_s.Contains(middle) And Split(ar(i).ToString, ":").GetValue(1).ToString <> middle Or g_code = middle And g_s.Length = 0 Then
                                         MsgBox("Infinite loop" & vbNewLine & p_ & g_code & _p & " >" & g_s, vbExclamation)
+                                        g_kb_i = -1
                                         g_s = ""
                                         Exit Sub
                                     End If
@@ -1201,21 +1212,6 @@
         '        Exit Sub
         'Err:
         '        MsgBox(Err.Description & vbNewLine & Err.Number, vbExclamation, "Error")
-    End Sub
-
-    Sub GetApp()
-        Sleep(1)
-        Dim x As Integer = 0
-App:
-        Try
-            x += 1
-            AppActivate(g_n)
-        Catch ex As Exception
-            If x = 200 Then MsgBox(p_ & "app:" & g_n & _p & " " & " not found", vbExclamation) : Exit Sub
-            If CBool(GetAsyncKeyState(Keys.Escape)) Then Exit Sub
-            Sleep(77)
-            GoTo App
-        End Try
     End Sub
 
     Sub PD()
