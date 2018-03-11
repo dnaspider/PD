@@ -1250,7 +1250,6 @@ App:
         'Console.WriteLine("code: " & ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)) 'code
         'Console.WriteLine("string: " & ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1))
         g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
-
         Select Case opt
             Case 1 '«code»
                 g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
