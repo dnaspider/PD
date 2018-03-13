@@ -414,6 +414,30 @@ Namespace My
                 Me("SettingIcon") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SettingWordWrap() As Boolean
+            Get
+                Return CType(Me("SettingWordWrap"),Boolean)
+            End Get
+            Set
+                Me("SettingWordWrap") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("PD")>  _
+        Public Property SettingTitleText() As String
+            Get
+                Return CType(Me("SettingTitleText"),String)
+            End Get
+            Set
+                Me("SettingTitleText") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

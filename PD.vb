@@ -275,6 +275,8 @@
         'config
         If My.Settings.SettingFirstLoad = 0 Then
             My.Settings.SettingIcon = My.Settings.SettingIcon
+            My.Settings.SettingTitleText = My.Settings.SettingTitleText
+            My.Settings.SettingWordWrap = My.Settings.SettingWordWrap
             My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
             My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
             My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
@@ -304,6 +306,7 @@
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.SettingFirstLoad = 0 Then Application.Restart()
         If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon)
+        TextBox1.WordWrap = My.Settings.SettingWordWrap
         LoadDb()
         DarkMode()
         Timer1.Interval = My.Settings.SettingInterval
@@ -359,16 +362,16 @@
 
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
             TextBox2.Text = "'"
-            If Me.ControlBox = True Then Me.Text = "PD > " & g_s
+            If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
             If TextBox1.Text > "" Then
                 If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText
                 If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text
-                If Me.ControlBox = True Then Me.Text = "PD > " & g_s
+                If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
                 PD()
             End If
             If TextBox1.Text = "" And ListBox1.Items.Count > 0 Then PD()
-            If Me.ControlBox = True Then Me.Text = "PD"
+            If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText
             ClearAllKeys()
             TextBox2.Clear()
         End If
@@ -446,7 +449,7 @@
             KeyRelease(Keys.Escape)
             If Not Me.Visible Then
                 Me.Show()
-                If Me.Text > "" Then AppActivate("PD")
+                If Me.Text > "" Then AppActivate(My.Settings.SettingTitleText)
                 Exit Sub
             End If
             If Me.Visible Then
@@ -549,14 +552,14 @@
                         Exit Sub
                     Case "xy" & _p
                         For i = 3 To 1 Step -1
-                            Me.Text = "PD > " & p_ & "xy:" & i.ToString & _p
+                            Me.Text = My.Settings.SettingTitleText & " > " & p_ & "xy:" & i.ToString & _p
                             Sleep(1000)
                         Next
                         Key(Keys.Back, False, 1)
                         g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
                         PD()
                         TextBox2.Clear()
-                        Me.Text = "PD"
+                        Me.Text = My.Settings.SettingTitleText
                         Exit Sub
                     Case "ye" & _p
                         AutoComplete("sno:", "", 0)
@@ -649,7 +652,7 @@
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         If TextBox2.Text = "'" Then Exit Sub
-        If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = "PD > " & TextBox2.Text
+        If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & TextBox2.Text
 
 
         If ((TextBox2.TextLength = g_length) Or (TextBox2.Text.StartsWith(p_) And TextBox2.TextLength >= 1)) = False Then
@@ -1358,7 +1361,7 @@ App:
         Else
             Me.ControlBox = True
             Me.FormBorderStyle = FormBorderStyle.Sizable
-            Me.Text = "PD"
+            Me.Text = My.Settings.SettingTitleText
             If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon) Else Me.Icon = Me.Icon
         End If
         If My.Settings.SettingBackgroundImage > "" Then Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
