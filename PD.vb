@@ -469,16 +469,11 @@
             SendKeys.Send(p_ & _p & "{left}") '«»
             Exit Sub
         End If
-
     End Sub
 
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
-        If e.KeyChar = ChrW(19) Then 'ctrl + s
-            AddDbItm()
-        End If
-        If e.KeyChar = ChrW(21) Then 'ctrl + u
-            UpdateDbItm()
-        End If
+        If e.KeyChar = ChrW(19) Then AddDbItm() 'ctrl + s
+        If e.KeyChar = ChrW(21) Then UpdateDbItm() 'ctrl + u
         If e.KeyChar = ChrW(5) Then 'ctrl + e
             TextBox1.Undo()
             EditDbItm()
@@ -1231,6 +1226,7 @@ App:
                 Kb(g_s(g_kb_i))
             Next
         End If
+        '$repeat
         g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
         'Console.WriteLine("#####finish#####" & vbNewLine)
     End Sub
@@ -1277,7 +1273,6 @@ App:
     Private Sub ListBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles ListBox1.KeyUp
         'Console.WriteLine(e.KeyValue)
         If (e.KeyValue) = 46 Then RemoveDbItm() 'delete
-
     End Sub
 
     Private Sub ListBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ListBox1.KeyPress
@@ -1321,7 +1316,7 @@ App:
                 Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, ListBox1.Font.Size + +1)
             End If
             If e.Delta < 1 Then
-                If ListBox1.Font.Size <= 0.25 Then ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, 8.25)   'reset
+                If ListBox1.Font.Size <= 0.25 Then ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, 8.25) 'reset
                 Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, ListBox1.Font.Size + -1) '- 
             End If
         End If
@@ -1331,7 +1326,7 @@ App:
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.F)) Then
             If ListBox1.SelectedIndex = -1 Then If ListBox1.Items.Count > 0 Then ListBox1.SelectedIndex = 0 Else Exit Sub
             If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = 0 : Exit Sub
-            If ListBox1.SelectedItem.ToString.Contains(LCase(TextBox1.Text)) Then ListBox1.SelectedIndex += 1 ': Exit Sub
+            If ListBox1.SelectedItem.ToString.Contains(LCase(TextBox1.Text)) Then ListBox1.SelectedIndex += 1
             For i = ListBox1.SelectedIndex To ListBox1.Items.Count - 1
                 If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = 0 : Exit Sub
                 If ListBox1.Items(i).ToString.Contains(LCase(TextBox1.Text)) Then ListBox1.SelectedIndex = i : Exit Sub
@@ -1342,12 +1337,12 @@ App:
         If CBool(GetAsyncKeyState(Keys.F4)) Then TextClear()
 
         'move cursor home or end
-        If e.KeyValue = 40 And TextBox1.Text > "" Then 'down {end}
+        If CBool(GetAsyncKeyState(Keys.Down)) And TextBox1.Text > "" Then 'end
             Dim getLastLineNumb = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart + TextBox1.TextLength) + 1
             Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
             If getLineNumb = getLastLineNumb Then TextBox1.SelectionStart = TextBox1.TextLength : Exit Sub 'Bottom
         End If
-        If e.KeyValue = 38 And TextBox1.Text > "" Then 'up {home}
+        If CBool(GetAsyncKeyState(Keys.Up)) And TextBox1.Text > "" Then 'home
             Dim getLineNumb As Integer = TextBox1.GetLineFromCharIndex(TextBox1.SelectionStart) + 1
             If getLineNumb = 1 Then TextBox1.SelectionStart = 0 : Exit Sub 'Bottom
         End If
@@ -1374,11 +1369,14 @@ App:
             If My.Settings.SettingDarkMode = True Then Me.BackColor = Color.Black Else Me.BackColor = Nothing
             Me.SplitContainer1.Visible = True
         End If
-
     End Sub
 
     Private Sub PD_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
         If My.Settings.SettingBackgroundImage > "" Then FixedSize()
         If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
+    End Sub
+
+    Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
+        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Timer1.Enabled = False Else Timer1.Enabled = True
     End Sub
 End Class
