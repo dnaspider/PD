@@ -99,5 +99,14 @@
     <Setting Name="SettingTitleText" Type="System.String" Scope="User">
       <Value Profile="(Default)">PD</Value>
     </Setting>
+    <Setting Name="SettingIgnoreWhiteSpaceOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">‹</Value>
+    </Setting>
+    <Setting Name="SettingIgnoreWhiteSpaceClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">›</Value>
+    </Setting>
+    <Setting Name="SettingInsertSymbol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">į</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

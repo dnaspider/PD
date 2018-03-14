@@ -290,6 +290,9 @@
             My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
             My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
             My.Settings.SettingInfiniteLoop = My.Settings.SettingInfiniteLoop
+            My.Settings.SettingIgnoreWhiteSpaceOpen = My.Settings.SettingIgnoreWhiteSpaceOpen
+            My.Settings.SettingIgnoreWhiteSpaceClose = My.Settings.SettingIgnoreWhiteSpaceClose
+            My.Settings.SettingInsertSymbol = My.Settings.SettingInsertSymbol
             My.Settings.SettingFirstLoad += 1
         End If
 
@@ -364,7 +367,6 @@
             TextBox2.Text = "'"
             If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
             If TextBox1.Text > "" Then
-                If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText
                 If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text
                 If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
@@ -383,11 +385,9 @@
             Me.Visible = False
             Sleep(1)
             If TextBox1.SelectedText.Length > 0 Then
-                If ListBox1.Items.Count = 0 Then AddDbItm()
                 g_s = TextBox1.SelectedText
                 PD()
             Else
-                If ListBox1.Items.Count = 0 Then AddDbItm()
                 If TextBox1.Text > "" Then g_s = TextBox1.Text : PD()
             End If
             Me.Visible = x
@@ -395,7 +395,7 @@
             TextBox2.Clear()
         End If
 
-        If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText("į")
+        If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText(My.Settings.SettingInsertSymbol)
 
         If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else TextBox2.Text = p_
 
@@ -444,6 +444,10 @@
         If CBool(GetAsyncKeyState(Keys.D9)) Then TextBox2.AppendText("9")
         If CBool(GetAsyncKeyState(Keys.D0)) Then TextBox2.AppendText("0")
 
+        If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.X)) Then
+            Clipboard.SetText(p_ & "xy:" & MousePosition.X & "-" & MousePosition.Y & _p)
+        End If
+
         If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.H)) Then 'toggle visibility 
             KeyRelease(Keys.H)
             KeyRelease(Keys.Escape)
@@ -457,7 +461,6 @@
                 Exit Sub
             End If
         End If
-
     End Sub
 
     Private Sub TextBox1_DoubleClick(sender As Object, e As EventArgs) Handles TextBox1.DoubleClick
@@ -496,7 +499,6 @@
             End If
 
             Dim x As String
-            If ListBox1.Items.Count = 0 Then AddDbItm()
             'If TextBox1.SelectionStart > 1 Then Console.WriteLine(Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
             If TextBox1.SelectionStart > 1 Then
                 x = (Microsoft.VisualBasic.Mid(TextBox1.Text, TextBox1.SelectionStart - 1))
@@ -544,6 +546,11 @@
                         Exit Sub
                     Case "to" & _p 'timeout
                         AutoComplete(":", "", 0)
+                        Exit Sub
+                    Case "ws" & _p
+                        Key(Keys.Back, False, 4) 'ignore whitespace 
+                        Key(Keys.Delete, False, 1)
+                        SendKeys.Send(ws_ & _ws & "{left}")
                         Exit Sub
                     Case "xy" & _p
                         For i = 3 To 1 Step -1
@@ -904,6 +911,10 @@
                 Key(Keys.OemPeriod, True, 1)
             Case "."
                 Key(Keys.OemPeriod, False, 1)
+            Case ws_
+                g_ignoreWhiteSpace = True
+            Case _ws
+                g_ignoreWhiteSpace = False
 
             Case p_
                 'Console.WriteLine("indexof «:" & g_s.IndexOf(p_) + 1)
@@ -1227,7 +1238,7 @@ App:
             Next
         End If
         '$repeat
-        g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
+        If ListBox1.Items.Count > 0 Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
         'Console.WriteLine("#####finish#####" & vbNewLine)
     End Sub
 
@@ -1237,6 +1248,9 @@ App:
     Dim g_s As String = "" 'string | «code-» GlobalString
     Dim p_ As String = My.Settings.SettingBracketOpen '«
     Dim _p As String = My.Settings.SettingBracketClose '»
+    Dim ws_ As String = My.Settings.SettingIgnoreWhiteSpaceOpen '‹
+    Dim _ws As String = My.Settings.SettingIgnoreWhiteSpaceClose '›
+
     Dim g_ignoreWhiteSpace As Boolean = False
     Dim g_x As Integer, g_y As Integer
     Dim ar As New ArrayList

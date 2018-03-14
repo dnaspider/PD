@@ -438,6 +438,42 @@ Namespace My
                 Me("SettingTitleText") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("‹")>  _
+        Public Property SettingIgnoreWhiteSpaceOpen() As String
+            Get
+                Return CType(Me("SettingIgnoreWhiteSpaceOpen"),String)
+            End Get
+            Set
+                Me("SettingIgnoreWhiteSpaceOpen") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("›")>  _
+        Public Property SettingIgnoreWhiteSpaceClose() As String
+            Get
+                Return CType(Me("SettingIgnoreWhiteSpaceClose"),String)
+            End Get
+            Set
+                Me("SettingIgnoreWhiteSpaceClose") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("į")>  _
+        Public Property SettingInsertSymbol() As String
+            Get
+                Return CType(Me("SettingInsertSymbol"),String)
+            End Get
+            Set
+                Me("SettingInsertSymbol") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
