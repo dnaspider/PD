@@ -1391,6 +1391,6 @@ App:
     End Sub
 
     Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
-        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Timer1.Enabled = False Else Timer1.Enabled = True
+        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False Else ClearAllKeys() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True 'on/off
     End Sub
 End Class
