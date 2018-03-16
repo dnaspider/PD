@@ -190,24 +190,8 @@
         Next
         GetAsyncKeyState(g_specialKey)
         GetAsyncKeyState(Keys.Insert)
+
         'GetAsyncKeyState(Keys.Escape)
-        'GetAsyncKeyState(Keys.LShiftKey)
-        'GetAsyncKeyState(Keys.RShiftKey)
-        'GetAsyncKeyState(Keys.LMenu)
-        'GetAsyncKeyState(Keys.Enter)
-        'GetAsyncKeyState(Keys.Tab)
-        'GetAsyncKeyState(Keys.Space)
-        'GetAsyncKeyState(Keys.OemQuestion)
-        'GetAsyncKeyState(Keys.OemMinus)
-        'GetAsyncKeyState(Keys.Oemplus)
-        'GetAsyncKeyState(Keys.OemOpenBrackets)
-        'GetAsyncKeyState(Keys.OemCloseBrackets)
-        'GetAsyncKeyState(Keys.OemBackslash)
-        'GetAsyncKeyState(Keys.OemSemicolon)
-        'GetAsyncKeyState(Keys.OemQuotes)
-        'GetAsyncKeyState(Keys.Oemcomma)
-        'GetAsyncKeyState(Keys.OemPeriod)
-        'GetAsyncKeyState(Keys.Oem3) '`
         'GetAsyncKeyState(Keys.F1)
         'GetAsyncKeyState(Keys.F2)
         'GetAsyncKeyState(Keys.F3)
@@ -220,6 +204,34 @@
         'GetAsyncKeyState(Keys.F10)
         'GetAsyncKeyState(Keys.F11)
         'GetAsyncKeyState(Keys.F12)
+        'GetAsyncKeyState(Keys.PrintScreen)
+        'GetAsyncKeyState(Keys.Scroll)
+        'GetAsyncKeyState(Keys.Pause)
+
+        'GetAsyncKeyState(Keys.LWin)
+        'GetAsyncKeyState(Keys.RWin)
+        'GetAsyncKeyState(Keys.LShiftKey)
+        'GetAsyncKeyState(Keys.RShiftKey)
+        'GetAsyncKeyState(Keys.LMenu) 'alt
+        'GetAsyncKeyState(Keys.RMenu)
+        'GetAsyncKeyState(Keys.LControlKey)
+        'GetAsyncKeyState(Keys.RControlKey)
+
+        'GetAsyncKeyState(Keys.Enter)
+        'GetAsyncKeyState(Keys.Tab)
+        'GetAsyncKeyState(Keys.CapsLock)
+        'GetAsyncKeyState(Keys.Space)
+        'GetAsyncKeyState(Keys.OemQuestion)
+        'GetAsyncKeyState(Keys.OemOpenBrackets)
+        'GetAsyncKeyState(Keys.OemCloseBrackets)
+        'GetAsyncKeyState(Keys.OemBackslash)
+        'GetAsyncKeyState(Keys.OemPipe)
+        'GetAsyncKeyState(Keys.OemSemicolon)
+        'GetAsyncKeyState(Keys.OemQuotes)
+        'GetAsyncKeyState(Keys.OemMinus)
+        'GetAsyncKeyState(Keys.Oemplus)
+        'GetAsyncKeyState(Keys.Oemcomma)
+        'GetAsyncKeyState(Keys.OemPeriod)
         'GetAsyncKeyState(Keys.Up)
         'GetAsyncKeyState(Keys.Down)
         'GetAsyncKeyState(Keys.Left)
@@ -231,6 +243,39 @@
         'GetAsyncKeyState(Keys.Delete)
         'GetAsyncKeyState(Keys.Back)
         'GetAsyncKeyState(Keys.Menu)
+
+        'GetAsyncKeyState(Keys.NumLock)
+        'GetAsyncKeyState(Keys.NumPad0)
+        'GetAsyncKeyState(Keys.NumPad1)
+        'GetAsyncKeyState(Keys.NumPad2)
+        'GetAsyncKeyState(Keys.NumPad3)
+        'GetAsyncKeyState(Keys.NumPad4)
+        'GetAsyncKeyState(Keys.NumPad5)
+        'GetAsyncKeyState(Keys.NumPad6)
+        'GetAsyncKeyState(Keys.NumPad7)
+        'GetAsyncKeyState(Keys.NumPad8)
+        'GetAsyncKeyState(Keys.NumPad9)
+        'GetAsyncKeyState(Keys.Multiply)
+        'GetAsyncKeyState(Keys.Add)
+        'GetAsyncKeyState(Keys.Divide)
+        'GetAsyncKeyState(Keys.Subtract)
+        'GetAsyncKeyState(Keys.Return)
+
+        'GetAsyncKeyState(Keys.Oem1) ';
+        'GetAsyncKeyState(Keys.Oem2) '/
+        'GetAsyncKeyState(Keys.Oem3) '`
+        'GetAsyncKeyState(Keys.Oem4) '[
+        'GetAsyncKeyState(Keys.Oem5) '\
+        'GetAsyncKeyState(Keys.Oem6) ']
+        'GetAsyncKeyState(Keys.Oem7) '
+
+        'GetAsyncKeyState(Keys.VolumeUp)
+        'GetAsyncKeyState(Keys.VolumeDown)
+        'GetAsyncKeyState(Keys.VolumeMute)
+        'GetAsyncKeyState(Keys.MediaPlayPause)
+        'GetAsyncKeyState(Keys.MediaStop)
+        'GetAsyncKeyState(Keys.MediaPreviousTrack)
+        'GetAsyncKeyState(Keys.MediaNextTrack)
     End Sub
 
     Sub TextMock()
@@ -443,6 +488,91 @@
         If CBool(GetAsyncKeyState(Keys.D8)) Then TextBox2.AppendText("8")
         If CBool(GetAsyncKeyState(Keys.D9)) Then TextBox2.AppendText("9")
         If CBool(GetAsyncKeyState(Keys.D0)) Then TextBox2.AppendText("0")
+
+        'If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F1)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F2)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F3)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F4)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F5)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F6)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F7)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F8)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F9)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F10)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F11)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.F12)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.PrintScreen)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Scroll)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Pause)) Then TextBox2.AppendText("")
+
+        'If CBool(GetAsyncKeyState(Keys.LWin)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.RWin)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.LShiftKey)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.RShiftKey)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.LMenu)) Then TextBox2.AppendText("") 'alt
+        'If CBool(GetAsyncKeyState(Keys.RMenu)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.LControlKey)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.RControlKey)) Then TextBox2.AppendText("")
+
+        'If CBool(GetAsyncKeyState(Keys.Enter)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Tab)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.CapsLock)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Space)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemQuestion)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemOpenBrackets)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemCloseBrackets)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemBackslash)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemPipe)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemSemicolon)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemQuotes)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemMinus)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Oemplus)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Oemcomma)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.OemPeriod)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Up)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Down)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Left)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Right)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.PageDown)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.PageUp)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Home)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.End)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Delete)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Menu)) Then TextBox2.AppendText("")
+
+        'If CBool(GetAsyncKeyState(Keys.NumLock)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad0)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad1)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad2)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad3)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad4)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad5)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad6)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad7)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad8)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.NumPad9)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Multiply)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Add)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Divide)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Subtract)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.Return)) Then TextBox2.AppendText("")
+
+        'If CBool(GetAsyncKeyState(Keys.Oem1)) Then TextBox2.AppendText("") ';
+        'If CBool(GetAsyncKeyState(Keys.Oem2)) Then TextBox2.AppendText("") '/
+        'If CBool(GetAsyncKeyState(Keys.Oem3)) Then TextBox2.AppendText("") '`
+        'If CBool(GetAsyncKeyState(Keys.Oem4)) Then TextBox2.AppendText("") '[
+        'If CBool(GetAsyncKeyState(Keys.Oem5)) Then TextBox2.AppendText("") '\
+        'If CBool(GetAsyncKeyState(Keys.Oem6)) Then TextBox2.AppendText("") ']
+        'If CBool(GetAsyncKeyState(Keys.Oem7)) Then TextBox2.AppendText("") '
+
+        'If CBool(GetAsyncKeyState(Keys.VolumeUp)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.VolumeDown)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.VolumeMute)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.MediaPlayPause)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.MediaStop)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.MediaPreviousTrack)) Then TextBox2.AppendText("")
+        'If CBool(GetAsyncKeyState(Keys.MediaNextTrack)) Then TextBox2.AppendText("")
 
         If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.X)) Then
             Clipboard.SetText(p_ & "xy:" & MousePosition.X & "-" & MousePosition.Y & _p)
