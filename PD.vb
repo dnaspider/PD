@@ -190,7 +190,7 @@
         Next
         GetAsyncKeyState(g_specialKey)
         GetAsyncKeyState(Keys.Insert)
-
+#Region "rem"
         'GetAsyncKeyState(Keys.Escape)
         'GetAsyncKeyState(Keys.F1)
         'GetAsyncKeyState(Keys.F2)
@@ -276,6 +276,7 @@
         'GetAsyncKeyState(Keys.MediaStop)
         'GetAsyncKeyState(Keys.MediaPreviousTrack)
         'GetAsyncKeyState(Keys.MediaNextTrack)
+#End Region
     End Sub
 
     Sub TextMock()
@@ -489,6 +490,7 @@
         If CBool(GetAsyncKeyState(Keys.D9)) Then TextBox2.AppendText("9")
         If CBool(GetAsyncKeyState(Keys.D0)) Then TextBox2.AppendText("0")
 
+#Region "rem"
         'If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText("")
         'If CBool(GetAsyncKeyState(Keys.F1)) Then TextBox2.AppendText("")
         'If CBool(GetAsyncKeyState(Keys.F2)) Then TextBox2.AppendText("")
@@ -573,7 +575,7 @@
         'If CBool(GetAsyncKeyState(Keys.MediaStop)) Then TextBox2.AppendText("")
         'If CBool(GetAsyncKeyState(Keys.MediaPreviousTrack)) Then TextBox2.AppendText("")
         'If CBool(GetAsyncKeyState(Keys.MediaNextTrack)) Then TextBox2.AppendText("")
-
+#End Region
         If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.X)) Then
             Clipboard.SetText(p_ & "xy:" & MousePosition.X & "-" & MousePosition.Y & _p)
         End If
@@ -662,6 +664,14 @@
                         AutoComplete("place:|", "", 0)
                         Key(Keys.Left, False, 1)
                         Exit Sub
+                    Case "se" & _p 'exe settings
+                        g_s = p_ & "win" & _p & "r" & p_ & "-win" & _p & p_ & "app:run" & _p & Application.LocalUserAppDataPath.ToString.Replace("\PD\" & Application.ProductVersion, "") & p_ & "enter" & _p
+                        PD()
+                        AppActivate(My.Settings.SettingTitleText)
+                        Key(Keys.Right, False, 1)
+                        Key(Keys.Back, False, 5)
+                        TextBox2.Clear()
+                        Exit Sub
                     Case "sl" & _p
                         AutoComplete("eep:", "", 0)
                         Exit Sub
@@ -677,9 +687,16 @@
                     Case "to" & _p 'timeout
                         AutoComplete(":", "", 0)
                         Exit Sub
-                    Case "ws" & _p
-                        Key(Keys.Back, False, 4) 'ignore whitespace 
-                        Key(Keys.Delete, False, 1)
+                    Case "wr" & _p 'run
+                        TextBox2.Clear()
+                        Key(Keys.Right, False, 1)
+                        Key(Keys.Back, False, 5)
+                        SendKeys.Send(p_ & "win" & _p & "r" & p_ & "-win" & _p & p_ & "app:run" & _p & p_ & "enter" & _p)
+                        Key(Keys.Left, False, 7)
+                        Exit Sub
+                    Case "ws" & _p 'ignore whitespace
+                        Key(Keys.Right, False, 1)
+                        Key(Keys.Back, False, 5)
                         SendKeys.Send(ws_ & _ws & "{left}")
                         Exit Sub
                     Case "xy" & _p
@@ -688,10 +705,9 @@
                             Sleep(1000)
                         Next
                         Key(Keys.Back, False, 1)
+                        TextBox2.Clear()
                         g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
                         PD()
-                        TextBox2.Clear()
-                        Me.Text = My.Settings.SettingTitleText
                         Exit Sub
                     Case "ye" & _p
                         AutoComplete("sno:", "", 0)
@@ -1521,6 +1537,6 @@ App:
     End Sub
 
     Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
-        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False Else ClearAllKeys() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True 'on/off
+        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False Else ClearAllKeys() : TextBox2.Clear() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True 'on/off
     End Sub
 End Class
