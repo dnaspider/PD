@@ -354,6 +354,8 @@
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.SettingFirstLoad = 0 Then Application.Restart()
+        Me.Visible = True
+        ListBox1.Width = ListBox1.Width + 10
         If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon)
         TextBox1.WordWrap = My.Settings.SettingWordWrap
         LoadDb()
@@ -799,7 +801,7 @@
     Dim g_kb_i As Integer = 0 'kb item c
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-        If TextBox2.Text = "'" Then Exit Sub
+        If TextBox2.Text = "'" Or TextBox2.Text = "" Then Exit Sub
         If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & TextBox2.Text
 
 
@@ -1415,7 +1417,7 @@ App:
                 PD()
             Case 2 '«code-»
                 g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
-                Key(Keys.Back, False, (g_code.Replace("į", "").Replace("-", "").Length)) 'auto bs*#
+                Key(Keys.Back, False, (g_code.Replace(My.Settings.SettingInsertSymbol, "").Replace("-", "").Length)) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
                 g_s = Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length)
