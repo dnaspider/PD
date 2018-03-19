@@ -410,6 +410,7 @@
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
+            If TextBox1.ContainsFocus Then Exit Sub
             TextBox2.Text = "'"
             If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
             If TextBox1.Text > "" Then
@@ -1537,6 +1538,10 @@ App:
     End Sub
 
     Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
-        If CBool(GetAsyncKeyState(Keys.OemQuotes)) Or e.KeyCode = 8 Then If TextBox1.Text.StartsWith("'") Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False Else ClearAllKeys() : TextBox2.Clear() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True 'on/off
+        If TextBox1.Text.StartsWith("'") Then
+            If Timer1.Enabled = True Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False
+        Else
+            If Timer1.Enabled = False Then ClearAllKeys() : TextBox2.Clear() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True
+        End If
     End Sub
 End Class
