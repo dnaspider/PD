@@ -1447,13 +1447,18 @@ App:
             UpdateDbItm()
             CleanSelect()
         End If
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.X)) Then
+            Clipboard.SetText(ListBox1.Text)
+            Key(Keys.Delete, False, 1)
+            CleanSelect()
+        End If
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.C)) Then
             Clipboard.SetText(ListBox1.Text)
             CleanSelect()
         End If
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.V)) And Clipboard.GetText > "" And ListBox1.Items.Count > 0 Then
             ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
-            My.Settings.SettingDB.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
+            My.Settings.SettingDB.Insert(ListBox1.SelectedIndex - 1, Clipboard.GetText)
             CleanSelect()
             LoadArray()
         End If
@@ -1538,7 +1543,7 @@ App:
     End Sub
 
     Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
-        If TextBox1.Text.StartsWith("'") Then
+        If TextBox1.Text.StartsWith("'") Then 'off/on
             If Timer1.Enabled = True Then Me.Text = My.Settings.SettingTitleText & " > Off" : Timer1.Enabled = False
         Else
             If Timer1.Enabled = False Then ClearAllKeys() : TextBox2.Clear() : Me.Text = My.Settings.SettingTitleText : Timer1.Enabled = True
