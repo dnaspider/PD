@@ -608,6 +608,10 @@
     End Sub
 
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.A)) And TextBox1.TextLength > 1 Then
+            TextBox1.SelectionStart = 0
+            TextBox1.SelectionLength = TextBox1.TextLength
+        End If
         If e.KeyChar = ChrW(19) Then AddDbItm() 'ctrl + s
         If e.KeyChar = ChrW(21) Then UpdateDbItm() 'ctrl + u
         If e.KeyChar = ChrW(5) Then 'ctrl + e
