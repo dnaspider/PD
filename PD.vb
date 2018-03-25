@@ -442,11 +442,12 @@
             TextBox2.Clear()
         End If
 
-        If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText(My.Settings.SettingInsertSymbol)
-
         If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else ClearAllKeys() : TextBox2.Text = p_
 
         If My.Settings.SettingBracketModeOnlyScan And TextBox2.Text.StartsWith(p_) = False Then Exit Sub
+
+
+        If CBool(GetAsyncKeyState(Keys.Insert)) Then TextBox2.AppendText(My.Settings.SettingInsertSymbol)
 
         If CBool(GetAsyncKeyState(Keys.Z)) Then TextBox2.AppendText("z")
         If CBool(GetAsyncKeyState(Keys.X)) Then TextBox2.AppendText("x")
