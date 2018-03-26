@@ -606,6 +606,9 @@
     End Sub
 
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.X)) Then GetAsyncKeyState(Keys.X) 'clear
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.C)) Then GetAsyncKeyState(Keys.C)
+
         If CBool(GetAsyncKeyState(Keys.LControlKey)) And CBool(GetAsyncKeyState(Keys.A)) And TextBox1.TextLength > 1 Then
             TextBox1.SelectionStart = 0
             TextBox1.SelectionLength = TextBox1.TextLength
@@ -617,6 +620,7 @@
             EditDbItm()
         End If
         If e.KeyChar = ChrW(22) Then  'ctrl + v
+            GetAsyncKeyState(Keys.V)
             If Clipboard.GetText > "" Then Clipboard.SetText(Clipboard.GetText.ToString) 'double paste, raw txt
             TextBox1.Undo()
             TextBox1.Paste()
@@ -1462,6 +1466,7 @@ App:
             ListBox1.Items.Insert(ListBox1.SelectedIndex, Clipboard.GetText)
             My.Settings.SettingDB.Insert(ListBox1.SelectedIndex - 1, Clipboard.GetText)
             CleanSelect()
+            ListBox1.SelectedIndex = ListBox1.SelectedIndex - 1
             LoadArray()
         End If
     End Sub
