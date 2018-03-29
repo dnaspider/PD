@@ -81,10 +81,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("163")>  _
-        Public Property SettingSpecialKey() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("RControlKey")>  _
+        Public Property SettingSpecialKey() As Global.System.Windows.Forms.Keys
             Get
-                Return CType(Me("SettingSpecialKey"),Integer)
+                Return CType(Me("SettingSpecialKey"),Global.System.Windows.Forms.Keys)
             End Get
             Set
                 Me("SettingSpecialKey") = value
