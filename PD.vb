@@ -1389,7 +1389,14 @@ App:
             Next
         End If
         '$repeat
-        If ListBox1.Items.Count > 0 Then g_s = Nothing : g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
+        If ListBox1.Items.Count > 0 Then
+            g_s = Nothing
+            If ListBox1.SelectedItem.ToString.StartsWith(p_) Then
+                g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
+            Else
+                g_s = ListBox1.SelectedItem.ToString
+            End If
+        End If
         'Console.WriteLine("#####finish#####" & vbNewLine)
     End Sub
 
