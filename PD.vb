@@ -190,6 +190,7 @@
         Next
         GetAsyncKeyState(g_specialKey)
         GetAsyncKeyState(Keys.Insert)
+        GetAsyncKeyState(Keys.Space)
 #Region "rem"
         'GetAsyncKeyState(Keys.Escape)
         'GetAsyncKeyState(Keys.F1)
@@ -292,12 +293,6 @@
             TextBox1.BackColor = Color.Black
             TextBox1.ForeColor = My.Settings.SettingDarkModeText
             Me.BackColor = Color.Black
-        Else
-            Me.BackColor = Nothing
-            ListBox1.BackColor = Color.White
-            ListBox1.ForeColor = Color.Black
-            TextBox1.BackColor = Color.White
-            TextBox1.ForeColor = Color.Black
         End If
     End Sub
 
@@ -412,15 +407,15 @@
         If CBool(GetAsyncKeyState(Keys.Scroll)) Then
             If TextBox1.ContainsFocus Then Exit Sub
             TextBox2.Text = "'"
-            If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
+            If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
             If TextBox1.Text > "" Then
                 If TextBox1.SelectedText.Length > 0 Then g_s = TextBox1.SelectedText
                 If TextBox1.SelectedText.Length = 0 Then g_s = TextBox1.Text
-                If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
+                If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
                 PD()
             End If
             If TextBox1.Text = "" And ListBox1.Items.Count > 0 Then PD()
-            If Me.ControlBox = True Then Me.Text = My.Settings.SettingTitleText
+            If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText
             ClearAllKeys()
             TextBox2.Clear()
         End If
@@ -488,6 +483,8 @@
         If CBool(GetAsyncKeyState(Keys.D8)) Then TextBox2.AppendText("8")
         If CBool(GetAsyncKeyState(Keys.D9)) Then TextBox2.AppendText("9")
         If CBool(GetAsyncKeyState(Keys.D0)) Then TextBox2.AppendText("0")
+
+        If CBool(GetAsyncKeyState(Keys.Space)) Then TextBox2.AppendText(" ")
 
 #Region "rem"
         'If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText("")
@@ -664,6 +661,9 @@
                     Case "iw" & _p
                         AutoComplete("", "-iw", 1) 'ignore whitespace 
                         Exit Sub
+                    Case "me" & _p
+                        AutoComplete("nu", "", 1)
+                        Exit Sub
                     Case "mi" & _p
                         AutoComplete("nute:", "", 0)
                         Exit Sub
@@ -715,6 +715,7 @@
                         TextBox2.Clear()
                         g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
                         PD()
+                        Key(Keys.Right, False, 1)
                         Exit Sub
                     Case "ye" & _p
                         AutoComplete("sno:", "", 0)
@@ -742,9 +743,6 @@
                             Exit Sub
                         Case "h" & _p
                             AutoComplete("ome", "", 1)
-                            Exit Sub
-                        Case "u" & _p
-                            AutoComplete("p*", "", 0)
                             Exit Sub
                         Case "i" & _p
                             AutoComplete("nsert", "", 1)
@@ -1127,7 +1125,7 @@
                         Clipboard.SetText(Clipboard.GetText.Replace(CType(Split(g_n, "|").GetValue(0), String), CType(Split(g_n, "|").GetValue(1), String)))
                     Case "yesno"
                         Dim yn = MsgBox(g_n, vbYesNo, "Verify")
-                        If yn = vbYes Then Else Exit Sub
+                        If yn = vbYes Then Else g_s = "" : Exit Sub
                     Case "audio"
                         My.Computer.Audio.Play(g_n)
                     Case "Audio"
@@ -1545,6 +1543,7 @@ App:
     End Sub
 
     Private Sub PD_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
+        GetAsyncKeyState(Keys.LControlKey)
         If My.Settings.SettingBackgroundImage > "" Then FixedSize()
         If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
     End Sub
