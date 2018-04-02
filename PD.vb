@@ -1110,7 +1110,7 @@
                         Dim h As String = Date.Now.Hour.ToString
                         Dim hh As Integer = CInt(h)
                         Dim m As String = "AM"
-                        If CInt(h) > 12 Then m = "PM" : hh -= 12
+                        If CInt(h) = 0 Then hh += 12 Else If CInt(h) > 12 Then m = "PM" : hh -= 12
                         Dim t As String = hh & ":" & Date.Now.Minute.ToString & ":" & Date.Now.Second.ToString & ":" & m
                         If g_n <> "0" Then t = Replace(t, ":", g_n)
                         Clipboard.SetText(t)
