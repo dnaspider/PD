@@ -781,7 +781,7 @@
                             Key(Keys.Back, False, 1)
                             SendKeys.Send(p_ & _p & "{left}")
                             Exit Sub
-                        Case "*" & _p
+                        Case "*" & _p, ":" & _p
                             Key(Keys.Back, False, 2)
                             Key(Keys.Right, True, 1)
                             Exit Sub
@@ -793,8 +793,17 @@
                 End If
 
             End If
-            Key(Keys.Back, False, 1)
-            SendKeys.Send(p_ & _p & "{left}")
+            If TextBox1.SelectionStart = 0 Then
+                Key(Keys.Back, False, 1)
+                SendKeys.Send(p_ + _p + "{left}")
+            ElseIf TextBox1.SelectionStart = 1 And TextBox1.Text.Substring(TextBox1.SelectionStart - 1, 1) = p_ Then
+                Key(Keys.Right, False, 1)
+                Key(Keys.Back, False, 3)
+                Key(Keys.Tab, False, 1)
+            Else
+                Key(Keys.Back, False, 1)
+                SendKeys.Send(p_ + _p + "{left}")
+            End If
         End If
 
     End Sub
