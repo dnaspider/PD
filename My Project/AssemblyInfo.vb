@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("PD")>
-<Assembly: AssemblyDescription("Keyboard Assist")>
+<Assembly: AssemblyDescription("Virtual keyboard assist")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("PD")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.3.13.0")>
-<Assembly: AssemblyFileVersion("1.3.13.0")>
+<Assembly: AssemblyVersion("1.3.14.0")>
+<Assembly: AssemblyFileVersion("1.3.14.0")>

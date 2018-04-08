@@ -324,6 +324,7 @@
             My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
             My.Settings.SettingInterval = My.Settings.SettingInterval
             My.Settings.SettingDarkMode = My.Settings.SettingDarkMode
+            My.Settings.SettingDarkModeText = My.Settings.SettingDarkModeText
             My.Settings.SettingOpacity = My.Settings.SettingOpacity
             My.Settings.SettingTopMost = My.Settings.SettingTopMost
             My.Settings.SettingSendkeysOnlyMode = My.Settings.SettingSendkeysOnlyMode
