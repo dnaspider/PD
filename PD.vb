@@ -784,7 +784,7 @@
                             Exit Sub
                         Case "*" & _p, ":" & _p
                             Key(Keys.Back, False, 2)
-                            Key(Keys.Right, True, 1)
+                            Key(Keys.Right, False, 1)
                             Exit Sub
                         Case "0" & _p, "1" & _p, "2" & _p, "3" & _p, "4" & _p, "5" & _p, "6" & _p, "7" & _p, "8" & _p, "9" & _p
                             Key(Keys.Back, False, 1)
