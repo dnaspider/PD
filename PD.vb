@@ -1439,7 +1439,7 @@ App:
                 PD()
             Case 2 '«code-»
                 g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
-                Key(Keys.Back, False, (g_code.Replace(My.Settings.SettingInsertSymbol, "").Replace(".", "").Replace("-", "").Length)) 'auto bs*#
+                Key(Keys.Back, False, (g_code.Replace(My.Settings.SettingInsertSymbol, "").Replace("-", "").Length)) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
                 g_s = Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length)
