@@ -189,7 +189,6 @@
             GetAsyncKeyState(i)
         Next
         GetAsyncKeyState(Keys.Tab)
-        GetAsyncKeyState(Keys.Escape)
         GetAsyncKeyState(Keys.Insert)
         GetAsyncKeyState(Keys.Space)
         GetAsyncKeyState(g_specialKey)
@@ -489,7 +488,6 @@
 
         If CBool(GetAsyncKeyState(Keys.Space)) Then TextBox2.AppendText(" ")
         If CBool(GetAsyncKeyState(Keys.Tab)) Then TextBox2.AppendText("T")
-        If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText(".")
 
 #Region "rem"
         'If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText("")
@@ -734,7 +732,7 @@
                         Case "a" & _p
                             AutoComplete("lt", "-alt", 1)
                             Exit Sub
-                        Case "b"
+                        Case "b" & _p
                             AutoComplete("s*", "", 0)
                             Exit Sub
                         Case "c" & _p
