@@ -188,9 +188,11 @@
         For i = 65 To 90 'a-z
             GetAsyncKeyState(i)
         Next
-        GetAsyncKeyState(g_specialKey)
+        GetAsyncKeyState(Keys.Tab)
+        GetAsyncKeyState(Keys.Escape)
         GetAsyncKeyState(Keys.Insert)
         GetAsyncKeyState(Keys.Space)
+        GetAsyncKeyState(g_specialKey)
 #Region "rem"
         'GetAsyncKeyState(Keys.Escape)
         'GetAsyncKeyState(Keys.F1)
@@ -486,6 +488,8 @@
         If CBool(GetAsyncKeyState(Keys.D0)) Then TextBox2.AppendText("0")
 
         If CBool(GetAsyncKeyState(Keys.Space)) Then TextBox2.AppendText(" ")
+        If CBool(GetAsyncKeyState(Keys.Tab)) Then TextBox2.AppendText("T")
+        If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText(".")
 
 #Region "rem"
         'If CBool(GetAsyncKeyState(Keys.Escape)) Then TextBox2.AppendText("")
@@ -1437,7 +1441,7 @@ App:
                 PD()
             Case 2 '«code-»
                 g_code = ListBox1.SelectedItem.ToString.Substring(1, ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
-                Key(Keys.Back, False, (g_code.Replace(My.Settings.SettingInsertSymbol, "").Replace("-", "").Length)) 'auto bs*#
+                Key(Keys.Back, False, (g_code.Replace(My.Settings.SettingInsertSymbol, "").Replace(".", "").Replace("-", "").Length)) 'auto bs*#
                 PD()
             Case 3 'code | g_length code
                 g_s = Microsoft.VisualBasic.Right(ListBox1.SelectedItem.ToString, ListBox1.SelectedItem.ToString.Length - g_length)
