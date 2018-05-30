@@ -322,6 +322,7 @@
             My.Settings.SettingWordWrap = My.Settings.SettingWordWrap
             My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
             My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
+            My.Settings.SettingRepeatKey = My.Settings.SettingRepeatKey
             My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
             My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
             My.Settings.SettingInterval = My.Settings.SettingInterval
@@ -1403,7 +1404,7 @@ App:
             Next
         End If
         '$repeat
-        If ListBox1.Items.Count > 0 Then
+        If ListBox1.Items.Count > 0 And ListBox1.SelectedIndex > 0 Then
             g_s = Nothing
             If ListBox1.SelectedItem.ToString.StartsWith(p_) Then
                 g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
