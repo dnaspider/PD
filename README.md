@@ -1,5 +1,5 @@
 # PD
-Vanilla sendkeys program for Windows 10
+Virtual keyboard app for Windows 10 desktop
 
 ## Wiki
 [Overview](https://github.com/dnaspider/PD/wiki/Overview "Wiki")
@@ -10,3 +10,5 @@ Vanilla sendkeys program for Windows 10
 
 ## Source
 Visual Studio 2017
+
+Right click pd.vbproj or pd -> Open with Visual Studio
