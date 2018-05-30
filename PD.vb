@@ -192,6 +192,7 @@
         GetAsyncKeyState(Keys.Insert)
         GetAsyncKeyState(Keys.Space)
         GetAsyncKeyState(g_specialKey)
+        GetAsyncKeyState(g_repeatKey)
 #Region "rem"
         'GetAsyncKeyState(Keys.Escape)
         'GetAsyncKeyState(Keys.F1)
@@ -403,10 +404,11 @@
     End Sub
 
     Dim g_specialKey As Integer = My.Settings.SettingSpecialKey
+    Dim g_repeatKey As Integer = My.Settings.SettingRepeatKey
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
 
-        If CBool(GetAsyncKeyState(Keys.Scroll)) Then
+        If CBool(GetAsyncKeyState(g_repeatKey)) Then
             If TextBox1.ContainsFocus Then Exit Sub
             TextBox2.Text = "'"
             If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText & " > " & g_s
