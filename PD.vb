@@ -1404,7 +1404,7 @@ App:
             Next
         End If
         '$repeat
-        If ListBox1.Items.Count > 0 And ListBox1.SelectedIndex > 0 Then
+        If ListBox1.Items.Count > 0 And ListBox1.SelectedIndex > -1 Then
             g_s = Nothing
             If ListBox1.SelectedItem.ToString.StartsWith(p_) Then
                 g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1)
