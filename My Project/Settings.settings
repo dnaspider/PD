@@ -11,7 +11,7 @@
     <Setting Name="SettingCodeLength" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="SettingSpecialKey" Type="System.Windows.Forms.Keys" Scope="User">
+    <Setting Name="SettingBracketKey" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">RControlKey</Value>
     </Setting>
     <Setting Name="SettingTitleTip" Type="System.Boolean" Scope="User">
@@ -112,6 +112,9 @@
     </Setting>
     <Setting Name="SettingRepeatKey" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">Scroll</Value>
+    </Setting>
+    <Setting Name="SettingOpenCloseBracketModeScan" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -132,7 +132,7 @@
         TextClear()
         ListBox1.SelectedIndex() = ListBox1.Items.Count - 1
         KeyRelease(Keys.S)
-        KeyRelease(g_specialKey)
+        KeyRelease(g_bracketKey)
         CleanMock()
         LoadArray()
     End Sub
@@ -191,7 +191,7 @@
         GetAsyncKeyState(Keys.Tab)
         GetAsyncKeyState(Keys.Insert)
         GetAsyncKeyState(Keys.Space)
-        GetAsyncKeyState(g_specialKey)
+        GetAsyncKeyState(g_bracketKey)
         GetAsyncKeyState(g_repeatKey)
 #Region "rem"
         'GetAsyncKeyState(Keys.Escape)
@@ -321,7 +321,7 @@
             My.Settings.SettingTitleText = My.Settings.SettingTitleText
             My.Settings.SettingWordWrap = My.Settings.SettingWordWrap
             My.Settings.SettingCodeLength = My.Settings.SettingCodeLength
-            My.Settings.SettingSpecialKey = My.Settings.SettingSpecialKey
+            My.Settings.SettingBracketKey = My.Settings.SettingBracketKey
             My.Settings.SettingRepeatKey = My.Settings.SettingRepeatKey
             My.Settings.SettingTitleTip = My.Settings.SettingTitleTip
             My.Settings.SettingBracketModeOnlyScan = My.Settings.SettingBracketModeOnlyScan
@@ -338,6 +338,7 @@
             My.Settings.SettingIgnoreWhiteSpaceOpen = My.Settings.SettingIgnoreWhiteSpaceOpen
             My.Settings.SettingIgnoreWhiteSpaceClose = My.Settings.SettingIgnoreWhiteSpaceClose
             My.Settings.SettingInsertSymbol = My.Settings.SettingInsertSymbol
+            My.Settings.SettingOpenCloseBracketModeScan = My.Settings.SettingOpenCloseBracketModeScan
             My.Settings.SettingFirstLoad += 1
         End If
 
@@ -404,7 +405,7 @@
         If MouseButtons = Windows.Forms.MouseButtons.Left Then DragForm()
     End Sub
 
-    Dim g_specialKey As Integer = My.Settings.SettingSpecialKey
+    Dim g_bracketKey As Integer = My.Settings.SettingBracketKey
     Dim g_repeatKey As Integer = My.Settings.SettingRepeatKey
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If CBool(GetAsyncKeyState(Keys.Back)) Then If TextBox2.Text > "" Then TextBox2.Text = Microsoft.VisualBasic.Left(TextBox2.Text, Len(TextBox2.Text) - 1)
@@ -442,7 +443,18 @@
             TextBox2.Clear()
         End If
 
-        If CBool(GetAsyncKeyState(g_specialKey)) Then If TextBox2.Text.StartsWith(p_) Then TextBox2.Clear() Else ClearAllKeys() : TextBox2.Text = p_
+        If CBool(GetAsyncKeyState(g_bracketKey)) Then
+            If TextBox2.Text.StartsWith(p_) Then
+                If My.Settings.SettingOpenCloseBracketModeScan Then
+                    If TextBox2.Text.Contains(_p) Or TextBox2.Text = p_ Then TextBox2.Clear() Else TextBox2.Text += _p : Exit Sub
+                Else
+                    TextBox2.Clear()
+                End If
+            Else
+                ClearAllKeys()
+                TextBox2.Text = p_
+            End If
+        End If
 
         If My.Settings.SettingBracketModeOnlyScan And TextBox2.Text.StartsWith(p_) = False Then Exit Sub
 
@@ -836,18 +848,33 @@
 
             g_i = i
             If TextBox2.Text.StartsWith(p_) Then '«x»|«x-»
-                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + _p) Then '«x»
-                    Sk(1)
-                    Exit For
-                End If
+                If My.Settings.SettingOpenCloseBracketModeScan Then
+                    If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text) And TextBox2.Text.EndsWith(_p) Then '«x»
+                        Sk(1)
+                        Exit For
+                    End If
 
-                If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text + "-" & _p) Then '«x-»
-                    Sk(2)
-                    Exit For
+                    If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text.Substring(0, TextBox2.TextLength - 1) & "-") And TextBox2.Text.EndsWith(_p) Then '«x-»
+                        Sk(2)
+                        Exit For
+                    End If
+
+                    If i = ListBox1.Items.Count - 1 And TextBox2.Text.EndsWith(_p) Then TextBox2.Clear()
+                Else
+                    If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text & _p) Then '«x
+                        Sk(1)
+                        Exit For
+                    End If
+
+                    If ListBox1.Items(i).ToString.StartsWith(TextBox2.Text & "-" & _p) Then '«x-
+                        Sk(2)
+                        Exit For
+                    End If
                 End If
 
                 Continue For
             End If
+
 
             If Microsoft.VisualBasic.Left(TextBox2.Text, g_length) = Microsoft.VisualBasic.Left(ListBox1.Items(i).ToString, g_length) Then 'x
                 Sk(3)

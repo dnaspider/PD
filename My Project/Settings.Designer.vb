@@ -83,12 +83,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("RControlKey")>  _
-        Public Property SettingSpecialKey() As Global.System.Windows.Forms.Keys
+        Public Property SettingBracketKey() As Global.System.Windows.Forms.Keys
             Get
-                Return CType(Me("SettingSpecialKey"),Global.System.Windows.Forms.Keys)
+                Return CType(Me("SettingBracketKey"),Global.System.Windows.Forms.Keys)
             End Get
             Set
-                Me("SettingSpecialKey") = value
+                Me("SettingBracketKey") = value
             End Set
         End Property
         
@@ -485,6 +485,18 @@ Namespace My
             End Get
             Set
                 Me("SettingRepeatKey") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SettingOpenCloseBracketModeScan() As Boolean
+            Get
+                Return CType(Me("SettingOpenCloseBracketModeScan"),Boolean)
+            End Get
+            Set
+                Me("SettingOpenCloseBracketModeScan") = value
             End Set
         End Property
     End Class
