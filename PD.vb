@@ -339,6 +339,7 @@
             My.Settings.SettingIgnoreWhiteSpaceClose = My.Settings.SettingIgnoreWhiteSpaceClose
             My.Settings.SettingInsertSymbol = My.Settings.SettingInsertSymbol
             My.Settings.SettingOpenCloseBracketModeScan = My.Settings.SettingOpenCloseBracketModeScan
+            My.Settings.SettingSettingClickItemToRun = My.Settings.SettingSettingClickItemToRun
             My.Settings.SettingFirstLoad += 1
         End If
 
@@ -389,6 +390,7 @@
 
         If My.Settings.SettingBackgroundImage > "" Then
             Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
+            If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Exit Sub
             FixedSize()
         End If
     End Sub
@@ -1595,6 +1597,19 @@ App:
         GetAsyncKeyState(Keys.LControlKey)
         If My.Settings.SettingBackgroundImage > "" Then FixedSize()
         If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
+    End Sub
+
+    Private Sub ListBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseClick
+        If My.Settings.SettingSettingClickItemToRun Then
+            Hide()
+            LeftRelease()
+            TextBox2.Text = "'"
+            If ListBox1.SelectedItem.ToString().StartsWith(p_) Then g_s = ListBox1.SelectedItem.ToString.Substring(ListBox1.SelectedItem.ToString.IndexOf(_p) + 1, ListBox1.SelectedItem.ToString.Length - ListBox1.SelectedItem.ToString.IndexOf(_p) - 1) Else g_s = ListBox1.SelectedItem.ToString
+            PD()
+            ClearAllKeys()
+            TextBox2.Clear()
+            Me.Show()
+        End If
     End Sub
 
     Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp

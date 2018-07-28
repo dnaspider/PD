@@ -499,6 +499,18 @@ Namespace My
                 Me("SettingOpenCloseBracketModeScan") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SettingSettingClickItemToRun() As Boolean
+            Get
+                Return CType(Me("SettingSettingClickItemToRun"),Boolean)
+            End Get
+            Set
+                Me("SettingSettingClickItemToRun") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

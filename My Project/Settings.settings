@@ -116,5 +116,8 @@
     <Setting Name="SettingOpenCloseBracketModeScan" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SettingSettingClickItemToRun" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
