@@ -426,7 +426,6 @@
             If My.Settings.SettingTitleTip = True And ControlBox = True Then Me.Text = My.Settings.SettingTitleText
             ClearAllKeys()
             TextBox2.Clear()
-            g_i = g_s.Length() : Exit Sub
         End If
 
         If TextBox1.ContainsFocus And CBool(GetAsyncKeyState(Keys.F5)) Then
