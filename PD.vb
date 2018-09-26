@@ -1226,7 +1226,7 @@ App:
                     Case "-win"
                         KeyRelease(Keys.LWin)
                     Case "shift"
-                        Keybd_event(Keys.LShiftKey, 0, 0, 0)
+                        Keybd_event(Keys.LShiftKey, 0, 1, 0)
                     Case "-shift"
                         KeyRelease(Keys.LShiftKey)
                         Keybd_event(Keys.RShiftKey, 0, 2, 0)
