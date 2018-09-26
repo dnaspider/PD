@@ -59,16 +59,18 @@
     Sub Key(key As Integer, shft As Boolean, presses As Integer)
         If shft Then Keybd_event(Keys.RShiftKey, 0, 1, 0)
         If CInt(g_presses) > 1 Then presses = CInt(g_presses)
+        Dim x = 1 : If key = Keys.Left Or key = Keys.Up Or key = Keys.Right Or key = Keys.Down Or key = Keys.Home Or key = Keys.End Then x = 1 Else x = 0
         For i = 1 To presses
-            Keybd_event(key, 0, 0, 0)
+            Keybd_event(key, 0, x, 0)
             Keybd_event(key, 0, 2, 0)
         Next
         If shft Then Keybd_event(Keys.RShiftKey, 0, 2, 0)
         GetAsyncKeyState(key)
     End Sub
-    Sub KeyHold(key As Integer)
-        Keybd_event(key, 0, 1, 0)
-    End Sub
+    'Sub KeyHold(key As Integer)
+    '    Dim x = 0 : If key = Keys.LShiftKey Then x = 0 Else x = 1
+    '    Keybd_event(key, 0, x, 0)
+    'End Sub
     Sub KeyRelease(key As Integer)
         Keybd_event(key, 0, 2, 0)
     End Sub
@@ -1220,11 +1222,11 @@ App:
                             GoTo App
                         End Try
                     Case "win"
-                        KeyHold(Keys.LWin)
+                        Keybd_event(Keys.LWin, 0, 1, 0)
                     Case "-win"
                         KeyRelease(Keys.LWin)
                     Case "shift"
-                        KeyHold(Keys.LShiftKey)
+                        Keybd_event(Keys.LShiftKey, 0, 0, 0)
                     Case "-shift"
                         KeyRelease(Keys.LShiftKey)
                         Keybd_event(Keys.RShiftKey, 0, 2, 0)
