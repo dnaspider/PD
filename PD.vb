@@ -595,7 +595,7 @@
         'If CBool(GetAsyncKeyState(Keys.MediaNextTrack)) Then TextBox2.AppendText("")
 #End Region
         If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.X)) Then
-            Clipboard.SetText(p_ & "xy:" & MousePosition.X & "-" & MousePosition.Y & _p)
+            Clipboard.SetText(p_ & "xy:" & MousePosition.X & "|" & MousePosition.Y & _p)
         End If
 
         If CBool(GetAsyncKeyState(Keys.Escape)) And CBool(GetAsyncKeyState(Keys.H)) Then 'toggle visibility 
@@ -735,7 +735,7 @@
                         Next
                         Key(Keys.Back, False, 1)
                         TextBox2.Clear()
-                        g_s = (":" & MousePosition.X & "-" & MousePosition.Y)
+                        g_s = (":" & MousePosition.X & "|" & MousePosition.Y)
                         PD()
                         Key(Keys.Right, False, 1)
                         Exit Sub
@@ -1328,7 +1328,7 @@ App:
                         Key(Keys.SelectMedia, False, 1)
 
                     Case "xy"
-                        SetCursorPos(CType(Split(g_n, "-").GetValue(0), Integer), CType(Split(g_n, "-").GetValue(1), Integer))
+                        SetCursorPos(CType(Split(g_n, "|").GetValue(0), Integer), CType(Split(g_n, "|").GetValue(1), Integer))
                     Case "rp", "rm" 'return pointer
                         SetCursorPos(g_x, g_y)
 
