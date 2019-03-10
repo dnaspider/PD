@@ -1,0 +1,342 @@
+<style>#warning{color:yellow}body{background: black;color:silver;}a{color:red;text-decoration: none;}strong{color:white;}</style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  
+  <title>Overview · dnaspider/PD Wiki</title>
+  <meta name="description" content="PD - 🗽Virtual keyboard assist">
+
+  </head>
+
+  <body>
+    
+<div class="markdown-body"><pre><h2>PD v1.5.0.5 <a title="contact" href="mailto:dnaspider@live.com">dnaspider@live.com</a></h2></pre><img src="./pd.gif" />
+<pre><a href="#description"><h3>Description:</a></h3>    Virtual keyboard assist
+
+<h3><a href="#input">PD > input:</a></h3>    A-Z
+    0-9
+    Insert
+    Space
+    Tab
+    Right Ctrl:    «        (SettingBracketKey)
+    Scroll:        Repeat   (SettingRepeatKey)
+    
+
+<h3>Basic examples:  (modes)</h3>
+* Bracket mode with auto backspace: Press <strong>Tab</strong> in the text box to auto print <strong>«»</strong>, type <strong>test-</strong>, press <strong>right</strong>, type <strong>Hi!</strong>,
+  and press <strong>Ctrl + S</strong> to save to the list box. After the code is saved to the list box, press <strong>Right Ctrl</strong> (RCtrl), <strong>release</strong>,
+  then type <strong>test</strong> for output: <strong>Hi!</strong>
+  ⚠ After pressing <strong>RCtrl</strong>, title bar text will show <strong>«</strong> symbol. Now type <strong>test</strong> to run the code.
+  PD > «test (this is your PD > input). Minus sign means auto backspace text between <strong>«</strong> and <strong>-</strong> characters.
+
+    <strong>«test-»Hi!</strong>
+
+
+* Non bracket mode: Save code below to the list box then type <strong>welc</strong> somewhere to output <strong>ome</strong> (SettingCodeLength: 4)
+
+    <strong>welcome«:{left 2}+{left 2}»</strong>
+    
+
+    - <strong>RCtrl</strong>, <strong>W</strong> (Bracket mode)
+
+    <strong>«w»elcome«left*2»«shift»«left*2»«-shift»</strong>
+    
+
+    - With white space
+
+    <strong>«w»elcome‹
+        «left*2»
+        «shift»
+            «left*2»
+        «-shift»
+    ›</strong>
+
+
+* Bracket mode: Save code below to the list box then press <strong>RCtrl</strong> then type <strong>t1</strong> to output <strong>Goodbye</strong>
+
+    <strong>«t1»Goodbye</strong>
+
+
+* Open Close Bracket mode scan: Save code below to the list box then press <strong>RCtrl</strong> type <strong>pd</strong> 
+  then press <strong>RCtrl</strong> quickly to output <strong>Hello out there in TV land.</strong> (SettingOpenCloseBracketModeScan must be set to True)
+  ⚠ SettingOpenCloseBracketModeScan must be set to True
+  ⚠ Not recommended if SettingBracketKey is set to RCtrl but will work if press quickly (change SettingBracketKey to something other than a shift or ctrl key. ex. F4)
+
+    <strong>«pd-»Hello out there in TV land.</strong>
+
+
+
+* Connect Mode: Save code below to the list box then press <strong>RCtrl</strong> then type <strong>t2</strong> for output
+
+    <strong>«t2»«t1»«ctrl»a«-ctrl»«'print goodbye and select all»</strong>
+
+    
+* Administrator mode:
+
+    pd.exe:  Properties > Compatibility > Run this program as an administrator
+    pd.appx: Right click > Run as administrator
+
+
+<h3>
+<a href="#interface-commands">Interface commands:</a></h3>
+    Escape:             Stop
+    H + Escape:         Toggle visibility
+    X + Escape:         Get «xy:» (clipboard)
+    Double click:       Toggle (if SettingBackgroundImage has value)
+    Ctrl + Dbl click:   Center
+    Scroll Lock:        Test selected text, text box text, or repeat
+    
+    <strong id="warning">⚠</strong> Scroll lock caution: 
+    Unlock loop:        Press <strong>Scroll Lock</strong> again or <strong>Escape + Scroll Lock</strong>  (ex. «v-»🗽)
+
+<h3>
+<a href="#list-box-commands">List box commands:</a></h3>
+    Delete:             Remove item
+    Ctrl + E:           Edit
+    Ctrl + X:           Cut and copy selected item to clipboard
+    Ctrl + C:           Copy
+    Ctrl + V:           Add clipboard
+
+<h3>
+<a href="#text-box-commands">Text box commands:</a></h3>
+    Ctrl + S:           Save
+    Ctrl + E:           Edit
+    Ctrl + U:           Update
+    Ctrl + F:           Find
+    Ctrl + Z:           Undo
+    Ctrl + Y:           Redo
+    Ctrl + Tab:         List focus
+    Double click | Tab: Print «»
+    Dbl click if empty: Print PD > input
+    F4:                 Clear
+    F5:                 Test selected text or full text
+    Toggle on/off:      ' (Single quote, Backspace)
+
+<h3>
+<a href="#splitter-command">Splitter command:</a></h3>
+    Right click:        Toggle select
+
+
+<h3>
+<a href="#-code-list-output">«» Code list (output)</a></h3>
+«code» Auto complete:   Tab, C (First or first and second letter), Tab
+
+«'comments»	
+«time»	                Copy current time to clipboard
+«Time»	                Print current time
+«time:»	                Replace : with value ex. «time:\»
+«date»	                Copy current date to clipboard
+«Date»	                Print current date
+«date:»	                Replace forward slashes with value ex. «date:-»
+«:»                     Sendkeys. Example: «:test+{left 4}»
+«<<»	                Print open code bracket (SettingBracketOpen)
+«>>»	                Print close bracket
+«iw»«-iw»               Ignore white space («iw + Tab»)
+«ws + Tab»              Ignore white space
+«cb:»	                Copy clipboard value. ex. «cb:test»
+«sleep:»                Pause program x ms, Esc to stop ex. «sleep:1000» (sleep 1 second)
+«Sleep:»                Pause program x milliseconds
+«,»                     Sleep 77ms or «,:» ex. «,:1777»
+«minute:»               Pause program x minutes, Esc to stop
+«to:»	                Timeout ex. «to:1000» Timeout 1 second, press Escape to stop
+«app:»	                App activate. ex. «app:PD» (15 second offset) Escape to stop
+«App:»	                App activate
+«win»«-win»             Auto complete: «w + Tab»
+«wr + Tab»              Run template ex. «win»r«-win»«app:run»cmd«enter»
+«se + Tab»              Open AppData (pd.exe settings)
+«shift»«-shift»         (press shift, release ex. «shift»«up»«-shift»)
+«alt»«-alt»
+«ctrl»«-ctrl»
+«up»
+«right»
+«down»
+«left»
+«tab»
+«space»
+«enter»
+«menu»
+«bs» or «backspace»
+«esc» or «escape»
+«home»
+«end»
+«pu»	                page up
+«pd»	                page down
+«insert»
+«delete»
+«f1»	                F1-F12 ex. «f4»
+«n0»	                Number Pad 0-9 ex. «n3»
+«pause» or «break»
+«ps» or «printscreen»
+«nl»	                Number lock
+«sl»	                Scroll lock
+«MediaStop»
+«MediaPlayPause»
+«MediaNextTrack»
+«MediaPreviousTrack»
+«SelectMedia»
+«vu»	                volume up
+«vd»	                volume down
+«vm»	                volume mute
+«lb»	                Left button
+«rb»	                Right button
+«mb»	                Middle button
+«lc»	                Left click
+«lh»	                Left hold
+«lr»	                Left release
+«mc»	                Middle click
+«mh»	                Middle hold
+«mr»	                Middle release
+«rc»	                Right click
+«rh»	                Right hold
+«rr»	                Right release
+«rp»	                Return pointer or «rm»
+«xy»	                Get pointer x y	( «xy + Tab» ) ex. «xy:0|0»
+«x:»	                Move pointer x  ex. «x:100» (right 100px)
+«y:»	                Move pointer y  ex. «y:-100»
+«audio:»                Play .wav file ex. «audio:C:\Users\..\sound.wav»
+«Audio:»                Play .wav and wait to complete
+«stop-audio»
+«yesno:»                Verify ex. «yesno:Continue?»
+«replace:that|this»     Edit clipboard value
+
+<h3>
+<a href="#master-settings">Master Settings:</a></h3>
+Edit user.config to customize: 
+    First exit program, open and edit user.config, save, then reopen program 
+
+pd.exe user.config location:
+    C:\Users\..\AppData\Local\pd\..\1.3\user.config
+
+pd.appx user.config location:
+    C:\Users\..\AppData\Local\Packages\pd-_..\LocalCache\Local\pd\pd.exe_Url_..\1.3\user.config
+
+Reset:
+    Close program, delete pd folder or user.config, then reopen program
+<h3>
+<a href="#userconfig">User.config</a></h3>
+(Customize)
+    <strong>SettingClickItemToRun
+    False</strong>
+    
+Show program title text: `PD > input`
+    <strong>SettingTitleTip
+    True</strong>
+
+If set to false `PD > input` will scan both bracket mode: `PD > «good` and non bracket mode: `PD > good`.
+If set to true ignore `PD > good` and only scan `PD > «customshortcut`
+    <strong>SettingBracketModeOnlyScan
+    False</strong>
+
+Adjust this value below if using mode two from above `welc` and would like more input values like `welco` (5)
+    <strong>SettingCodeLength
+    3</strong>
+
+If set to true all bracket codes are ignored. True example: PD > good{bs 4}Legacy mode here | «good»{bs 4}Legacy code here only
+    <strong>SettingSendkeysOnlyMode
+    False</strong>
+
+Right Ctrl key: « 
+    <strong>SettingBracketKey
+    RControlKey  </strong>(<a href="https://msdn.microsoft.com/en-us/library/system.windows.forms.keys" title="Key Enumeration">List</a>)<strong>
+    
+    SettingRepeatKey
+    Scroll </strong>(scroll lock key)<strong>
+
+    SettingOpenCloseBracketModeScan
+    False </strong>(if set to True, press Rctrl, type the «code», now press Rctrl to scan/run)<strong>
+    
+    SettingBracketOpen
+    «
+
+    SettingBracketClose
+    »
+
+    SettingIgnoreWhiteSpaceOpen
+    ‹
+
+    SettingIgnoreWhiteSpaceClose
+    ›
+
+    SettingInsertSymbol
+    į
+
+    SettingBackgroundImage
+    &lt;value&gt;C:\Users\..\..\.jpg&lt;/value&gt;
+
+    SettingIcon
+    &lt;value&gt;C:\Users\..\..\.ico&lt;/value&gt;
+
+    SettingTitleText
+    &lt;value&gt;PD&lt;/value&gt;</strong>
+
+(Frequency)
+    <strong>SettingInterval
+    150
+
+    SettingInfiniteLoop
+    False</strong>
+
+(Interface)
+    <strong>SettingDarkMode
+    True
+
+    SettingDarkModeText
+    Lime
+
+    SettingTopMost
+    False
+
+    SettingWordWrap
+    True</strong>
+
+(1 for no opacity)
+    <strong>SettingOpacity
+    0.9</strong>
+
+(Auto saved values when closed)
+    <strong>SettingHeight
+    268
+
+    SettingWidth
+    300
+
+    SettingLocationTop
+    118
+
+    SettingLocationLeft
+    78
+
+    SettingTextBox
+    Text
+
+    SettingListboxSelectedIndex
+    -1
+
+    SettingTabIndex
+    0
+
+    SettingSelectionStart
+    0
+
+    SettingSelectionLength
+    0
+
+    SettingTextBoxZoomFactor
+    1
+
+    SettingListBoxFontSize
+    8.25
+
+    SettingSplitterDistance
+    95
+
+    SettingSplitterWidth
+    15</strong>
+
+</pre>
+  </div>
+
+  </body>
+</html>
+
