@@ -122,6 +122,44 @@
         'Next
     End Sub
 
+    Sub LoadSe()
+        My.Settings.Upgrade()
+        If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon)
+        TextBox1.WordWrap = My.Settings.SettingWordWrap
+        DarkMode()
+        Timer1.Interval = My.Settings.SettingInterval
+        Me.Opacity = My.Settings.SettingOpacity
+        Me.TopMost = My.Settings.SettingTopMost
+
+        GetBorder()
+
+        Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, My.Settings.SettingListBoxFontSize)
+
+        SplitContainer1.SplitterWidth = My.Settings.SettingSplitterWidth
+
+        If My.Settings.SettingBackgroundImage > "" Then
+            Select Case My.Settings.SettingBackgroundImageLayout
+                Case 0
+                    Me.BackgroundImageLayout = ImageLayout.None
+                Case 1
+                    Me.BackgroundImageLayout = ImageLayout.Tile
+                Case 2
+                    Me.BackgroundImageLayout = ImageLayout.Center
+                Case 3
+                    Me.BackgroundImageLayout = ImageLayout.Stretch
+                Case 4
+                    Me.BackgroundImageLayout = ImageLayout.Zoom
+                Case Else
+                    Me.BackgroundImageLayout = ImageLayout.Center
+            End Select
+            Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
+        End If
+
+        On Error Resume Next
+        SplitContainer1.SplitterDistance = My.Settings.SettingSplitterDistance
+
+    End Sub
+
     Sub LoadDb()
         For Each item As String In My.Settings.SettingDB
             ListBox1.Items.Add(CStr(item))
@@ -303,10 +341,10 @@
     Sub SaveSettings()
         If Me.Top <> -32000 Then My.Settings.SettingLocationTop = Me.Top
         If Me.Left <> -32000 Then My.Settings.SettingLocationLeft = Me.Left
-        If WindowState = 0 And ControlBox = True Then
-            My.Settings.SettingHeight = Me.Height
-            My.Settings.SettingWidth = Me.Width
-        End If
+        'If WindowState = 0 And ControlBox = True Then
+        My.Settings.SettingHeight = Me.Height
+        My.Settings.SettingWidth = Me.Width
+        'End If
         If ListBox1.Focused Then My.Settings.SettingTabIndex = 1
         If TextBox1.Focused Then My.Settings.SettingTabIndex = 5
         My.Settings.SettingSelectionStart = TextBox1.SelectionStart
@@ -319,6 +357,7 @@
 
         'config
         If My.Settings.SettingFirstLoad = 0 Then
+            My.Settings.SettingBorderStyle = My.Settings.SettingBorderStyle
             My.Settings.SettingIcon = My.Settings.SettingIcon
             My.Settings.SettingTitleText = My.Settings.SettingTitleText
             My.Settings.SettingWordWrap = My.Settings.SettingWordWrap
@@ -336,6 +375,7 @@
             My.Settings.SettingBracketOpen = My.Settings.SettingBracketOpen
             My.Settings.SettingBracketClose = My.Settings.SettingBracketClose
             My.Settings.SettingBackgroundImage = My.Settings.SettingBackgroundImage
+            My.Settings.SettingBackgroundImageLayout = My.Settings.SettingBackgroundImageLayout
             My.Settings.SettingInfiniteLoop = My.Settings.SettingInfiniteLoop
             My.Settings.SettingIgnoreWhiteSpaceOpen = My.Settings.SettingIgnoreWhiteSpaceOpen
             My.Settings.SettingIgnoreWhiteSpaceClose = My.Settings.SettingIgnoreWhiteSpaceClose
@@ -348,8 +388,6 @@
         My.Settings.Save()
     End Sub
 
-
-
     Private Sub PD_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Timer1.Dispose()
         SaveSettings()
@@ -357,21 +395,13 @@
 
     Private Sub PD_Load(sender As Object, e As EventArgs) Handles Me.Load
         If My.Settings.SettingFirstLoad = 0 Then Application.Restart()
-        If My.Settings.SettingIcon > "" Then Me.Icon = New Icon(My.Settings.SettingIcon)
-        TextBox1.WordWrap = My.Settings.SettingWordWrap
         LoadDb()
-        DarkMode()
-        Timer1.Interval = My.Settings.SettingInterval
-        Me.Opacity = My.Settings.SettingOpacity
-        Me.TopMost = My.Settings.SettingTopMost
+        Me.Show()
         Me.Top = My.Settings.SettingLocationTop
         Me.Left = My.Settings.SettingLocationLeft
         Me.Height = My.Settings.SettingHeight
         Me.Width = My.Settings.SettingWidth
-
         If ListBox1.Items.Count > 0 Then ListBox1.SelectedIndex = My.Settings.SettingListboxSelectedIndex
-        Me.ListBox1.Font = New System.Drawing.Font(TextBox1.Font.Name, My.Settings.SettingListBoxFontSize)
-
         Select Case My.Settings.SettingTabIndex
             Case 1
                 ListBox1.Focus()
@@ -380,21 +410,16 @@
             Case Else
                 ListBox1.Focus()
         End Select
-
         TextBox1.Text = My.Settings.SettingTextBox
         If TextBox1.Focused Then
             TextBox1.SelectionStart = My.Settings.SettingSelectionStart
             TextBox1.SelectionLength = My.Settings.SettingSelectionLength
         End If
         TextBox1.ZoomFactor = My.Settings.SettingTextBoxZoomFactor
-        SplitContainer1.SplitterDistance = My.Settings.SettingSplitterDistance
-        SplitContainer1.SplitterWidth = My.Settings.SettingSplitterWidth
-
-        If My.Settings.SettingBackgroundImage > "" Then
-            Me.BackgroundImage = Image.FromFile(My.Settings.SettingBackgroundImage)
-            If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Exit Sub
-            FixedSize()
-        End If
+        LoadSe()
+        If My.Settings.SettingBackgroundImage > "" Then FixedSize()
+        'If TextBox1.Text = "'" Then TextBox1.Focus() : Kb("'") 'SendKeys.Send("^a'^a") 'off
+        'If My.Settings.SettingBackgroundImage > "" And Me.Text > "" Then FixedSize()
     End Sub
 
     Private Sub PD_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -1572,6 +1597,27 @@ App:
         End If
     End Sub
 
+    Sub GetBorder()
+        Select Case My.Settings.SettingBorderStyle
+            Case 0
+                Me.FormBorderStyle = FormBorderStyle.None
+            Case 1
+                Me.FormBorderStyle = FormBorderStyle.FixedSingle
+            Case 2
+                Me.FormBorderStyle = FormBorderStyle.Fixed3D
+            Case 3
+                Me.FormBorderStyle = FormBorderStyle.FixedDialog
+            Case 4
+                Me.FormBorderStyle = FormBorderStyle.Sizable
+            Case 5
+                Me.FormBorderStyle = FormBorderStyle.FixedToolWindow
+            Case 6
+                Me.FormBorderStyle = FormBorderStyle.SizableToolWindow
+            Case Else
+                Me.FormBorderStyle = FormBorderStyle.Sizable
+        End Select
+    End Sub
+
     Sub FixedSize()
         If Me.ControlBox = True Then
             Me.FormBorderStyle = FormBorderStyle.None
@@ -1598,7 +1644,11 @@ App:
     Private Sub PD_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
         GetAsyncKeyState(Keys.LControlKey)
         If My.Settings.SettingBackgroundImage > "" Then FixedSize()
-        If CBool(GetAsyncKeyState(Keys.LControlKey)) Then Me.CenterToScreen()
+        LoadSe()
+        If CBool(GetAsyncKeyState(Keys.LControlKey)) Then
+            If CBool(GetAsyncKeyState(Keys.LShiftKey)) Then Me.CenterToScreen()
+            FormBorderStyle = FormBorderStyle.SizableToolWindow
+        End If
     End Sub
 
     Private Sub ListBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseClick
